@@ -1,0 +1,13 @@
+{
+  "files": {
+    "main.css": "/%7BFWT-Art-Gallery%7D/static/css/main.073c9b0a.css",
+    "main.js": "/%7BFWT-Art-Gallery%7D/static/js/main.f7961f48.js",
+    "index.html": "/%7BFWT-Art-Gallery%7D/index.html",
+    "main.073c9b0a.css.map": "/%7BFWT-Art-Gallery%7D/static/css/main.073c9b0a.css.map",
+    "main.f7961f48.js.map": "/%7BFWT-Art-Gallery%7D/static/js/main.f7961f48.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.073c9b0a.css",
+    "static/js/main.f7961f48.js"
+  ]
+}
