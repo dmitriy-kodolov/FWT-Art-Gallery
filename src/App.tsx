@@ -1,12 +1,10 @@
 import React from 'react';
-import './App.scss';
+import CardList from './components/CardList/CardList';
 
-function App() {
-  return (
-    <div className="App">
-      start
-    </div>
-  );
-}
+const App = () => (
+  <div>
+    <CardList />
+  </div>
+);
 
 export default App;
