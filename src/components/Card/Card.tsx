@@ -3,7 +3,7 @@ import { CardInfo } from '../../types/types';
 import style from './style.module.scss';
 
 type CardProps = {
-  cardInfo:CardInfo
+  cardInfo: CardInfo
 };
 
 const Card:FC<CardProps> = ({

@@ -13,6 +13,6 @@ export const FirstStory = Template.bind({});
 
 FirstStory.args = {
   isFilled: true,
-  isTheme: true,
+  isDarkTheme: true,
   text: 'Log Out',
 };

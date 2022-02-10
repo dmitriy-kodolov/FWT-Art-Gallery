@@ -2,9 +2,7 @@ import React from 'react';
 import CardList from './components/CardList/CardList';
 
 const App = () => (
-  <div>
-    <CardList />
-  </div>
+  <CardList />
 );
 
 export default App;

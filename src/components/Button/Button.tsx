@@ -3,22 +3,22 @@ import classNames from 'classnames/bind';
 import style from './style.module.scss';
 
 interface ButtonProps {
-  isFilled:boolean,
-  isTheme:boolean,
-  text:string,
-  clickHandler:() => void
+  isFilled: boolean,
+  isDarkTheme: boolean,
+  text: string,
+  clickHandler: () => void
 }
 
 const cx = classNames.bind(style);
 
 const Button:FC<ButtonProps> = ({
-  isFilled, isTheme, clickHandler, text,
+  isFilled, isDarkTheme, clickHandler, text,
 }) => {
   const buttonClassName = cx(
     'button',
-    { button_addTheme: isTheme },
+    { button_addTheme: isDarkTheme },
     { button_filled: isFilled },
-    { button_filledTheme: isFilled && isTheme },
+    { button_filledTheme: isFilled && isDarkTheme },
   );
 
   return (

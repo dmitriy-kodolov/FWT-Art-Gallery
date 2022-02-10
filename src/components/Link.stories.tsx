@@ -1,7 +1,6 @@
 import React from 'react';
 import { ComponentStory, ComponentMeta } from '@storybook/react';
 import Link from './Link';
-// import FaceBook from '../../public/facebook.svg';
 
 export default {
   component: Link,
@@ -16,5 +15,4 @@ FirstStory.args = {
   url: 'https://www.facebook.com/framework.team',
   isTheme: false,
   text: 'dsadsa',
-//   Component: FaceBook,
 };
