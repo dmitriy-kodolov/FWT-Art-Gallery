@@ -4,7 +4,7 @@ import style from './style.module.scss';
 
 type LinkProps = {
   text?: string,
-  isTheme?: boolean,
+  isDarkTheme?: boolean,
   url: string,
   Component?: FC<SVGProps<SVGSVGElement> & { title?: string | undefined; }>,
 };
@@ -12,14 +12,15 @@ type LinkProps = {
 const cx = cn.bind(style);
 
 const MyLink:FC<LinkProps> = ({
-  text, isTheme, url, Component,
+  text, isDarkTheme, url, Component,
 }) => {
-  const linkClassName = cx('myLink', { myLink_theme: isTheme });
+  const linkClassName = cx('myLink', { myLink_addLightTheme: !isDarkTheme });
+  const svgClassName = cx('myLink__svg', { myLink__svg_addLightTheme: !isDarkTheme });
 
   return (
     <a className={linkClassName} href={url}>
       {text || ''}
-      {Component && <Component />}
+      {Component && <Component className={svgClassName} />}
     </a>
   );
 };

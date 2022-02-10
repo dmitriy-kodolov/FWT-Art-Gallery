@@ -1,11 +1,18 @@
 @use '../../assets/variables' as v;
 
 .header{
-    display: grid;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0 0 40px 0;
     width: 100%;
-    grid-template-columns: repeat(2, 1fr);
     background: v.$darkThemeColor;
     align-items: center;
+    position: relative;
+    @media (max-width: v.$tabletWidth){
+        padding: 0 0 30px 0;
+    }
+
     &_addLightTheme{
         background: v.$lightThemeColor;
     }
@@ -15,6 +22,9 @@
         gap: 12px;
         max-height: 40px;
         grid-template-columns: repeat(3, 1fr);
+        @media (max-width: v.$tabletWidth){
+            display: none;
+        }
     }
     &__themeButton{
         height: 40px;
@@ -28,4 +38,21 @@
         height: 40px;
         width: 86px;
     }
+    &__logo{
+        stroke: v.$lightThemeColor;
+        &_addLightTheme{
+            stroke: v.$darkThemeColor;
+        }
+    }
+    &__openMobileMenuBtn{
+        padding: 0;
+        width: 24px;
+        border: none;
+        height: 24px;
+        display:none;
+        @media (max-width: v.$tabletWidth){
+            display: block;
+        }
+    }
 }
+

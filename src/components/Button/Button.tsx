@@ -4,9 +4,9 @@ import style from './style.module.scss';
 
 interface ButtonProps {
   isFilled?: boolean,
-  isTheme?: boolean,
+  isDarkTheme?: boolean,
   text?: string,
-  customStyle: string,
+  customStyle?: string,
   clickHandler:() => void,
   Component?: FC<SVGProps<SVGSVGElement> & { title?: string | undefined; }>,
 }
@@ -14,14 +14,18 @@ interface ButtonProps {
 const cx = cn.bind(style);
 
 const Button:FC<ButtonProps> = ({
-  isFilled, isTheme, clickHandler, text, Component, customStyle,
+  isFilled, isDarkTheme, clickHandler, text, Component, customStyle,
 }) => {
   const buttonClassName = cx(
     'button',
     customStyle,
-    { button_addTheme: isTheme },
+    { button_addLightTheme: !isDarkTheme },
     { button_filled: isFilled },
-    { button_filledTheme: isFilled && isTheme },
+    { button_filledLightTheme: isFilled && !isDarkTheme },
+  );
+  const svgClassName = cx(
+    'button__svgBtn',
+    { button__svgBtn_addLightTheme: !isDarkTheme },
   );
 
   return (
@@ -30,7 +34,7 @@ const Button:FC<ButtonProps> = ({
       type="button"
       onClick={clickHandler}
     >
-      {Component && <Component />}
+      {Component && <Component className={svgClassName} />}
       {text && text}
     </button>
   );

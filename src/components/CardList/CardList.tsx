@@ -1,6 +1,10 @@
+import cn from 'classnames/bind';
 import React, { FC } from 'react';
+import { useAppSelector } from '../../hooks/redux';
 import Card from '../Card/Card';
 import style from './style.module.scss';
+
+const cx = cn.bind(style);
 
 const CardList:FC = () => {
   const mokPaintingsInfo = [
@@ -50,9 +54,14 @@ const CardList:FC = () => {
       painting: 'https://miro.medium.com/max/1400/1*mk1-6aYaf_Bes1E3Imhc0A.jpeg',
     },
   ];
+  const { theme: { isDarkTheme } } = useAppSelector((state) => state);
+  const cardlistClassName = cx(
+    'cardList',
+    { cardList_addLightTheme: !isDarkTheme },
+  );
 
   return (
-    <div className={style.cardList}>
+    <div className={cardlistClassName}>
       {mokPaintingsInfo.map((item) => (
         <div className={style.cardList__card}>
           <Card cardInfo={item} />

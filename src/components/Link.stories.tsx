@@ -1,7 +1,6 @@
 import React from 'react';
 import { ComponentStory, ComponentMeta } from '@storybook/react';
 import MyLink from './MyLink';
-// import FaceBook from '../../public/facebook.svg';
 
 export default {
   component: MyLink,
@@ -14,7 +13,6 @@ export const FirstStory = Template.bind({});
 
 FirstStory.args = {
   url: 'https://www.facebook.com/framework.team',
-  isTheme: false,
+  isDarkTheme: true,
   text: 'dsadsa',
-//   Component: FaceBook,
 };

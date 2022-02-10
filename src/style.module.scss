@@ -1,8 +1,14 @@
 @use './assets/variables' as v;
-
 .app{
-    background: black;
-    &_theme{
+    padding: 20px 20px 40px 20px;
+    background: v.$darkThemeColor;
+    &_addLightTheme{
         background: v.$lightThemeColor;
+    }
+    @media (max-width: v.$desctopWidth){
+        padding: 20px 20px 156px 20px;
+    }
+    @media (max-width: v.$tabletWidth){
+        padding: 15px 15px 30px 15px;
     }
 }

@@ -1,7 +1,7 @@
 import { createSlice } from '@reduxjs/toolkit';
 
 type ChangeThemeSlice = {
-  isDarkTheme: boolean
+  isDarkTheme: boolean,
 };
 
 const initialState:ChangeThemeSlice = {
@@ -19,4 +19,5 @@ const changeThemeSlice = createSlice({
 });
 
 export const { changeTheme } = changeThemeSlice.actions;
+
 export default changeThemeSlice.reducer;

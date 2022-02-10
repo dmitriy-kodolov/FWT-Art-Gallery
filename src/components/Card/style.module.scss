@@ -1,5 +1,5 @@
-@use '../../assets/font';
 @use '../../assets/variables' as v;
+@import '../../assets/font';
 .card{
     display: grid;
     width: 100%;
@@ -10,16 +10,24 @@
     align-items: center;
     border-radius: 4px;
     &__slidePanel{
+        @include font;
+        font-weight: 500;
+        font-size: 12px;
+        line-height: 14px;
         width: 100%;
         height: 50%;
+        box-sizing: border-box;
         position: absolute;
         top: 90%;
         padding-left: 15px;
         background: rgba(255, 255, 255, 0.75);
-        direction: column;
         transition: 0.5s;
         @media (min-width: v.$tabletWidth) {
+            font-size: 18px;
+            line-height: 20px;
+            font-weight: bold;
             &:hover{
+                padding: 10px 15px;
                 top: 57%;
                 transition: 0.5s;
             }   
