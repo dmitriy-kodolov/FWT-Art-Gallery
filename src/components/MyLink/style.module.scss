@@ -2,6 +2,7 @@
 
 .myLink{
     color: v.$lightThemeColor;
+    font-weight: bold;
     &_theme{
         color:v.$darkThemeColor;
     }

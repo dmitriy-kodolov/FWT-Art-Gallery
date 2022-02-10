@@ -1,14 +1,14 @@
 import React from 'react';
 import { ComponentStory, ComponentMeta } from '@storybook/react';
-import Link from './Link';
+import MyLink from './MyLink';
 // import FaceBook from '../../public/facebook.svg';
 
 export default {
-  component: Link,
-  title: 'Link',
-} as ComponentMeta<typeof Link>;
+  component: MyLink,
+  title: 'MyLink',
+} as ComponentMeta<typeof MyLink>;
 
-const Template: ComponentStory<typeof Link> = (args) => <Link {...args} />;
+const Template: ComponentStory<typeof MyLink> = (args) => <MyLink {...args} />;
 
 export const FirstStory = Template.bind({});
 

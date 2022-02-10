@@ -54,7 +54,9 @@ const CardList:FC = () => {
   return (
     <div className={style.cardList}>
       {mokPaintingsInfo.map((item) => (
-        <Card cardInfo={item} />
+        <div className={style.cardList__card}>
+          <Card cardInfo={item} />
+        </div>
       ))}
     </div>
   );

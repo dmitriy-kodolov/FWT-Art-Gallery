@@ -1,21 +1,24 @@
-import React, { FC } from 'react';
-import classNames from 'classnames/bind';
+import React, { FC, SVGProps } from 'react';
+import cn from 'classnames/bind';
 import style from './style.module.scss';
 
 interface ButtonProps {
-  isFilled:boolean,
-  isTheme:boolean,
-  text:string,
-  clickHandler:() => void
+  isFilled?: boolean,
+  isTheme?: boolean,
+  text?: string,
+  customStyle: string,
+  clickHandler:() => void,
+  Component?: FC<SVGProps<SVGSVGElement> & { title?: string | undefined; }>,
 }
 
-const cx = classNames.bind(style);
+const cx = cn.bind(style);
 
 const Button:FC<ButtonProps> = ({
-  isFilled, isTheme, clickHandler, text,
+  isFilled, isTheme, clickHandler, text, Component, customStyle,
 }) => {
   const buttonClassName = cx(
     'button',
+    customStyle,
     { button_addTheme: isTheme },
     { button_filled: isFilled },
     { button_filledTheme: isFilled && isTheme },
@@ -27,7 +30,8 @@ const Button:FC<ButtonProps> = ({
       type="button"
       onClick={clickHandler}
     >
-      {text}
+      {Component && <Component />}
+      {text && text}
     </button>
   );
 };

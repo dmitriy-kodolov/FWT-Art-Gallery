@@ -1,0 +1,8 @@
+@use './assets/variables' as v;
+
+.app{
+    background: black;
+    &_theme{
+        background: v.$lightThemeColor;
+    }
+}

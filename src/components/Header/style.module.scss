@@ -1,0 +1,31 @@
+@use '../../assets/variables' as v;
+
+.header{
+    display: grid;
+    width: 100%;
+    grid-template-columns: repeat(2, 1fr);
+    background: v.$darkThemeColor;
+    align-items: center;
+    &_addLightTheme{
+        background: v.$lightThemeColor;
+    }
+    &__buttons{
+        display: grid;
+        max-width: 226px;
+        gap: 12px;
+        max-height: 40px;
+        grid-template-columns: repeat(3, 1fr);
+    }
+    &__themeButton{
+        height: 40px;
+        width: 40px;   
+    }
+    &__logInBtn{
+        height: 40px;
+        width: 76px;
+    }
+    &__signInBtn{
+        height: 40px;
+        width: 86px;
+    }
+}

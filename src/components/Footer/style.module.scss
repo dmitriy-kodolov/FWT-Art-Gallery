@@ -1,0 +1,37 @@
+@use '../../assets/variables' as v;
+@use '../../assets/font';
+// @include font;
+
+.footer{
+    margin: 30px 0 0 0;
+    display: grid;
+    border-top: 2px solid rgba(255, 255, 255, 0.3);
+    grid-template-areas: 
+        'footer__mainSite'
+        'footer__social'
+        'footer__author';
+    &__social{
+        padding: 15px;
+        grid-area: footer__social;
+    }
+    &__mainSite{
+        padding: 30px 0 0 0; 
+        grid-area: footer__mainSite;
+    }
+    &__author{
+        color: rgba(255, 255, 255, 0.3);
+        grid-area: footer__author;
+    }
+    background: v.$darkThemeColor;
+    color: v.$lightThemeColor;
+    @media (min-width: v.$tabletWidth){
+        grid-template-areas: 
+        'footer__mainSite footer__social'
+        'footer__author footer__author'
+    }
+    &_theme{
+        background: v.$lightThemeColor;
+        color: v.$darkThemeColor;
+        border-top: 2px solid rgba(0, 0, 0, 0.3);
+    }
+}

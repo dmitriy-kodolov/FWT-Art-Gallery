@@ -18,7 +18,7 @@ const Card:FC<CardProps> = ({
       <span>{name}</span>
       {yearOfPublishing && <span>{yearOfPublishing}</span>}
     </div>
-    <img src={painting} alt="#paintOfAuthor" />
+    <img className={style.card__img} src={painting} alt="#paintOfAuthor" />
   </div>
 );
 
