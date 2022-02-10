@@ -1,0 +1,8 @@
+@use '../../assets/variables' as v;
+
+.myLink{
+    color: v.$lightThemeColor;
+    &_theme{
+        color:v.$darkThemeColor;
+    }
+}
