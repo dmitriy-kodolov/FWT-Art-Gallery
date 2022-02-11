@@ -26,6 +26,9 @@
         grid-area: footer__mainSite;
     }
     &__author{
+        &_addLightTheme{
+            color: rgba(0, 0, 0, 0.3);
+        };
         padding: 20px 0 0 0; 
         color: rgba(255, 255, 255, 0.3);
         grid-area: footer__author;

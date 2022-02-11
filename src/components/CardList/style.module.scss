@@ -26,4 +26,9 @@
             height: 260px;
         }
     }
+    &__loader{
+        width: 100%;
+        display: grid;
+        justify-content: center;
+    }
 }

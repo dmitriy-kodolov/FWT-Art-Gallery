@@ -15,6 +15,10 @@ const Footer:FC = () => {
     'footer',
     { footer_addLightTheme: !isDarkTheme },
   );
+  const authorClassName = cx(
+    'footer__author',
+    { footer__author_addLightTheme: !isDarkTheme },
+  );
 
   return (
     <div className={footerClassName}>
@@ -31,7 +35,7 @@ const Footer:FC = () => {
         <MyLink isDarkTheme={isDarkTheme} Component={VK} url="https://vk.com/frameworkteam" />
         <MyLink isDarkTheme={isDarkTheme} Component={Instagram} url="https://www.instagram.com/framework.team/" />
       </div>
-      <span className={style.footer__author}>Иванов Иван, 2022</span>
+      <span className={authorClassName}>Иванов Иван, 2022</span>
     </div>
   );
 };

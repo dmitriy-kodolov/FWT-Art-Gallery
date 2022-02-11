@@ -1,9 +1,11 @@
 import { configureStore } from '@reduxjs/toolkit';
 import changeThemeSlice from './slices/changeThemeSlice';
+import getArtistsSlice from './slices/getArtistsSlice';
 
 const store = configureStore({
   reducer: {
     theme: changeThemeSlice,
+    artists: getArtistsSlice,
   },
 });
 
