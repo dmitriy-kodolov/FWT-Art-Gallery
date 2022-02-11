@@ -1,13 +1,12 @@
-import React, { FC, useEffect, useState } from 'react';
+import React, { FC, useState } from 'react';
 import cn from 'classnames/bind';
-import Cookies from 'js-cookie';
 import { ReactComponent as Logo } from '../../assets/Logo.svg';
 import { ReactComponent as ThemeIcon } from '../../assets/ThemeIcon.svg';
 import { ReactComponent as Menu } from '../../assets/Menu.svg';
 import Button from '../Button';
 import style from './style.module.scss';
 import { useAppDispatch, useAppSelector } from '../../hooks/redux';
-import { changeTheme, setTheme } from '../../store/slices/changeThemeSlice';
+import { changeTheme } from '../../store/slices/changeThemeSlice';
 import BurgerMenu from '../BurgerMenu';
 
 const cx = cn.bind(style);
@@ -16,7 +15,6 @@ const Header:FC = () => {
   const dispatch = useAppDispatch();
   const [isOpenMenu, setIsOpenMenu] = useState(false);
   const { theme: { isDarkTheme } } = useAppSelector((state) => state);
-
   const headerClassName = cx(
     'header',
     { header_addLightTheme: !isDarkTheme },
@@ -30,11 +28,7 @@ const Header:FC = () => {
     setIsOpenMenu((prev: boolean) => !prev);
   };
 
-  useEffect(() => {
-    dispatch(setTheme(JSON.parse(Cookies.get('isDarkTheme') || 'true')));
-  }, []);
-
-  const setIsDarkTheme = () => {
+  const setTheme = () => {
     dispatch(changeTheme());
   };
 
@@ -44,20 +38,20 @@ const Header:FC = () => {
       <div className={style.header__buttons}>
         <Button
           customStyle={style.header__themeButton}
-          clickHandler={setIsDarkTheme}
+          clickHandler={setTheme}
           Component={ThemeIcon}
           isDarkTheme={isDarkTheme}
         />
         <Button
           customStyle={style.header__logInBtn}
-          clickHandler={setIsDarkTheme}
+          clickHandler={setTheme}
           text="LOG IN"
           isDarkTheme={isDarkTheme}
         />
         <Button
           customStyle={style.header__signInBtn}
           isFilled
-          clickHandler={setIsDarkTheme}
+          clickHandler={setTheme}
           text="SIGN UP"
           isDarkTheme={isDarkTheme}
         />
@@ -71,7 +65,7 @@ const Header:FC = () => {
         />
       )}
       {isOpenMenu && (
-        <BurgerMenu setOpenMenu={setOpenMenu} isDarkTheme={isDarkTheme} setTheme={setIsDarkTheme} />
+        <BurgerMenu setOpenMenu={setOpenMenu} isDarkTheme={isDarkTheme} setTheme={setTheme} />
       )}
     </div>
   );

@@ -1,5 +1,4 @@
-import { createSlice, PayloadAction } from '@reduxjs/toolkit';
-import Cookies from 'js-cookie';
+import { createSlice } from '@reduxjs/toolkit';
 
 type ChangeThemeSlice = {
   isDarkTheme: boolean,
@@ -15,14 +14,10 @@ const changeThemeSlice = createSlice({
   reducers: {
     changeTheme(state) {
       state.isDarkTheme = !state.isDarkTheme;
-      Cookies.set('isDarkTheme', `${state.isDarkTheme}`);
-    },
-    setTheme(state, action:PayloadAction<boolean>) {
-      state.isDarkTheme = action.payload;
     },
   },
 });
 
-export const { changeTheme, setTheme } = changeThemeSlice.actions;
+export const { changeTheme } = changeThemeSlice.actions;
 
 export default changeThemeSlice.reducer;
