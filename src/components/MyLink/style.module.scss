@@ -1,0 +1,18 @@
+@use '../../assets/variables' as v;
+@import '../../assets/font';
+.myLink{
+    @include font;
+    color: v.$lightThemeColor;
+    font-weight: bold;
+    &_addLightTheme{
+        color: v.$darkThemeColor;
+    }
+    &__svg{
+        stroke: v.$lightThemeColor;
+        fill: v.$lightThemeColor;
+        &_addLightTheme{
+            stroke: v.$darkThemeColor;
+            fill: v.$darkThemeColor;
+        }
+    }
+}

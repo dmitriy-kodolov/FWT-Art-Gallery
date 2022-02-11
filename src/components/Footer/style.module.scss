@@ -1,0 +1,45 @@
+@use '../../assets/variables' as v;
+@import '../../assets/font';
+
+.footer{
+    margin: 40px 0 0 0;
+    @include font;
+    font-weight: normal;
+    font-size: 16px;
+    box-sizing: border-box;
+    display: grid;
+    border-top: 2px solid rgba(255, 255, 255, 0.3);
+    grid-template-areas: 
+        'footer__mainSite'
+        'footer__social'
+        'footer__author';
+    &__social{
+        width: 106px;
+        display: grid;
+        grid-template-columns: 1fr 1fr 1fr;
+        padding: 20px 0 0 0;
+        grid-area: footer__social;
+        justify-items: end;
+    }
+    &__mainSite{
+        padding: 20px 0 0 0; 
+        grid-area: footer__mainSite;
+    }
+    &__author{
+        padding: 20px 0 0 0; 
+        color: rgba(255, 255, 255, 0.3);
+        grid-area: footer__author;
+    }
+    background: v.$darkThemeColor;
+    color: v.$lightThemeColor;
+    @media (min-width: v.$tabletWidth){
+        grid-template-areas: 
+        'footer__mainSite footer__social'
+        'footer__author footer__author'
+    }
+    &_addLightTheme{
+        background: v.$lightThemeColor;
+        color: v.$darkThemeColor;
+        border-top: 2px solid rgba(0, 0, 0, 0.3);
+    }
+}

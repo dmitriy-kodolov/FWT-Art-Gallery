@@ -1,0 +1,32 @@
+@use '../../assets/variables' as v;
+@import '../../assets/font';
+
+.button{
+    @include font;
+    background: v.$darkThemeColor;
+    border: 1px solid v.$lightThemeColor;
+    box-sizing: border-box;
+    border-radius: 6px;
+    color: v.$lightThemeColor;
+    &_addLightTheme{
+        background: v.$lightThemeColor;
+        border: 1px solid v.$darkThemeColor;
+        color: v.$darkThemeColor;
+    }
+    &_filled{
+        color: v.$darkThemeColor;
+        background: v.$lightThemeColor;
+        border:none;
+    }
+    &_filledLightTheme{
+        color: v.$lightThemeColor;
+        border:none;
+        background: v.$darkThemeColor;
+    }
+    &__svgBtn{
+        stroke: v.$lightThemeColor;
+        &_addLightTheme{
+            stroke: v.$darkThemeColor;
+        }
+    }
+}
