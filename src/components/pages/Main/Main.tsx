@@ -1,15 +1,17 @@
 import React, { FC } from 'react';
+import { useNavigate } from 'react-router-dom';
 import CardList from '../../CardList';
-import Footer from '../../Footer';
-import Header from '../../Header';
-import style from './style.module.scss';
 
-const Main:FC = () => (
-  <div className={style.main}>
-    <Header />
-    <CardList />
-    <Footer />
-  </div>
-);
+const Main:FC = () => {
+  const navigate = useNavigate();
+
+  const clickHandler = () => {
+    navigate('../artist');
+  };
+
+  return (
+    <CardList clickHandler={clickHandler} />
+  );
+};
 
 export default Main;

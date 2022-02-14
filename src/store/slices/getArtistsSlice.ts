@@ -1,9 +1,9 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
-import { Artists } from '../../types/types';
+import { Artist } from '../../types/types';
 import { getArtists } from '../../utils/api/methods';
 
 type ArtistsSlice = {
-  artists: Artists[],
+  artists: Artist[],
   loading: boolean,
   error: boolean,
 };

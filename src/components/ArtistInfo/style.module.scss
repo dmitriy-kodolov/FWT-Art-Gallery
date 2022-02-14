@@ -1,0 +1,116 @@
+@use '../../assets/variables' as v;
+@import '../../assets/font';
+
+.artistInfo{
+    @include font;
+    color: v.$lightThemeColor;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 15px;
+    padding-bottom:30px;
+    background: v.$darkThemeColor;
+    @media (min-width: v.$tabletWidth){
+        padding-bottom: 40px;
+        // flex-direction: row;
+        display: grid;
+        grid-template-areas: 
+        'artistInfo__buttons artistInfo__buttons'
+        'artistInfo__portrait artistInfo__description';
+        gap: 20px;
+    }
+    &__genres{
+        display: flex;
+        flex-wrap: wrap;
+        gap: 27px;
+        justify-content: space-evenly;
+        @media (min-width: v.$tabletWidth){
+            justify-content: flex-start;
+        }
+    }
+    &__genre{
+        display: inline-block;
+        margin: 0;
+        color: v.$darkThemeColor;
+        background: #FAFAD2;
+        border-radius: 50px;
+        padding: 10px;
+        font-size: 10px;
+        line-height: 12px;
+        font-variant: small-caps;
+        font-weight: bold;
+        @media (min-width: v.$tabletWidth){
+            font-size: 14px;
+            line-height: 16px;
+        }
+    }
+    &__descriprion{
+        grid-area: artistInfo__description;
+        display: flex;
+        flex-direction: column;
+        align-items: flex-start;
+        line-height: 24px;
+        font-weight: normal;
+        span:nth-child(2){
+            padding: 15px 0 30px 0;
+            color: #9C9C9C;
+            font-variant: small-caps;
+        }
+    }
+    &__info{
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        padding-top: 15px;
+        span:nth-child(1){
+            padding-bottom: 10px;
+            font-weight: 900;
+            font-size: 22px;
+            line-height: 26px;    
+            text-transform: uppercase;
+        }
+        span:nth-child(2){
+            color: #9C9C9C;
+            font-variant: small-caps;
+        }
+    }
+    &__imgContainer{
+        display: flex;
+        flex-direction: column;
+    }
+    &__portrait{
+        grid-area: artistInfo__portrait;
+        width: 290px;
+        height: 250px;
+        @media (min-width: v.$tabletWidth){
+            width: 354px;
+            height: 310px;
+        }
+        @media (min-width: v.$desctopWidth){
+            width: 482px;
+            height: 350px;
+        }
+    }
+    &_addLightTheme{
+        background: v.$lightThemeColor;
+        color: v.$darkThemeColor;
+
+    }
+    &__buttons{
+    grid-area: artistInfo__buttons;
+    padding-bottom: 15px;
+    display: flex;
+    gap: 15px;
+    justify-content: flex-start;
+    }
+    &__btn{
+        background: rgba(255, 255, 255, 0.1);
+        width: 30px;
+        height: 30px;
+        stroke: v.$lightThemeColor;
+        fill: v.$lightThemeColor;
+        &_addLightTheme{
+            background: rgba(0, 0, 0, 0.1);
+        }
+    }
+}

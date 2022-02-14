@@ -8,7 +8,11 @@ import Loader from '../../Loader';
 
 const cx = cn.bind(style);
 
-const CardList:FC = () => {
+type CardListProps = {
+  clickHandler?: () => void
+};
+
+const CardList:FC<CardListProps> = ({ clickHandler }) => {
   const dispatch = useAppDispatch();
   const {
     theme: { isDarkTheme },
@@ -42,7 +46,7 @@ const CardList:FC = () => {
     <div className={cardlistClassName}>
       {artists.map((artistInfo) => (
         <div className={style.cardList__card}>
-          <Card key={artistInfo.id} cardInfo={artistInfo} />
+          <Card clickHandler={clickHandler} key={artistInfo.id} cardInfo={artistInfo} />
         </div>
       ))}
     </div>

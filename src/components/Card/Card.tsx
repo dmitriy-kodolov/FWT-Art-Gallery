@@ -3,16 +3,17 @@ import { CardInfo } from '../../types/types';
 import style from './style.module.scss';
 
 type CardProps = {
-  cardInfo:CardInfo
+  cardInfo:CardInfo,
+  clickHandler?: () => void,
 };
 
 const Card:FC<CardProps> = ({
   cardInfo: {
-    name, painting, clickHandler, yearOfAvtor, yearOfPublishing,
-  },
+    name, painting, yearOfAvtor, yearOfPublishing,
+  }, clickHandler,
 }) => (
-  <div className={style.card}>
-    <div className={style.card__slidePanel} onClick={clickHandler}>
+  <div className={style.card} onClick={clickHandler}>
+    <div className={style.card__slidePanel}>
       <span>{name}</span>
       {yearOfAvtor && <span>{yearOfAvtor}</span>}
       <span>{name}</span>

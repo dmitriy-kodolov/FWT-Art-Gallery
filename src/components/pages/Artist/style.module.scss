@@ -1,0 +1,11 @@
+@use '../../../assets/variables' as v;
+
+.artist{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    background: v.$darkThemeColor;
+    &_addLightTheme{
+        background: v.$lightThemeColor;
+    }
+}

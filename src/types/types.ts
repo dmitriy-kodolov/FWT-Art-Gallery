@@ -5,20 +5,20 @@ export type CardInfo = {
   yearsOfLife: string,
   genres?: string[],
   painting: string
-  clickHandler?: () => void,
   yearOfAvtor?: string,
   yearOfPublishing?: string,
 };
 
 export type GetArtistsResponseData = {
-  data: Artists[],
+  data: Artist[],
 };
 
-export type Artists = {
+export type Artist = {
   id: number,
+  birthCity: string,
   name: string,
   description: string,
   yearsOfLife: string,
   genres: string[],
-  painting: string
+  painting: string,
 };
