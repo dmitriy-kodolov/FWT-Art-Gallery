@@ -6,6 +6,7 @@ import { ReactComponent as DeleteIcon } from '../../assets/deleteIcon.svg';
 import style from './style.module.scss';
 import Button from '../Button';
 import { Artist } from '../../types/types';
+import Accardeon from '../Accardeon';
 
 type ArtistInfoProps = {
   isDarkTheme: boolean,
@@ -27,38 +28,37 @@ const ArtistInfo:FC<ArtistInfoProps> = ({
   },
 }) => {
   const artistInfoClassName = cx('artistInfo', { artistInfo_addLightTheme: !isDarkTheme });
-  const btnClassName = cx('artistInfo__btn', { artist__btn_addLightTheme: !isDarkTheme });
+  const btnClassName = cx('artistInfo__btn', { artistInfo__btn_addLightTheme: !isDarkTheme });
 
   return (
     <div className={artistInfoClassName}>
-      <div className={style.artistInfo__imgContainer}>
-        <div className={style.artistInfo__buttons}>
-          <Button
-            customStyle={btnClassName}
-            Component={BackIcon}
-            clickHandler={backToMainHadler}
-          />
-          <Button
-            customStyle={btnClassName}
-            Component={EditIcon}
-            clickHandler={editArtistHandler}
-          />
-          <Button
-            customStyle={btnClassName}
-            Component={DeleteIcon}
-            clickHandler={deleteArtistHandler}
-          />
-        </div>
-        <div className={style.artistInfo__imgContainer}>
-          <img className={style.artistInfo__portrait} src={painting} alt="portrait" />
-          <div className={style.artistInfo__info}>
-            <span>{name}</span>
-            <span>{yearsOfLife}</span>
-          </div>
-        </div>
+      <div className={style.artistInfo__buttons}>
+        <Button
+          className={btnClassName}
+          onClick={backToMainHadler}
+        >
+          <BackIcon />
+        </Button>
+        <Button
+          className={btnClassName}
+          onClick={editArtistHandler}
+        >
+          <EditIcon />
+        </Button>
+        <Button
+          className={btnClassName}
+          onClick={deleteArtistHandler}
+        >
+          <DeleteIcon />
+        </Button>
+      </div>
+      <img className={style.artistInfo__portrait} src={painting} alt="portrait" />
+      <div className={style.artistInfo__info}>
+        <span>{name}</span>
+        <span>{yearsOfLife}</span>
       </div>
       <div className={style.artistInfo__descriprion}>
-        <span>{description}</span>
+        <Accardeon text={description} isDarkTheme={isDarkTheme} />
         <span>{birthCity}</span>
         <div className={style.artistInfo__genres}>
           {genres.map((genre) => <p className={style.artistInfo__genre}>{genre}</p>)}

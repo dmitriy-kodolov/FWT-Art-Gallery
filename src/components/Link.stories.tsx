@@ -14,5 +14,4 @@ export const FirstStory = Template.bind({});
 FirstStory.args = {
   url: 'https://www.facebook.com/framework.team',
   isDarkTheme: true,
-  text: 'dsadsa',
 };

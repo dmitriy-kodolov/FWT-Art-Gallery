@@ -1,4 +1,5 @@
 import React, { FC } from 'react';
+import cn from 'classnames/bind';
 import Button from '../Button';
 import style from './style.module.scss';
 import { ReactComponent as ThemeIcon } from '../../assets/ThemeIcon.svg';
@@ -10,37 +11,46 @@ type BurgerMenuProps = {
   setTheme: () => void,
 };
 
-const BurgerMenu:FC<BurgerMenuProps> = ({ setOpenMenu, isDarkTheme, setTheme }) => (
-  <div className={style.mobileMenu}>
-    <div className={style.mobileMenu__content}>
-      <Button
-        customStyle={style.mobileMenu__closeBtn}
-        clickHandler={setOpenMenu}
-        isDarkTheme={isDarkTheme}
-        Component={Exit}
-      />
-      <Button
-        customStyle={style.mobileMenu__btn}
-        clickHandler={setTheme}
-        Component={ThemeIcon}
-        isDarkTheme={isDarkTheme}
-      />
-      <Button
-        customStyle={style.mobileMenu__btn}
-        clickHandler={setTheme}
-        text="LOG IN"
-        isDarkTheme={isDarkTheme}
-      />
-      <Button
-        customStyle={style.mobileMenu__btn}
-        isFilled
-        clickHandler={setTheme}
-        text="SIGN UP"
-        isDarkTheme={isDarkTheme}
-      />
+const cx = cn.bind(style);
+
+const BurgerMenu:FC<BurgerMenuProps> = ({ setOpenMenu, isDarkTheme, setTheme }) => {
+  const themeBtnClassName = cx('mobileMenu__btn', 'mobileMenu__svgBtn', { mobileMenu__svgBtn_addLightTheme: !isDarkTheme });
+  const exitBtnClassName = cx('mobileMenu__closeBtn', { mobileMenu__closeBtn_addLightTheme: !isDarkTheme });
+
+  return (
+    <div className={style.mobileMenu}>
+      <div className={style.mobileMenu__content}>
+        <Button
+          className={exitBtnClassName}
+          onClick={setOpenMenu}
+          isDarkTheme={isDarkTheme}
+        >
+          <Exit />
+        </Button>
+        <Button
+          className={themeBtnClassName}
+          onClick={setTheme}
+          isDarkTheme={isDarkTheme}
+        >
+          <ThemeIcon />
+        </Button>
+        <Button
+          className={style.mobileMenu__btn}
+          onClick={setTheme}
+          isDarkTheme={isDarkTheme}
+        >
+          LOG IN
+        </Button>
+        <Button
+          className={style.mobileMenu__btn}
+          isFilled
+          onClick={setTheme}
+          isDarkTheme={isDarkTheme}
+        >
+          SIGN UP
+        </Button>
+      </div>
     </div>
-
-  </div>
-);
-
+  );
+};
 export default BurgerMenu;

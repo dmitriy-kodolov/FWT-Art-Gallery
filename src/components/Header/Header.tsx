@@ -16,7 +16,10 @@ const Header:FC = () => {
   const dispatch = useAppDispatch();
   const [isOpenMenu, setIsOpenMenu] = useState(false);
   const { theme: { isDarkTheme } } = useAppSelector((state) => state);
-
+  const svgClassName = cx(
+    'header__svgBtn',
+    { header__svgBtn_addLightTheme: !isDarkTheme },
+  );
   const headerClassName = cx(
     'header',
     { header_addLightTheme: !isDarkTheme },
@@ -43,32 +46,36 @@ const Header:FC = () => {
       <Logo className={logoClassName} />
       <div className={style.header__buttons}>
         <Button
-          customStyle={style.header__themeButton}
-          clickHandler={setIsDarkTheme}
-          Component={ThemeIcon}
+          className={style.header__themeButton}
+          onClick={setIsDarkTheme}
           isDarkTheme={isDarkTheme}
-        />
+        >
+          <ThemeIcon className={svgClassName} />
+        </Button>
         <Button
-          customStyle={style.header__logInBtn}
-          clickHandler={setIsDarkTheme}
-          text="LOG IN"
+          className={style.header__logInBtn}
+          onClick={setIsDarkTheme}
           isDarkTheme={isDarkTheme}
-        />
+        >
+          LOG IN
+        </Button>
         <Button
-          customStyle={style.header__signInBtn}
+          className={style.header__signInBtn}
           isFilled
-          clickHandler={setIsDarkTheme}
-          text="SIGN UP"
+          onClick={setIsDarkTheme}
           isDarkTheme={isDarkTheme}
-        />
+        >
+          SIGN UP
+        </Button>
       </div>
       {!isOpenMenu && (
         <Button
-          customStyle={style.header__openMobileMenuBtn}
-          clickHandler={setOpenMenu}
-          Component={Menu}
+          className={style.header__openMobileMenuBtn}
+          onClick={setOpenMenu}
           isDarkTheme={isDarkTheme}
-        />
+        >
+          <Menu className={svgClassName} />
+        </Button>
       )}
       {isOpenMenu && (
         <BurgerMenu setOpenMenu={setOpenMenu} isDarkTheme={isDarkTheme} setTheme={setIsDarkTheme} />

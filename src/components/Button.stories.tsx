@@ -14,5 +14,5 @@ export const FirstStory = Template.bind({});
 FirstStory.args = {
   isFilled: true,
   isDarkTheme: true,
-  text: 'Log Out',
+  title: 'Log Out',
 };

@@ -16,12 +16,22 @@
         border: none;
         height: 24px;
     }
+    &__svgBtn{
+        stroke: v.$lightThemeColor;
+        &_addLightTheme{
+            stroke: v.$darkThemeColor;
+        }
+    }
     &__closeBtn{
         padding: 0;
         border: none;
         width: 24px;
         height: 24px;
         margin: 0 0 37px 0;
+        stroke: v.$lightThemeColor;
+        &_addLightTheme{
+            stroke: v.$darkThemeColor;
+        }
     }
     &__btn{
         width: 290px;

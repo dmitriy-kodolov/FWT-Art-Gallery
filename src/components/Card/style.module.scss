@@ -1,5 +1,4 @@
 @use '../../assets/variables' as v;
-@import '../../assets/font';
 .card{
     display: grid;
     width: 100%;
@@ -10,7 +9,6 @@
     align-items: center;
     border-radius: 4px;
     &__slidePanel{
-        @include font;
         font-weight: 500;
         font-size: 12px;
         line-height: 14px;

@@ -54,5 +54,11 @@
             display: block;
         }
     }
+    &__svgBtn{
+        stroke: v.$lightThemeColor;
+        &_addLightTheme{
+            stroke: v.$darkThemeColor;
+        }
+    }
 }
 

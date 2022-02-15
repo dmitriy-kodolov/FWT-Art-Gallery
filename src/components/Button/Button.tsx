@@ -1,41 +1,33 @@
-import React, { FC, SVGProps } from 'react';
+import React, { ButtonHTMLAttributes, FC } from 'react';
 import cn from 'classnames/bind';
 import style from './style.module.scss';
 
-interface ButtonProps {
+interface ButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
   isFilled?: boolean,
   isDarkTheme?: boolean,
-  text?: string,
-  customStyle?: string,
-  clickHandler:() => void,
-  Component?: FC<SVGProps<SVGSVGElement> & { title?: string | undefined; }>,
+  className: string,
 }
 
 const cx = cn.bind(style);
 
 const Button:FC<ButtonProps> = ({
-  isFilled, isDarkTheme, clickHandler, text, Component, customStyle,
+  isFilled, isDarkTheme, className, children, ...other
 }) => {
   const buttonClassName = cx(
     'button',
-    customStyle,
+    className,
     { button_addLightTheme: !isDarkTheme },
     { button_filled: isFilled },
     { button_filledLightTheme: isFilled && !isDarkTheme },
   );
-  const svgClassName = cx(
-    'button__svgBtn',
-    { button__svgBtn_addLightTheme: !isDarkTheme },
-  );
 
   return (
     <button
+      {...other}
       className={buttonClassName}
       type="button"
-      onClick={clickHandler}
     >
-      {Component && <Component className={svgClassName} />}
-      {text && text}
+      {children}
     </button>
   );
 };

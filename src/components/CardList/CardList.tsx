@@ -45,8 +45,8 @@ const CardList:FC<CardListProps> = ({ clickHandler }) => {
   return (
     <div className={cardlistClassName}>
       {artists.map((artistInfo) => (
-        <div className={style.cardList__card}>
-          <Card clickHandler={clickHandler} key={artistInfo.id} cardInfo={artistInfo} />
+        <div className={style.cardList__card} key={artistInfo.id}>
+          <Card clickHandler={clickHandler} cardInfo={artistInfo} />
         </div>
       ))}
     </div>

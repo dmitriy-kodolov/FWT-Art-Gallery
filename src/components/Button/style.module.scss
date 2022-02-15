@@ -1,8 +1,6 @@
 @use '../../assets/variables' as v;
-@import '../../assets/font';
 
 .button{
-    @include font;
     background: v.$darkThemeColor;
     border: 1px solid v.$lightThemeColor;
     box-sizing: border-box;
@@ -22,11 +20,5 @@
         color: v.$lightThemeColor;
         border:none;
         background: v.$darkThemeColor;
-    }
-    &__svgBtn{
-        stroke: v.$lightThemeColor;
-        &_addLightTheme{
-            stroke: v.$darkThemeColor;
-        }
     }
 }

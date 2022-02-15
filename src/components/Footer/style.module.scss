@@ -1,9 +1,7 @@
 @use '../../assets/variables' as v;
-@import '../../assets/font';
 
 .footer{
     margin: 40px 0 0 0;
-    @include font;
     font-weight: normal;
     font-size: 16px;
     box-sizing: border-box;
@@ -14,12 +12,16 @@
         'footer__social'
         'footer__author';
     &__social{
-        width: 106px;
-        display: grid;
-        grid-template-columns: 1fr 1fr 1fr;
-        padding: 20px 0 0 0;
         grid-area: footer__social;
-        justify-items: end;
+        width: 100%;
+        gap: 20px;
+        display: flex;
+        justify-content: flex-start;
+        padding: 20px 0 0 0;
+        @media (min-width: v.$tabletWidth){
+            justify-content: flex-end;
+            align-items: center;
+        }
     }
     &__mainSite{
         padding: 20px 0 0 0; 
@@ -44,5 +46,13 @@
         background: v.$lightThemeColor;
         color: v.$darkThemeColor;
         border-top: 2px solid rgba(0, 0, 0, 0.3);
+    }
+    &__svg{
+        stroke: v.$lightThemeColor;
+        fill: v.$lightThemeColor;
+        &_addLightTheme{
+            stroke: v.$darkThemeColor;
+            fill: v.$darkThemeColor;
+        }
     }
 }

@@ -19,6 +19,7 @@ const Footer:FC = () => {
     'footer__author',
     { footer__author_addLightTheme: !isDarkTheme },
   );
+  const svgClassName = cx('footer__svg', { footer__svg_addLightTheme: !isDarkTheme });
 
   return (
     <div className={footerClassName}>
@@ -28,12 +29,18 @@ const Footer:FC = () => {
         для Frontend-разработчиков
         от компании
         {' '}
-        <MyLink isDarkTheme={isDarkTheme} text="Framework Team" url="https://framework.team" />
+        <MyLink isDarkTheme={isDarkTheme} url="https://framework.team">Framework Team</MyLink>
       </span>
       <div className={style.footer__social}>
-        <MyLink isDarkTheme={isDarkTheme} Component={FaceBook} url="https://www.facebook.com/framework.team" />
-        <MyLink isDarkTheme={isDarkTheme} Component={VK} url="https://vk.com/frameworkteam" />
-        <MyLink isDarkTheme={isDarkTheme} Component={Instagram} url="https://www.instagram.com/framework.team/" />
+        <MyLink isDarkTheme={isDarkTheme} url="https://www.facebook.com/framework.team">
+          <FaceBook className={svgClassName} />
+        </MyLink>
+        <MyLink isDarkTheme={isDarkTheme} url="https://vk.com/frameworkteam">
+          <VK className={svgClassName} />
+        </MyLink>
+        <MyLink isDarkTheme={isDarkTheme} url="https://www.instagram.com/framework.team/">
+          <Instagram className={svgClassName} />
+        </MyLink>
       </div>
       <span className={authorClassName}>Иванов Иван, 2022</span>
     </div>
