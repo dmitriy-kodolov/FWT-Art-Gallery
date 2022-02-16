@@ -1,6 +1,4 @@
-/* eslint-disable @typescript-eslint/no-unused-vars */
 import React, { FC } from 'react';
-import ContentLoader from 'react-content-loader';
 import cn from 'classnames/bind';
 import { ReactComponent as Circle } from '../../assets/circleLoader.svg';
 import style from './style.module.scss';
