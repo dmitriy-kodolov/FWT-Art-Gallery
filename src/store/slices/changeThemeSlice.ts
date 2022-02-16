@@ -5,7 +5,7 @@ type ChangeThemeSlice = {
   isDarkTheme: boolean,
 };
 
-const initialState:ChangeThemeSlice = {
+const initialState: ChangeThemeSlice = {
   isDarkTheme: true,
 };
 
@@ -17,7 +17,7 @@ const changeThemeSlice = createSlice({
       state.isDarkTheme = !state.isDarkTheme;
       Cookies.set('isDarkTheme', `${state.isDarkTheme}`);
     },
-    setTheme(state, action:PayloadAction<boolean>) {
+    setTheme(state, action: PayloadAction<boolean>) {
       state.isDarkTheme = action.payload;
     },
   },

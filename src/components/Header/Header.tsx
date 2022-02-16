@@ -12,7 +12,7 @@ import BurgerMenu from '../BurgerMenu';
 
 const cx = cn.bind(style);
 
-const Header:FC = () => {
+const Header: FC = () => {
   const dispatch = useAppDispatch();
   const [isOpenMenu, setIsOpenMenu] = useState(false);
   const { theme: { isDarkTheme } } = useAppSelector((state) => state);

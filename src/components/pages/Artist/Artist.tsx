@@ -10,7 +10,7 @@ import Loader from '../../Loader';
 
 const cx = cn.bind(style);
 
-const Artist:FC = () => {
+const Artist: FC = () => {
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
   const {

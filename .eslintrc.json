@@ -22,6 +22,12 @@
         "@typescript-eslint"
     ],
     "rules": {
+        "@typescript-eslint/type-annotation-spacing": [
+            "error",
+            {
+                "after": true
+            }
+        ],
         "import/no-extraneous-dependencies": [0, {"devDependencies": true}],
         "react/function-component-definition": [1, {
             "namedComponents": "arrow-function",

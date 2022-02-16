@@ -13,7 +13,7 @@ type BurgerMenuProps = {
 
 const cx = cn.bind(style);
 
-const BurgerMenu:FC<BurgerMenuProps> = ({ setOpenMenu, isDarkTheme, setTheme }) => {
+const BurgerMenu: FC<BurgerMenuProps> = ({ setOpenMenu, isDarkTheme, setTheme }) => {
   const themeBtnClassName = cx('mobileMenu__btn', 'mobileMenu__svgBtn', { mobileMenu__svgBtn_addLightTheme: !isDarkTheme });
   const exitBtnClassName = cx('mobileMenu__closeBtn', { mobileMenu__closeBtn_addLightTheme: !isDarkTheme });
 

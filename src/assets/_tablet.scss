@@ -1,0 +1,6 @@
+@use '../assets/variables' as v;
+@mixin tablet {
+    @media(max-width: v.$desctopWidth) {
+        @content;
+    }
+} 

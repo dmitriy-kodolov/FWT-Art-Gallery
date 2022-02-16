@@ -3,11 +3,11 @@ import { CardInfo } from '../../types/types';
 import style from './style.module.scss';
 
 type CardProps = {
-  cardInfo:CardInfo,
+  cardInfo: CardInfo,
   clickHandler: (id: number) => void,
 };
 
-const Card:FC<CardProps> = ({
+const Card: FC<CardProps> = ({
   cardInfo: {
     name, painting, yearOfAuthor, yearOfPublishing, id,
   }, clickHandler,

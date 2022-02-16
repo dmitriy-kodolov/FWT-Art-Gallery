@@ -10,7 +10,7 @@ type AccardeonProps = {
 
 const cx = cn.bind(style);
 
-const Accardeon:FC<AccardeonProps> = ({ text, isDarkTheme }) => {
+const Accardeon: FC<AccardeonProps> = ({ text, isDarkTheme }) => {
   const [isOpen, setIsOpen] = useState(false);
   const svgClassName = cx(
     'accardeon__svgIcon',

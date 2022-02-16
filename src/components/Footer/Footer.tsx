@@ -9,7 +9,7 @@ import { useAppSelector } from '../../hooks/redux';
 
 const cx = cn.bind(style);
 
-const Footer:FC = () => {
+const Footer: FC = () => {
   const { theme: { isDarkTheme } } = useAppSelector((state) => state);
   const footerClassName = cx(
     'footer',

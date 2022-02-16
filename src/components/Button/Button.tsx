@@ -11,7 +11,7 @@ interface ButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
 
 const cx = cn.bind(style);
 
-const Button:FC<ButtonProps> = ({
+const Button: FC<ButtonProps> = ({
   isFilled, isDarkTheme, isDisabled, className, children, ...other
 }) => {
   const buttonClassName = cx(

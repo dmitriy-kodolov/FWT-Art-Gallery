@@ -1,5 +1,8 @@
 @use '../../assets/variables' as v;
 @import '../../assets/font';
+@import '../../assets/mobile';
+@import '../../assets/tablet';
+
 .app{
     @include font;
     padding: 20px 20px 40px 20px;
@@ -7,10 +10,10 @@
     &_addLightTheme{
         background: v.$lightThemeColor;
     }
-    @media (max-width: v.$desctopWidth){
+    @include tablet{
         padding: 20px 20px 156px 20px;
     }
-    @media (max-width: v.$tabletWidth){
+    @include mobile{
         padding: 15px 15px 30px 15px;
     }
 }

@@ -1,4 +1,6 @@
 @use '../../assets/variables' as v;
+@import '../../assets/mobile';
+
 .footer{
     margin: 40px 0 0 0;
     font-weight: normal;
@@ -6,20 +8,27 @@
     box-sizing: border-box;
     display: grid;
     border-top: 2px solid rgba(255, 255, 255, 0.3);
+    background: v.$darkThemeColor;
+    color: v.$lightThemeColor;
     grid-template-areas: 
+        'footer__mainSite footer__social'
+        'footer__author footer__author';
+    @include mobile{
+        grid-template-areas: 
         'footer__mainSite'
         'footer__social'
         'footer__author';
+    }
     &__social{
         grid-area: footer__social;
         width: 100%;
         gap: 20px;
         display: flex;
-        justify-content: flex-start;
-        padding: 20px 0 0 0;
-        @media (min-width: v.$tabletWidth){
-            justify-content: flex-end;
+        justify-content: flex-end;
             align-items: center;
+        padding: 20px 0 0 0;
+        @include mobile{
+            justify-content: flex-start;
         }
     }
     &__mainSite{
@@ -33,13 +42,6 @@
         padding: 20px 0 0 0; 
         color: rgba(255, 255, 255, 0.3);
         grid-area: footer__author;
-    }
-    background: v.$darkThemeColor;
-    color: v.$lightThemeColor;
-    @media (min-width: v.$tabletWidth){
-        grid-template-areas: 
-        'footer__mainSite footer__social'
-        'footer__author footer__author'
     }
     &_addLightTheme{
         background: v.$lightThemeColor;

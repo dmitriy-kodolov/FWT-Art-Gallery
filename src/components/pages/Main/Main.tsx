@@ -5,7 +5,7 @@ import Loader from '../../Loader';
 import { fetchArtists } from '../../../store/slices/getArtistsSlice';
 import CardList from '../../CardList';
 
-const Main:FC = () => {
+const Main: FC = () => {
   const navigate = useNavigate();
   const {
     theme: { isDarkTheme },

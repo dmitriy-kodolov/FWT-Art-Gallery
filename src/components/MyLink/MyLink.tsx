@@ -9,7 +9,7 @@ interface LinkProps extends AnchorHTMLAttributes<HTMLAnchorElement> {
 
 const cx = cn.bind(style);
 
-const MyLink:FC<LinkProps> = ({
+const MyLink: FC<LinkProps> = ({
   isDarkTheme, url, children, ...other
 }) => {
   const linkClassName = cx('myLink', { myLink_addLightTheme: !isDarkTheme });

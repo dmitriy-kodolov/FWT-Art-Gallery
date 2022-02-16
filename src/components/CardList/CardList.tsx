@@ -12,7 +12,7 @@ type CardListProps = {
   isDarkTheme: boolean,
 };
 
-const CardList:FC<CardListProps> = ({ paintingInfo, isDarkTheme, clickHandler }) => {
+const CardList: FC<CardListProps> = ({ paintingInfo, isDarkTheme, clickHandler }) => {
   const cardlistClassName = cx(
     'cardList',
     { cardList_addLightTheme: !isDarkTheme },

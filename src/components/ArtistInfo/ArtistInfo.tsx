@@ -18,7 +18,7 @@ type ArtistInfoProps = {
 
 const cx = cn.bind(style);
 
-const ArtistInfo:FC<ArtistInfoProps> = ({
+const ArtistInfo: FC<ArtistInfoProps> = ({
   backToMainHadler,
   deleteArtistHandler,
   editArtistHandler,

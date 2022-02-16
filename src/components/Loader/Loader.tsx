@@ -11,7 +11,7 @@ type LoaderPops = {
   isDarkTheme: boolean;
 };
 
-const Loader:FC<LoaderPops> = ({ isDarkTheme }) => {
+const Loader: FC<LoaderPops> = ({ isDarkTheme }) => {
   const loaderItemClassName = cx('loader__item', { loader__item_addLightTheme: !isDarkTheme });
 
   return (
