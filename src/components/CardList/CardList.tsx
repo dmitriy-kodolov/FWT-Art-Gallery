@@ -1,50 +1,26 @@
 import cn from 'classnames/bind';
-import React, { FC, useEffect } from 'react';
-import { useAppSelector, useAppDispatch } from '../../hooks/redux';
+import React, { FC } from 'react';
 import Card from '../Card/Card';
 import style from './style.module.scss';
-import { fetchArtists } from '../../store/slices/getArtistsSlice';
-import Loader from '../../Loader';
+import { CardInfo } from '../../types/types';
 
 const cx = cn.bind(style);
 
 type CardListProps = {
-  clickHandler?: () => void
+  paintingInfo: CardInfo[],
+  clickHandler: (id: number) => void,
+  isDarkTheme: boolean,
 };
 
-const CardList:FC<CardListProps> = ({ clickHandler }) => {
-  const dispatch = useAppDispatch();
-  const {
-    theme: { isDarkTheme },
-    artists: { artists, error, loading },
-  } = useAppSelector((state) => state);
-
+const CardList:FC<CardListProps> = ({ paintingInfo, isDarkTheme, clickHandler }) => {
   const cardlistClassName = cx(
     'cardList',
     { cardList_addLightTheme: !isDarkTheme },
   );
 
-  useEffect(() => {
-    if (!artists.length) {
-      dispatch(fetchArtists());
-    }
-  }, []);
-
-  if (error) {
-    return <h1>Error</h1>;
-  }
-
-  if (loading) {
-    return (
-      <div className={style.cardList__loader}>
-        <Loader />
-      </div>
-    );
-  }
-
   return (
     <div className={cardlistClassName}>
-      {artists.map((artistInfo) => (
+      {paintingInfo.map((artistInfo) => ( // TODO как появиться бэк изменить передаваемый массив
         <div className={style.cardList__card} key={artistInfo.id}>
           <Card clickHandler={clickHandler} cardInfo={artistInfo} />
         </div>

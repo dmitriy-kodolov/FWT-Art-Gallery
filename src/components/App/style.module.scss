@@ -1,6 +1,5 @@
 @use '../../assets/variables' as v;
 @import '../../assets/font';
-
 .app{
     @include font;
     padding: 20px 20px 40px 20px;

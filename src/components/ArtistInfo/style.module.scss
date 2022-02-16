@@ -1,5 +1,4 @@
 @use '../../assets/variables' as v;
-
 .artistInfo{
     color: v.$lightThemeColor;
     display: flex;
@@ -108,11 +107,17 @@
         background: rgba(255, 255, 255, 0.1);
         width: 30px;
         height: 30px;
+        border: none !important;
+        svg{
+            fill: v.$lightThemeColor;
+        }
+        
         &_addLightTheme{
             border: none;
-            stroke: v.$darkThemeColor;
-            fill: v.$darkThemeColor;
             background: rgba(0, 0, 0, 0.1);
+            svg{
+                fill: v.$darkThemeColor;
+            }
         }
     }
 }

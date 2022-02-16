@@ -1,5 +1,4 @@
 @use '../../assets/variables' as v;
-
 .header{
     display: flex;
     justify-content: space-between;
@@ -55,9 +54,9 @@
         }
     }
     &__svgBtn{
-        stroke: v.$lightThemeColor;
+        fill: v.$lightThemeColor;
         &_addLightTheme{
-            stroke: v.$darkThemeColor;
+            fill: v.$darkThemeColor;
         }
     }
 }

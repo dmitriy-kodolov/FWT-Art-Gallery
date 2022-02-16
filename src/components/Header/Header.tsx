@@ -46,6 +46,7 @@ const Header:FC = () => {
       <Logo className={logoClassName} />
       <div className={style.header__buttons}>
         <Button
+          aria-label="theme button"
           className={style.header__themeButton}
           onClick={setIsDarkTheme}
           isDarkTheme={isDarkTheme}

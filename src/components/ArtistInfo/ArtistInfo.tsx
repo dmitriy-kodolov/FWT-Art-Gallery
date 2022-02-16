@@ -34,18 +34,24 @@ const ArtistInfo:FC<ArtistInfoProps> = ({
     <div className={artistInfoClassName}>
       <div className={style.artistInfo__buttons}>
         <Button
+          aria-label="back button"
+          isDarkTheme={isDarkTheme}
           className={btnClassName}
           onClick={backToMainHadler}
         >
           <BackIcon />
         </Button>
         <Button
+          aria-label="edit button"
+          isDarkTheme={isDarkTheme}
           className={btnClassName}
           onClick={editArtistHandler}
         >
           <EditIcon />
         </Button>
         <Button
+          aria-label="delete button"
+          isDarkTheme={isDarkTheme}
           className={btnClassName}
           onClick={deleteArtistHandler}
         >
@@ -61,7 +67,7 @@ const ArtistInfo:FC<ArtistInfoProps> = ({
         <Accardeon text={description} isDarkTheme={isDarkTheme} />
         <span>{birthCity}</span>
         <div className={style.artistInfo__genres}>
-          {genres.map((genre) => <p className={style.artistInfo__genre}>{genre}</p>)}
+          {genres.map((genre, id) => <p key={id} className={style.artistInfo__genre}>{genre}</p>)}
         </div>
       </div>
     </div>

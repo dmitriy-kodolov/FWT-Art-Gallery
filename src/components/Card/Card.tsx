@@ -4,18 +4,18 @@ import style from './style.module.scss';
 
 type CardProps = {
   cardInfo:CardInfo,
-  clickHandler?: () => void,
+  clickHandler: (id: number) => void,
 };
 
 const Card:FC<CardProps> = ({
   cardInfo: {
-    name, painting, yearOfAvtor, yearOfPublishing,
+    name, painting, yearOfAuthor, yearOfPublishing, id,
   }, clickHandler,
 }) => (
-  <div className={style.card} onClick={clickHandler}>
+  <div className={style.card} onClick={() => clickHandler(id)}>
     <div className={style.card__slidePanel}>
       <span>{name}</span>
-      {yearOfAvtor && <span>{yearOfAvtor}</span>}
+      {yearOfAuthor && <span>{yearOfAuthor}</span>}
       <span>{name}</span>
       {yearOfPublishing && <span>{yearOfPublishing}</span>}
     </div>

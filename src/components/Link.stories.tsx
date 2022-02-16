@@ -1,17 +1,15 @@
 import React from 'react';
 import { ComponentStory, ComponentMeta } from '@storybook/react';
-import MyLink from './MyLink';
+import Loader from './Loader';
 
 export default {
-  component: MyLink,
-  title: 'MyLink',
-} as ComponentMeta<typeof MyLink>;
+  component: Loader,
+  title: 'Loader',
+} as ComponentMeta<typeof Loader>;
 
-const Template: ComponentStory<typeof MyLink> = (args) => <MyLink {...args} />;
+const Template: ComponentStory<typeof Loader> = (args) => <Loader {...args} />;
 
 export const FirstStory = Template.bind({});
 
 FirstStory.args = {
-  url: 'https://www.facebook.com/framework.team',
-  isDarkTheme: true,
 };

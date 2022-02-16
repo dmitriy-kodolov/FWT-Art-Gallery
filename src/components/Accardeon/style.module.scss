@@ -1,6 +1,4 @@
 @use '../../assets/variables' as v;
-
-    // titleContainer
 .accardeon{
     gap: 5px;
     display: flex;
@@ -23,9 +21,9 @@
         }
     }
     &__svgIcon{
-        stroke: rgba(255, 255, 255, 0.25);
+        fill: rgba(255, 255, 255, 0.25);
         &_addLightTheme{
-            stroke: rgba(0, 0, 0, 0.25);
+            fill: rgba(0, 0, 0, 0.25);
         }
         &_rotateSvg{
             transform: rotate(180deg);

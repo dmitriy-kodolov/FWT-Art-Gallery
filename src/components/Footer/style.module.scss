@@ -1,5 +1,4 @@
 @use '../../assets/variables' as v;
-
 .footer{
     margin: 40px 0 0 0;
     font-weight: normal;
@@ -48,11 +47,15 @@
         border-top: 2px solid rgba(0, 0, 0, 0.3);
     }
     &__svg{
-        stroke: v.$lightThemeColor;
         fill: v.$lightThemeColor;
-        &_addLightTheme{
-            stroke: v.$darkThemeColor;
+        :nth-child(2){
             fill: v.$darkThemeColor;
+        }
+        &_addLightTheme{
+            fill: v.$darkThemeColor;
+            :nth-child(2){
+                fill: v.$lightThemeColor;
+            }
         }
     }
 }

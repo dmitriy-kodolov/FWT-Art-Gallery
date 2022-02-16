@@ -53,4 +53,5 @@ const BurgerMenu:FC<BurgerMenuProps> = ({ setOpenMenu, isDarkTheme, setTheme }) 
     </div>
   );
 };
+
 export default BurgerMenu;

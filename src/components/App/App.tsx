@@ -12,16 +12,15 @@ const cx = cn.bind(style);
 
 const App = () => {
   const { theme: { isDarkTheme } } = useAppSelector((state) => state);
-
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const appClassName = cx('app', { app_addLightTheme: !isDarkTheme });
+
   return (
     <div className={appClassName}>
       <Header />
       <BrowserRouter>
         <Routes>
           <Route path="/FWT-Art-Gallery" element={<Main />} />
-          <Route path="/artist" element={<Artist />} />
+          <Route path="/artist/:id" element={<Artist />} />
         </Routes>
       </BrowserRouter>
       <Footer />
