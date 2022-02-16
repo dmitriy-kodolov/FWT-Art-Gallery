@@ -1,0 +1,45 @@
+@use '../../assets/variables' as v;
+.mobileMenu{
+    display: grid;
+    position: fixed;
+    background: inherit;
+    align-content: center;
+    width: 100%;
+    height: 100%;
+    top: 0;
+    left: 0;
+    z-index: 1;
+    justify-items: center;
+    &__openBtn{
+        padding: 0;
+        width: 24px;
+        border: none;
+        height: 24px;
+    }
+    &__svgBtn{
+        stroke: v.$lightThemeColor;
+        &_addLightTheme{
+            stroke: v.$darkThemeColor;
+        }
+    }
+    &__closeBtn{
+        padding: 0;
+        border: none;
+        width: 24px;
+        height: 24px;
+        margin: 0 0 37px 0;
+        stroke: v.$lightThemeColor;
+        &_addLightTheme{
+            stroke: v.$darkThemeColor;
+        }
+    }
+    &__btn{
+        width: 290px;
+        height: 50px;
+    }
+    &__content{
+        gap: 15px;
+        display: grid;
+        justify-items: end;
+    }    
+}
