@@ -1,5 +1,6 @@
 import React, { FC } from 'react';
 import cn from 'classnames/bind';
+import { LazyLoadImage } from 'react-lazy-load-image-component';
 import { ReactComponent as BackIcon } from '../../assets/backIcon.svg';
 import { ReactComponent as EditIcon } from '../../assets/editIcon.svg';
 import { ReactComponent as DeleteIcon } from '../../assets/deleteIcon.svg';
@@ -58,7 +59,9 @@ const ArtistInfo: FC<ArtistInfoProps> = ({
           <DeleteIcon />
         </Button>
       </div>
-      <img className={style.artistInfo__portrait} src={painting} alt="portrait" />
+      <div className={style.artistInfo__portrait}>
+        <LazyLoadImage src={painting} effect="blur" width="100%" height="100%" />
+      </div>
       <div className={style.artistInfo__info}>
         <span>{name}</span>
         <span>{yearsOfLife}</span>
