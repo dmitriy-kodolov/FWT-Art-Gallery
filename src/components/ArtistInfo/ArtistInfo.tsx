@@ -25,7 +25,7 @@ const ArtistInfo: FC<ArtistInfoProps> = ({
   editArtistHandler,
   isDarkTheme,
   artistInfo: {
-    painting, birthCity, description, genres, name, yearsOfLife,
+    avatar, birthCity, description, genres, name, yearsOfLife,
   },
 }) => {
   const artistInfoClassName = cx('artistInfo', { artistInfo_addLightTheme: !isDarkTheme });
@@ -60,7 +60,7 @@ const ArtistInfo: FC<ArtistInfoProps> = ({
         </Button>
       </div>
       <div className={style.artistInfo__portrait}>
-        <LazyLoadImage src={painting} effect="blur" width="100%" height="100%" />
+        <LazyLoadImage src={avatar} effect="blur" width="100%" height="100%" />
       </div>
       <div className={style.artistInfo__info}>
         <span>{name}</span>

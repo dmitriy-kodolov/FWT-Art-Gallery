@@ -1,23 +1,31 @@
 import React, { FC } from 'react';
-import { CardInfo } from '../../types/types';
+import { Painting } from '../../types/types';
 import style from './style.module.scss';
 
 type CardProps = {
-  cardInfo: CardInfo,
-  clickHandler: (id: number) => void,
+  cardInfo: Painting,
+  clickHandler: (idPainting: number) => void,
 };
 
 const Card: FC<CardProps> = ({
   cardInfo: {
-    name, painting, yearOfAuthor, yearOfPublishing, id,
+    id, authorName, yearOfAuthor, name, yearOfCreated, painting,
   }, clickHandler,
 }) => (
   <div className={style.card} onClick={() => clickHandler(id)}>
     <div className={style.card__slidePanel}>
-      <span>{name}</span>
+      <span>{authorName}</span>
       {yearOfAuthor && <span>{yearOfAuthor}</span>}
-      <span>{name}</span>
-      {yearOfPublishing && <span>{yearOfPublishing}</span>}
+      <span>
+        Name:
+        {name}
+      </span>
+      {yearOfCreated && (
+      <span>
+        Created:
+        {yearOfCreated}
+      </span>
+      )}
     </div>
     <img className={style.card__img} src={painting} alt="#paintOfAuthor" />
   </div>

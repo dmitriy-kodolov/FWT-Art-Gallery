@@ -1,11 +1,9 @@
-export interface CardInfo extends Artist {
-  id: number,
-  yearOfAuthor?: string,
-  yearOfPublishing?: string,
-}
-
 export type GetArtistsResponseData = {
   data: Artist[],
+};
+
+export type GetPaintingsResponseData = {
+  data: Painting[],
 };
 
 export type Artist = {
@@ -15,5 +13,18 @@ export type Artist = {
   description: string,
   yearsOfLife: string,
   genres: string[],
-  painting: string,
+  avatar: string,
+  paintings: AuthorPaintings[],
+};
+
+export interface Painting extends AuthorPaintings {
+  authorName?: string,
+  yearOfAuthor?: string,
+}
+
+export type AuthorPaintings = {
+  id: number,
+  name: string,
+  yearOfCreated?: string,
+  painting: string
 };

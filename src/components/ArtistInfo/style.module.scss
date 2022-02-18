@@ -106,14 +106,41 @@
         width: 30px;
         height: 30px;
         border: none !important;
+        &:active{
+            border: 1px solid rgba(255, 255, 255, 0.1) !important;
+            svg{
+                fill: v.$darkThemeHoverColor!important;
+                stroke: none;
+            }
+            &:nth-child(3){
+                svg{
+                    fill: red !important;
+                    stroke: none;
+                }
+            }
+        }
+        &:hover{
+            svg{
+                fill: v.$darkThemeHoverColor!important;
+                stroke: none;
+            }
+            &:nth-child(3){
+                svg{
+                    fill: red !important;
+                    stroke: none;
+                }
+            }
+        }
         svg{
             fill: v.$lightThemeColor;
+            stroke: none;
         }
         &_addLightTheme{
             border: none;
             background: rgba(0, 0, 0, 0.1);
             svg{
                 fill: v.$darkThemeColor;
+                stroke: none;
             }
         }
     }

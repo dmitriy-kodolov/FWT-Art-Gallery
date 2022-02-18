@@ -1,6 +1,6 @@
 import instance from '.';
-import { GetArtistsResponseData } from '../../types/types';
+import { GetArtistsResponseData, GetPaintingsResponseData } from '../../types/types';
 
 export const getArtists = (): Promise<GetArtistsResponseData> => instance.get('/artists');
 
-export const getSome = () => {};
+export const getPaintings = (): Promise<GetPaintingsResponseData> => instance.get('/paintings');
