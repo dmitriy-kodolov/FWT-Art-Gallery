@@ -1,0 +1,14 @@
+@use '../../assets/variables' as v;
+.myLink{
+    color: v.$lightThemeColor;
+    font-weight: bold;
+    &:hover{
+        color: v.$darkThemeHoverColor
+    }
+    &_addLightTheme{
+        color: v.$darkThemeColor;
+        &:hover{
+            color: v.$lightThemeHoverColor
+        }
+    }
+}

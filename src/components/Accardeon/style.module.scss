@@ -1,0 +1,34 @@
+@use '../../assets/variables' as v;
+@import '../../assets/mobile';
+
+.accardeon{
+    gap: 5px;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    @include mobile { 
+        display: inline;
+        padding-left: 5px;
+    }
+    &__title{
+        @include mobile {
+            display: none;
+        }
+        font-variant: small-caps;
+        color: rgba(255, 255, 255, 0.25);
+        border-bottom: 1px dashed rgba(255, 255, 255, 0.25);
+        &_addLightTheme{
+            color: rgba(0, 0, 0, 0.25);
+            border-bottom: 1px dashed rgba(0, 0, 0, 0.25);
+        }
+    }
+    &__svgIcon{
+        fill: rgba(255, 255, 255, 0.25);
+        &_addLightTheme{
+            fill: rgba(0, 0, 0, 0.25);
+        }
+        &_rotateSvg{
+            transform: rotate(180deg);
+        }
+    }
+}
