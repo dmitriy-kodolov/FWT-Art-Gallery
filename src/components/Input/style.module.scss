@@ -1,0 +1,77 @@
+@use '../../assets/variables' as v;
+@import '../../assets/mobile';
+.input{
+    height: 40px;
+    position: relative;
+    box-sizing: border-box;
+    border-radius: 6px;
+    font-weight: normal;
+    color: v.$darkThemeColor;
+    background: v.$lightThemeColor;
+    span{
+        display: none;
+    }
+    &__customPlaceHolder{
+        display: inline;
+        position: absolute;
+        top: -20px;
+        left: 0;
+        color: rgba(0, 0, 0, 0.3);
+    }
+    input{
+        width: inherit !important;
+        height: 40px;
+        border-radius: 6px;
+        box-sizing: border-box;
+        outline: none;
+        border: 1px solid rgba(0, 0, 0, 0.3);
+        padding: 0 12px;
+        @include mobile{
+            width: 290px;
+        };
+        &:hover{
+            border: 1px solid v.$darkThemeColor;
+        }
+        &::placeholder{
+            color: v.$darkThemeColor;
+        }
+        &:focus::placeholder{
+            color: rgba(0, 0, 0, 0.3);
+        }
+        &:focus+svg{
+            fill: none;
+        }
+        &:not(:placeholder-shown) + svg{
+            fill: none;
+        }
+    }
+    &_addLightTheme{
+        border: 1px solid #BFBFBF;   
+        color: v.$lightThemeColor;
+        input{
+            background: inherit;
+            background: v.$darkThemeColor;
+            color: v.$lightThemeColor;
+            &::placeholder{
+                color: v.$lightThemeColor
+            }
+            &:focus{
+                &::placeholder{
+                    color: rgba(255, 255, 255, 0.3);
+                }
+            }
+            &:focus+svg{
+                fill: none;
+            }
+            &:not(:placeholder-shown) + svg{
+                fill: none;
+            }
+        }
+        &:hover{
+            border: 1px solid v.$lightThemeColor;
+        }
+    };
+    @include mobile{
+        width: 290px;
+    };
+}

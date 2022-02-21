@@ -1,11 +1,9 @@
-/* eslint-disable jsx-a11y/no-noninteractive-tabindex */
-/* eslint-disable @typescript-eslint/no-unused-vars */
 import React, { FC, useEffect, useRef } from 'react';
 import cn from 'classnames/bind';
 import style from './style.module.scss';
 import { ReactComponent as Next } from '../../assets/nextIcon.svg';
 import { ReactComponent as Prev } from '../../assets/prevIcon.svg';
-import { ReactComponent as Exit } from '../../assets/closeBtnSlider.svg';
+import { ReactComponent as Exit } from '../../assets/smallCloseBtn.svg';
 import { ReactComponent as EditIcon } from '../../assets/editIcon.svg';
 import { ReactComponent as DeleteIcon } from '../../assets/deleteIcon.svg';
 import { ReactComponent as Favorite } from '../../assets/favoriteIcon.svg';
@@ -65,89 +63,87 @@ const Slider: FC<SliderProps> = ({
   };
 
   return (
-    <form>
+    <div
+      className={style.sliderContainer}
+      tabIndex={0}
+      onKeyDown={(e) => keyHandler(e)}
+      ref={sliderRef}
+    >
       <div
-        className={style.sliderContainer}
-        tabIndex={0}
-        onKeyDown={(e) => keyHandler(e)}
-        ref={sliderRef}
+        className={style.sliderContainer__btn}
+        onClick={prevPaintingHandler}
       >
-        <div
-          className={style.sliderContainer__btn}
-          onClick={prevPaintingHandler}
-        >
-          <Prev />
+        <Prev />
+      </div>
+      <Button
+        className={style.sliderContainer__closeBtn}
+        onClick={() => closeHandler(false)}
+        isDarkTheme={isDarkTheme}
+      >
+        <Exit />
+      </Button>
+      <div className={style.sliderContainer__item}>
+        <img src={paintings[curentIdPainting].painting} alt="" />
+        <div className={style.sliderContainer__buttons}>
+          <Button
+            aria-label="favorite button"
+            isDarkTheme={isDarkTheme}
+            className={btnClassName}
+            onClick={() => {}}
+          >
+            <Favorite />
+          </Button>
+          <Button
+            aria-label="edit button"
+            isDarkTheme={isDarkTheme}
+            className={btnClassName}
+            onClick={() => {}}
+          >
+            <EditIcon />
+          </Button>
+          <Button
+            aria-label="delete button"
+            isDarkTheme={isDarkTheme}
+            className={btnClassName}
+            onClick={() => {}}
+          >
+            <DeleteIcon />
+          </Button>
         </div>
-        <Button
-          className={style.sliderContainer__closeBtn}
-          onClick={() => closeHandler(false)}
-          isDarkTheme={isDarkTheme}
-        >
-          <Exit />
-        </Button>
-        <div className={style.sliderContainer__item}>
-          <img src={paintings[curentIdPainting].painting} alt="" />
-          <div className={style.sliderContainer__buttons}>
-            <Button
-              aria-label="favorite button"
-              isDarkTheme={isDarkTheme}
-              className={btnClassName}
-              onClick={() => {}}
-            >
-              <Favorite />
-            </Button>
-            <Button
-              aria-label="edit button"
-              isDarkTheme={isDarkTheme}
-              className={btnClassName}
-              onClick={() => {}}
-            >
-              <EditIcon />
-            </Button>
-            <Button
-              aria-label="delete button"
-              isDarkTheme={isDarkTheme}
-              className={btnClassName}
-              onClick={() => {}}
-            >
-              <DeleteIcon />
-            </Button>
+        <div className={style.sliderContainer__bottomMenu}>
+          <div className={style.sliderContainer__circles}>
+            {paintings.map((item) => (
+              <div
+                onClick={() => {
+                  setCurentIdPainting(item.id);
+                }}
+                className={curentIdPainting + 1 === item.id
+                  ? circle
+                  : style.sliderContainer__circle}
+                key={item.id}
+              />
+            ))}
           </div>
-          <div className={style.sliderContainer__bottomMenu}>
-            <div className={style.sliderContainer__circles}>
-              {paintings.map((item) => (
-                <div
-                  onClick={() => {
-                    setCurentIdPainting(item.id);
-                  }}
-                  className={curentIdPainting + 1 === item.id
-                    ? circle
-                    : style.sliderContainer__circle}
-                  key={item.id}
-                />
-              ))}
-            </div>
-            <div className={style.sliderContainer__description}>
-              <span className={style.sliderContainer__text}>
-                {paintings[curentIdPainting].name}
-              </span>
-              {paintings[curentIdPainting].yearOfCreated
+          <div className={style.sliderContainer__description}>
+            <span className={style.sliderContainer__text}>
+              {paintings[curentIdPainting].name}
+            </span>
+            {paintings[curentIdPainting].yearOfCreated
             && (
             <span className={style.sliderContainer__text}>
               {paintings[curentIdPainting].yearOfCreated}
             </span>
             )}
-            </div>
           </div>
         </div>
-        <div
-          className={style.sliderContainer__btn}
-          onClick={nexpPaintingHandler}
-        >
-          <Next />
-        </div>
       </div>
-    </form>
+      <div
+        className={style.sliderContainer__btn}
+        onClick={nexpPaintingHandler}
+      >
+        <Next />
+      </div>
+    </div>
   );
 };
 
