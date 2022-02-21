@@ -10,14 +10,20 @@ import { useAppDispatch, useAppSelector } from '../../hooks/redux';
 import { changeTheme, setTheme } from '../../store/slices/changeThemeSlice';
 import BurgerMenu from '../BurgerMenu';
 import Registration from '../Registration/Registration';
+import Authorization from '../Authorization';
+import { changeRegistration } from '../../store/slices/registrationSlice';
+import { changeAuthorization } from '../../store/slices/authorizationSlice';
 
 const cx = cn.bind(style);
 
 const Header: FC = () => {
   const dispatch = useAppDispatch();
+  const {
+    theme: { isDarkTheme },
+    auth: { isAuth },
+    registration: { isRegistred },
+  } = useAppSelector((state) => state);
   const [isOpenMenu, setIsOpenMenu] = useState(false);
-  const isAuth = false;
-  const { theme: { isDarkTheme } } = useAppSelector((state) => state);
   const svgClassName = cx(
     'header__svgBtn',
     { header__svgBtn_addLightTheme: !isDarkTheme },
@@ -43,6 +49,14 @@ const Header: FC = () => {
     dispatch(changeTheme());
   };
 
+  const setIsOpenRegistration = (flag: boolean) => {
+    dispatch(changeRegistration(flag));
+  };
+
+  const setIsOpenAuth = (flag: boolean) => {
+    dispatch(changeAuthorization(flag));
+  };
+
   return (
     <div className={headerClassName}>
       <Logo className={logoClassName} />
@@ -57,7 +71,7 @@ const Header: FC = () => {
         </Button>
         <Button
           className={style.header__logInBtn}
-          onClick={setIsDarkTheme}
+          onClick={() => setIsOpenAuth(true)}
           isDarkTheme={isDarkTheme}
         >
           LOG IN
@@ -65,7 +79,7 @@ const Header: FC = () => {
         <Button
           className={style.header__signInBtn}
           isFilled
-          onClick={setIsDarkTheme}
+          onClick={() => setIsOpenRegistration(true)}
           isDarkTheme={isDarkTheme}
         >
           SIGN UP
@@ -81,10 +95,19 @@ const Header: FC = () => {
         </Button>
       )}
       {isOpenMenu && (
-        <BurgerMenu setOpenMenu={setOpenMenu} isDarkTheme={isDarkTheme} setTheme={setIsDarkTheme} />
+        <BurgerMenu
+          setOpenMenu={setOpenMenu}
+          setIsOpenRegistration={setIsOpenRegistration}
+          setIsOpenAuth={setIsOpenAuth}
+          isDarkTheme={isDarkTheme}
+          setTheme={setIsDarkTheme}
+        />
       )}
-      {!isAuth && (
-        <Registration />
+      {isAuth && (
+        <Authorization setIsOpenAuth={setIsOpenAuth} />
+      )}
+      {isRegistred && (
+        <Registration setIsOpenRegistration={setIsOpenRegistration} />
       )}
     </div>
   );

@@ -9,11 +9,16 @@ type BurgerMenuProps = {
   setOpenMenu: () => void,
   isDarkTheme: boolean,
   setTheme: () => void,
+  setIsOpenAuth: (falg: boolean) => void,
+  setIsOpenRegistration: (falg: boolean) => void,
 };
 
 const cx = cn.bind(style);
 
-const BurgerMenu: FC<BurgerMenuProps> = ({ setOpenMenu, isDarkTheme, setTheme }) => {
+const BurgerMenu: FC<BurgerMenuProps> = ({
+  setOpenMenu, setIsOpenAuth, setIsOpenRegistration,
+  isDarkTheme, setTheme,
+}) => {
   const themeBtnClassName = cx('mobileMenu__btn', 'mobileMenu__svgBtn', { mobileMenu__svgBtn_addLightTheme: !isDarkTheme });
   const exitBtnClassName = cx('mobileMenu__closeBtn', { mobileMenu__closeBtn_addLightTheme: !isDarkTheme });
 
@@ -36,7 +41,7 @@ const BurgerMenu: FC<BurgerMenuProps> = ({ setOpenMenu, isDarkTheme, setTheme })
         </Button>
         <Button
           className={style.mobileMenu__btn}
-          onClick={setTheme}
+          onClick={() => setIsOpenAuth(true)}
           isDarkTheme={isDarkTheme}
         >
           LOG IN
@@ -44,7 +49,7 @@ const BurgerMenu: FC<BurgerMenuProps> = ({ setOpenMenu, isDarkTheme, setTheme })
         <Button
           className={style.mobileMenu__btn}
           isFilled
-          onClick={setTheme}
+          onClick={() => setIsOpenRegistration(true)}
           isDarkTheme={isDarkTheme}
         >
           SIGN UP
