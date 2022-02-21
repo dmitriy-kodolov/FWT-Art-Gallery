@@ -1,6 +1,6 @@
 import cn from 'classnames/bind';
 import React, { FC } from 'react';
-import Card from '../Card';
+import Card from '../Card/Card';
 import style from './style.module.scss';
 import { Painting } from '../../types/types';
 

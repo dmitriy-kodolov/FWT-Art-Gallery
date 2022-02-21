@@ -9,14 +9,12 @@ import style from './style.module.scss';
 import { useAppDispatch, useAppSelector } from '../../hooks/redux';
 import { changeTheme, setTheme } from '../../store/slices/changeThemeSlice';
 import BurgerMenu from '../BurgerMenu';
-import Registration from '../Registration/Registration';
 
 const cx = cn.bind(style);
 
 const Header: FC = () => {
   const dispatch = useAppDispatch();
   const [isOpenMenu, setIsOpenMenu] = useState(false);
-  const isAuth = false;
   const { theme: { isDarkTheme } } = useAppSelector((state) => state);
   const svgClassName = cx(
     'header__svgBtn',
@@ -82,9 +80,6 @@ const Header: FC = () => {
       )}
       {isOpenMenu && (
         <BurgerMenu setOpenMenu={setOpenMenu} isDarkTheme={isDarkTheme} setTheme={setIsDarkTheme} />
-      )}
-      {!isAuth && (
-        <Registration />
       )}
     </div>
   );
