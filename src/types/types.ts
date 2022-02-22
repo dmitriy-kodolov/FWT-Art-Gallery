@@ -1,3 +1,15 @@
+export type Schema = 'login' | 'password' | 'confirmPassword';
+
+export type ControlSchema = {
+  login?: string,
+  password: string,
+  confirmPassword?: string
+};
+
+export type PostAuthRegistrat = {
+  data: ControlSchema
+};
+
 export type GetArtistsResponseData = {
   data: Artist[],
 };

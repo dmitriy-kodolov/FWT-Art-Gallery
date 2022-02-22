@@ -1,20 +1,49 @@
-import { createSlice, PayloadAction } from '@reduxjs/toolkit';
+import { createSlice, PayloadAction, createAsyncThunk } from '@reduxjs/toolkit';
+import { ControlSchema } from '../../types/types';
+import { createUser } from '../../utils/api/methods';
 
 type RegistrationSlice = {
-  isRegistred: boolean,
+  isRegistrationOpen: boolean,
+  errorRegistrat: boolean,
+  profileInfo: {
+    login?: string,
+    password?: string,
+  }
 };
 
 const initialState: RegistrationSlice = {
-  isRegistred: false,
+  isRegistrationOpen: false,
+  errorRegistrat: false,
+  profileInfo: {
+    login: '',
+    password: '',
+  },
 };
 
+export const fetchRegistration = createAsyncThunk(
+  'fetchRegistration',
+  async (body: ControlSchema) => {
+    const response = await createUser(body);
+    return (response.data);
+  },
+);
+
 const registrationSlice = createSlice({
-  name: 'authorization',
+  name: 'registration',
   initialState,
   reducers: {
     changeRegistration(state, action: PayloadAction<boolean>) {
-      state.isRegistred = action.payload;
+      state.isRegistrationOpen = action.payload;
     },
+  },
+  extraReducers: (builder) => {
+    builder.addCase(fetchRegistration.fulfilled, (state, action) => {
+      state.profileInfo = action.payload;
+    });
+
+    builder.addCase(fetchRegistration.rejected, (state) => {
+      state.errorRegistrat = true;
+    });
   },
 });
 

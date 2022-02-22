@@ -21,6 +21,10 @@
         gap: 12px;
         max-height: 40px;
         grid-template-columns: repeat(3, 1fr);
+        &_addAuthorizate{
+            grid-template-columns: repeat(2, 1fr);
+            justify-items: flex-end;
+        }
         @include mobile{
             display: none;
         }
@@ -48,6 +52,23 @@
         width: 24px;
         border: none;
         height: 24px;
+        svg{
+            stroke: v.$lightThemeColor;
+            &:hover{
+                stroke: v.$lightThemeHoverColor;
+            }
+        }
+        &_addLighTheme{
+            svg{
+                stroke: v.$darkThemeColor;
+            }
+            &:hover{
+                stroke: v.$darkThemeHoverColor
+            }
+        }
+        &:hover{
+            border: none;
+        }
         display:none;
         @include mobile{
             display: block;

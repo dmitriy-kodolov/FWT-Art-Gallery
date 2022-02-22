@@ -2,6 +2,7 @@
 .myLink{
     color: v.$lightThemeColor;
     font-weight: bold;
+    cursor: pointer;
     &:hover{
         color: v.$darkThemeHoverColor
     }

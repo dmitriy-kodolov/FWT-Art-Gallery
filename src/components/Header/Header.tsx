@@ -12,7 +12,7 @@ import BurgerMenu from '../BurgerMenu';
 import Registration from '../Registration/Registration';
 import Authorization from '../Authorization';
 import { changeRegistration } from '../../store/slices/registrationSlice';
-import { changeAuthorization } from '../../store/slices/authorizationSlice';
+import { changeIsAuth, changeIsOpenModalAuth } from '../../store/slices/authorizationSlice';
 
 const cx = cn.bind(style);
 
@@ -20,22 +20,15 @@ const Header: FC = () => {
   const dispatch = useAppDispatch();
   const {
     theme: { isDarkTheme },
-    auth: { isAuth },
-    registration: { isRegistred },
+    auth: { isAuthOpen, isAuth, errorAuth },
+    registration: { isRegistrationOpen, errorRegistrat },
   } = useAppSelector((state) => state);
   const [isOpenMenu, setIsOpenMenu] = useState(false);
-  const svgClassName = cx(
-    'header__svgBtn',
-    { header__svgBtn_addLightTheme: !isDarkTheme },
-  );
-  const headerClassName = cx(
-    'header',
-    { header_addLightTheme: !isDarkTheme },
-  );
-  const logoClassName = cx(
-    'header__logo',
-    { header__logo_addLightTheme: !isDarkTheme },
-  );
+  const svgClassName = cx('header__svgBtn', { header__svgBtn_addLightTheme: !isDarkTheme });
+  const headerBtnsClassName = cx('header__buttons', { header__buttons_addAuthorizate: isAuth });
+  const headerClassName = cx('header', { header_addLightTheme: !isDarkTheme });
+  const logoClassName = cx('header__logo', { header__logo_addLightTheme: !isDarkTheme });
+  const openMobileBtn = cx('header__openMobileMenuBtn', { header__openMobileMenuBtn_addLighTheme: !isDarkTheme });
 
   const setOpenMenu = () => {
     setIsOpenMenu((prev: boolean) => !prev);
@@ -54,13 +47,22 @@ const Header: FC = () => {
   };
 
   const setIsOpenAuth = (flag: boolean) => {
-    dispatch(changeAuthorization(flag));
+    dispatch(changeIsOpenModalAuth(flag));
   };
+
+  const changeIsAuthorization = (flag: boolean) => {
+    dispatch(changeIsAuth(flag));
+  };
+
+  if (errorAuth && errorRegistrat) {
+    dispatch(changeIsAuth(false));
+    alert('Не удалось');
+  }
 
   return (
     <div className={headerClassName}>
       <Logo className={logoClassName} />
-      <div className={style.header__buttons}>
+      <div className={headerBtnsClassName}>
         <Button
           aria-label="theme button"
           className={style.header__themeButton}
@@ -69,6 +71,7 @@ const Header: FC = () => {
         >
           <ThemeIcon className={svgClassName} />
         </Button>
+        {!isAuth && (
         <Button
           className={style.header__logInBtn}
           onClick={() => setIsOpenAuth(true)}
@@ -76,6 +79,8 @@ const Header: FC = () => {
         >
           LOG IN
         </Button>
+        )}
+        {!isAuth && (
         <Button
           className={style.header__signInBtn}
           isFilled
@@ -84,10 +89,20 @@ const Header: FC = () => {
         >
           SIGN UP
         </Button>
+        )}
+        {isAuth && (
+        <Button
+          className={style.header__logInBtn}
+          onClick={() => dispatch(changeIsAuth(false))}
+          isDarkTheme={isDarkTheme}
+        >
+          LOG OUT
+        </Button>
+        )}
       </div>
       {!isOpenMenu && (
         <Button
-          className={style.header__openMobileMenuBtn}
+          className={openMobileBtn}
           onClick={setOpenMenu}
           isDarkTheme={isDarkTheme}
         >
@@ -96,18 +111,28 @@ const Header: FC = () => {
       )}
       {isOpenMenu && (
         <BurgerMenu
+          isAuth={isAuth}
           setOpenMenu={setOpenMenu}
           setIsOpenRegistration={setIsOpenRegistration}
           setIsOpenAuth={setIsOpenAuth}
           isDarkTheme={isDarkTheme}
           setTheme={setIsDarkTheme}
+          changeIsAuthorization={changeIsAuthorization}
         />
       )}
-      {isAuth && (
-        <Authorization setIsOpenAuth={setIsOpenAuth} />
+      {isAuthOpen && (
+        <Authorization
+          setIsOpenAuth={setIsOpenAuth}
+          changeIsAuthorization={changeIsAuthorization}
+          setIsOpenRegistration={setIsOpenRegistration}
+        />
       )}
-      {isRegistred && (
-        <Registration setIsOpenRegistration={setIsOpenRegistration} />
+      {isRegistrationOpen && (
+        <Registration
+          setIsOpenAuth={setIsOpenAuth}
+          setIsOpenRegistration={setIsOpenRegistration}
+          changeIsAuthorization={changeIsAuthorization}
+        />
       )}
     </div>
   );

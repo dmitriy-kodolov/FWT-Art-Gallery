@@ -25,9 +25,9 @@ const Button: FC<ButtonProps> = ({
 
   return (
     <button
-      {...other}
       className={buttonClassName}
       type="button"
+      {...other}
     >
       {children}
     </button>

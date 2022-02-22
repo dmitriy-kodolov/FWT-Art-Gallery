@@ -4,7 +4,7 @@ import style from './style.module.scss';
 
 interface LinkProps extends AnchorHTMLAttributes<HTMLAnchorElement> {
   isDarkTheme?: boolean,
-  url: string,
+  url?: string,
 }
 
 const cx = cn.bind(style);

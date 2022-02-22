@@ -8,8 +8,19 @@
     font-weight: normal;
     color: v.$darkThemeColor;
     background: v.$lightThemeColor;
-    span{
-        display: none;
+    &__errorMessage{
+        color: #FF0000;
+        font-weight: normal;
+        font-size: 10px;
+        line-height: 12px;
+        span{
+          display: inline !important; 
+        }
+    }
+    &_addErrorStyle{
+        input{
+            border: 1px solid #FF0000 !important;
+        }
     }
     &__customPlaceHolder{
         display: inline;

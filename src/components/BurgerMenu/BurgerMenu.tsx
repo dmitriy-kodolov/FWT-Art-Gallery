@@ -8,16 +8,18 @@ import { ReactComponent as Exit } from '../../assets/Exit.svg';
 type BurgerMenuProps = {
   setOpenMenu: () => void,
   isDarkTheme: boolean,
+  isAuth: boolean,
   setTheme: () => void,
   setIsOpenAuth: (falg: boolean) => void,
   setIsOpenRegistration: (falg: boolean) => void,
+  changeIsAuthorization: (falg: boolean) => void
 };
 
 const cx = cn.bind(style);
 
 const BurgerMenu: FC<BurgerMenuProps> = ({
   setOpenMenu, setIsOpenAuth, setIsOpenRegistration,
-  isDarkTheme, setTheme,
+  isDarkTheme, setTheme, isAuth, changeIsAuthorization,
 }) => {
   const themeBtnClassName = cx('mobileMenu__btn', 'mobileMenu__svgBtn', { mobileMenu__svgBtn_addLightTheme: !isDarkTheme });
   const exitBtnClassName = cx('mobileMenu__closeBtn', { mobileMenu__closeBtn_addLightTheme: !isDarkTheme });
@@ -39,6 +41,7 @@ const BurgerMenu: FC<BurgerMenuProps> = ({
         >
           <ThemeIcon />
         </Button>
+        {!isAuth && (
         <Button
           className={style.mobileMenu__btn}
           onClick={() => setIsOpenAuth(true)}
@@ -46,6 +49,17 @@ const BurgerMenu: FC<BurgerMenuProps> = ({
         >
           LOG IN
         </Button>
+        )}
+        {isAuth && (
+        <Button
+          className={style.mobileMenu__btn}
+          onClick={() => changeIsAuthorization(false)}
+          isDarkTheme={isDarkTheme}
+        >
+          LOG OUT
+        </Button>
+        )}
+        {!isAuth && (
         <Button
           className={style.mobileMenu__btn}
           isFilled
@@ -54,6 +68,7 @@ const BurgerMenu: FC<BurgerMenuProps> = ({
         >
           SIGN UP
         </Button>
+        )}
       </div>
     </div>
   );
