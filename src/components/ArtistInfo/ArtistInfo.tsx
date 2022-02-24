@@ -11,7 +11,7 @@ import Accardeon from '../Accardeon';
 
 type ArtistInfoProps = {
   isDarkTheme: boolean,
-  backToMainHadler: () => void,
+  backToMainHandler: () => void,
   deleteArtistHandler: () => void,
   editArtistHandler: () => void,
   artistInfo: Artist,
@@ -20,7 +20,7 @@ type ArtistInfoProps = {
 const cx = cn.bind(style);
 
 const ArtistInfo: FC<ArtistInfoProps> = ({
-  backToMainHadler,
+  backToMainHandler,
   deleteArtistHandler,
   editArtistHandler,
   isDarkTheme,
@@ -38,7 +38,7 @@ const ArtistInfo: FC<ArtistInfoProps> = ({
           aria-label="back button"
           isDarkTheme={isDarkTheme}
           className={btnClassName}
-          onClick={backToMainHadler}
+          onClick={backToMainHandler}
         >
           <BackIcon />
         </Button>

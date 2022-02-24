@@ -1,6 +1,6 @@
 import React, { FC, useEffect, useState } from 'react';
 import cn from 'classnames/bind';
-import { useNavigate, useParams } from 'react-router-dom';
+import { useNavigate, useParams, useLocation } from 'react-router-dom';
 import style from './style.module.scss';
 import CardList from '../../CardList';
 import { fetchArtists } from '../../../store/slices/getArtistsSlice';
@@ -19,8 +19,12 @@ const Artist: FC = () => {
     artists: { artists, error, loading },
   } = useAppSelector((state) => state);
   const { id } = useParams();
+  const { pathname } = useLocation();
+  const isArtistPage = !!pathname.indexOf('artist');
+
   const [isOpenSlider, setIsOpenSlider] = useState(false);
   const [curentIdPainting, setCurentIdPainting] = useState(0);
+
   useEffect(() => {
     if (!artists.length) {
       dispatch(fetchArtists());
@@ -29,7 +33,7 @@ const Artist: FC = () => {
 
   const artistClassName = cx('artist', { artist_addLightTheme: !isDarkTheme });
 
-  const backToMainHadler = () => {
+  const backToMainHandler = () => {
     navigate(-1);
   };
 
@@ -61,7 +65,7 @@ const Artist: FC = () => {
       <ArtistInfo
         artistInfo={typeof id === 'string' ? artists[+id - 1] : artists[0]}
         isDarkTheme={isDarkTheme}
-        backToMainHadler={backToMainHadler}
+        backToMainHandler={backToMainHandler}
         deleteArtistHandler={deleteArtistHandler}
         editArtistHandler={editArtistHandler}
       />
@@ -78,6 +82,7 @@ const Artist: FC = () => {
         )
       }
       <CardList
+        isArtistPage={isArtistPage}
         isDarkTheme={isDarkTheme}
         info={typeof id === 'string' ? artists[+id - 1].paintings : artists[0].paintings}
         clickHandler={openHandler}
