@@ -1,0 +1,182 @@
+@use '../../assets/variables' as v;
+@import '../../assets/mobile';
+@import '../../assets/tablet';
+.sliderContainer{
+    position: fixed;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    box-sizing: border-box;
+    background: rgba(0, 0, 0, 0.8);
+    width: 100%;
+    height: 100%;
+    top: 0;
+    left: 0;
+    z-index: 1;
+    @include mobile {
+        justify-content: center;
+    }
+    &__btnChange{
+        background: rgba(255, 255, 255, 0.1);
+        width: 30px;
+        height: 30px;
+        border: none !important;
+        &:active{
+            border: 1px solid rgba(255, 255, 255, 0.1) !important;
+            svg{
+                fill: v.$darkThemeHoverColor!important;
+                stroke: none;
+            }
+            &:nth-child(1){
+                svg{
+                    fill: #FFFF00 !important;
+                }
+            }
+            &:nth-child(3){
+                svg{
+                    fill: red !important;
+                }
+            }
+        }
+        &:hover{
+            svg{
+                fill: v.$darkThemeHoverColor!important;
+                stroke: none;
+            }
+            &:nth-child(1){
+                svg{
+                    fill: #FFFF00 !important;
+                }
+            }
+            &:nth-child(3){
+                svg{
+                    fill: red !important;
+                }
+            }
+        }
+        svg{
+            fill: v.$lightThemeColor;
+        }
+        &_addLightTheme{
+            border: none;
+            background: rgba(0, 0, 0, 0.1);
+            svg{
+                fill: v.$darkThemeColor;
+            }
+        }
+    }
+    &__buttons{
+        gap: 15px;
+        display: flex;
+        flex-direction: column;
+        right: -38px;
+        position: absolute;
+        top: 0;
+        @include tablet{
+            flex-direction: row;
+            position: absolute;
+            top: -38px;
+            right: 0;
+        }
+    }
+    &__closeBtn{
+        position: absolute;
+        background: inherit;
+        top: 20px;
+        right: 60px;
+        padding: 0;
+        border: none !important;
+        width: 12px;
+        height: 12px;
+        @include tablet {
+            right: 50px;
+        }
+        @include mobile {
+            top: 15px;
+            right: 15px;
+        }
+    }
+    &__bottomMenu{
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        top: 95%;
+        position: absolute;
+        gap: 44px;
+        @include mobile {
+            gap: 15px;
+            top: 105%;
+        }
+    }
+    &__description{
+        display: flex;
+        gap: 20px;
+        @include mobile {
+            flex-direction: column;
+            align-items: center;
+        }
+    }
+    &__text{
+        padding: 12px 20px;
+        border-radius: 8px;
+        background: rgba(255, 255, 255, 0.05);
+        font-size: 13px;
+        line-height: 15px;
+        color: v.$lightThemeColor;
+    }
+    &__circles{
+        top: 50%;
+        gap: 8px;
+        display: flex;
+    }
+    &__circle{
+        width: 12px;
+        height: 12px;
+        border-radius: 50%;
+        background: rgba(255, 255, 255, 0.4);
+        &_addScale{
+            background: rgba(255, 255, 255, 0.85);
+            transform: scale(1.25);
+        }
+    }
+    &__item{
+        width: 700px;
+        height: 615px;
+        display: flex;
+        justify-content: center;
+        box-sizing: border-box;
+        background: green;
+        position: relative;
+        img{
+            width: 700px;
+            height: 615px;
+        }
+        @include tablet{
+            img{
+                width: 620px;
+                height: 545px;
+            }
+            width: 620px;
+            height: 545px;
+        }
+        @include mobile{
+            img{
+                width: 290px;
+                height: 245px;
+            }
+            width: 290px;
+            height: 245px;
+        }
+    }
+    &__btn{
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        width: 40px;
+        height: 100%;
+        background: rgba(255, 255, 255, 0.05);
+        @include mobile {
+            display: none;
+        }
+    }
+}
