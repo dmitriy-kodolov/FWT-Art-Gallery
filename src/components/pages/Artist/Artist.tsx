@@ -8,6 +8,8 @@ import { useAppSelector, useAppDispatch } from '../../../hooks/redux';
 import ArtistInfo from '../../ArtistInfo';
 import Loader from '../../Loader';
 import Slider from '../../Slider';
+import { patchFavoritePainting } from '../../../utils/api/methods';
+import { PatchFavoritePaintingRequest } from '../../../types/types';
 
 const cx = cn.bind(style);
 
@@ -24,6 +26,10 @@ const Artist: FC = () => {
 
   const [isOpenSlider, setIsOpenSlider] = useState(false);
   const [curentIdPainting, setCurentIdPainting] = useState(0);
+
+  const favoritePaintingHandler = (payload: PatchFavoritePaintingRequest) => {
+    patchFavoritePainting(payload);
+  };
 
   useEffect(() => {
     if (!artists.length) {
@@ -63,7 +69,7 @@ const Artist: FC = () => {
   return (
     <div className={artistClassName}>
       <ArtistInfo
-        artistInfo={typeof id === 'string' ? artists[+id - 1] : artists[0]}
+        artistInfo={artists[+id! - 1]}
         isDarkTheme={isDarkTheme}
         backToMainHandler={backToMainHandler}
         deleteArtistHandler={deleteArtistHandler}
@@ -73,17 +79,21 @@ const Artist: FC = () => {
         isOpenSlider
         && (
         <Slider
-          paintings={typeof id === 'string' ? artists[+id - 1].paintings : artists[0].paintings} // здесь надо будет придумать как сделать правильно
+          paintings={artists[+id! - 1].paintings}
+          idArtist={+id!}
           closeHandler={setIsOpenSlider}
           curentIdPainting={curentIdPainting - 1}
           setCurentIdPainting={setCurentIdPainting}
           isDarkTheme={isDarkTheme}
+          favoritePaintingHandler={favoritePaintingHandler}
         />
         )
       }
       <CardList
         isArtistPage={isArtistPage}
         isDarkTheme={isDarkTheme}
+        idArtist={+id!}
+        favoritePaintingHandler={favoritePaintingHandler}
         info={typeof id === 'string' ? artists[+id - 1].paintings : artists[0].paintings}
         clickHandler={openHandler}
       />

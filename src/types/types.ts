@@ -6,6 +6,13 @@ export type ControlSchema = {
   confirmPassword?: string
 };
 
+export type PatchFavoritePaintingRequest = {
+  id: number,
+  body: {
+    painting: string,
+  }
+};
+
 export type AuthResponse = {
   accessToken: string,
   user: {

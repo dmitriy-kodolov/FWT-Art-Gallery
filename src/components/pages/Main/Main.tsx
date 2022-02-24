@@ -14,9 +14,7 @@ const Main: FC = () => {
   const dispatch = useAppDispatch();
 
   useEffect(() => {
-    if (!paintings.length) {
-      dispatch(fetchPaintings());
-    }
+    dispatch(fetchPaintings());
   }, []);
   const clickHandler = (idPainting: number) => {
     navigate(`../artist/${idPainting}`);

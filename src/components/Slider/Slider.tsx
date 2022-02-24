@@ -8,7 +8,7 @@ import { ReactComponent as EditIcon } from '../../assets/editIcon.svg';
 import { ReactComponent as DeleteIcon } from '../../assets/deleteIcon.svg';
 import { ReactComponent as Favorite } from '../../assets/favoriteIcon.svg';
 import Button from '../Button/Button';
-import { AuthorPaintings } from '../../types/types';
+import { AuthorPaintings, PatchFavoritePaintingRequest } from '../../types/types';
 
 const cx = cn.bind(style);
 
@@ -17,11 +17,14 @@ type SliderProps = {
   closeHandler: (flag: boolean) => void,
   paintings: AuthorPaintings[],
   curentIdPainting: number,
-  setCurentIdPainting: (id: number) => void
+  setCurentIdPainting: (id: number) => void,
+  favoritePaintingHandler: (payload: PatchFavoritePaintingRequest) => void,
+  idArtist: number,
 };
 
 const Slider: FC<SliderProps> = ({
   curentIdPainting, isDarkTheme, closeHandler, paintings, setCurentIdPainting,
+  favoritePaintingHandler, idArtist,
 }) => {
   const circle = cx(
     'sliderContainer__circle',
@@ -89,7 +92,12 @@ const Slider: FC<SliderProps> = ({
             aria-label="favorite button"
             isDarkTheme={isDarkTheme}
             className={btnClassName}
-            onClick={() => {}}
+            onClick={() => favoritePaintingHandler({
+              id: idArtist!,
+              body: {
+                painting: paintings[curentIdPainting].painting,
+              },
+            })}
           >
             <Favorite />
           </Button>
