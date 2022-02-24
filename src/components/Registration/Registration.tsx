@@ -24,7 +24,7 @@ type RegistrationProp = {
 };
 
 const schema = yup.object({
-  login: yup.string().email().required('Enter your email address')
+  email: yup.string().email().required('Enter your email address')
     .max(50, 'Please make sure that youve entered your login and password correctly'),
   password: yup.string().required('Enter your password')
     .min(8, 'Please make sure that youve entered your login and password correctly')
@@ -90,12 +90,12 @@ const Registration: FC<RegistrationProp> = ({
         <span className={style.registration__nameModal}>СREATE YOUR PROFILE</span>
         <Input
           control={control}
-          {...register('login')}
+          {...register('email')}
           type="email"
-          name="login"
+          name="email"
           placeholder="Email"
           className={style.registration__input}
-          errorMessage={errors.login?.message || false}
+          errorMessage={errors.email?.message || false}
         >
           <UserLogo />
         </Input>

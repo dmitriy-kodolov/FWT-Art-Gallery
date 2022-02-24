@@ -34,8 +34,13 @@ const Header: FC = () => {
     setIsOpenMenu((prev: boolean) => !prev);
   };
 
+  const changeIsAuthorization = (flag: boolean) => {
+    dispatch(changeIsAuth(flag));
+  };
+
   useEffect(() => {
     dispatch(setTheme(JSON.parse(Cookies.get('isDarkTheme') || 'true')));
+    changeIsAuthorization(!!Cookies.get('accessToken'));
   }, []);
 
   const setIsDarkTheme = () => {
@@ -50,12 +55,8 @@ const Header: FC = () => {
     dispatch(changeIsOpenModalAuth(flag));
   };
 
-  const changeIsAuthorization = (flag: boolean) => {
-    dispatch(changeIsAuth(flag));
-  };
-
   if (errorAuth && errorRegistrat) {
-    dispatch(changeIsAuth(false));
+    changeIsAuthorization(false);
     alert('Не удалось');
   }
 
@@ -93,7 +94,10 @@ const Header: FC = () => {
         {isAuth && (
         <Button
           className={style.header__logInBtn}
-          onClick={() => dispatch(changeIsAuth(false))}
+          onClick={() => {
+            Cookies.remove('accessToken');
+            changeIsAuthorization(false);
+          }}
           isDarkTheme={isDarkTheme}
         >
           LOG OUT

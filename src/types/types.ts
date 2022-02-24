@@ -1,21 +1,18 @@
-export type Schema = 'login' | 'password' | 'confirmPassword';
+export type Schema = 'email' | 'password' | 'confirmPassword';
 
 export type ControlSchema = {
-  login?: string,
+  email: string,
   password: string,
   confirmPassword?: string
 };
 
-export type PostAuthRegistrat = {
-  data: ControlSchema
-};
+export type AuthResponse = {
+  accessToken: string,
+  user: {
+    email: string,
+    id: number
+  }
 
-export type GetArtistsResponseData = {
-  data: Artist[],
-};
-
-export type GetPaintingsResponseData = {
-  data: Painting[],
 };
 
 export type Artist = {

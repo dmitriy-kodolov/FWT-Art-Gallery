@@ -1,4 +1,5 @@
 import { createSlice, PayloadAction, createAsyncThunk } from '@reduxjs/toolkit';
+import Cookies from 'js-cookie';
 import { ControlSchema } from '../../types/types';
 import { postAuthorization } from '../../utils/api/methods';
 
@@ -18,6 +19,8 @@ export const fetchAuthorization = createAsyncThunk(
   'fetchAuthorization',
   async (body: ControlSchema) => {
     const response = await postAuthorization(body);
+    Cookies.set('accessToken', `${response.data.accessToken}`);
+
     return (response.data);
   },
 );

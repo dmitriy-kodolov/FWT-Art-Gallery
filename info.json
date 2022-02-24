@@ -1,35 +1,14 @@
 {
   "users": [
     {
-      "id": 1,
-      "email": "dD@mail.ru",
-      "password": "Dd12345678"
-    },
-    {
-      "login": "dsdads@mail.ru",
-      "password": "dsadsadsadsa",
+      "email": "test@mail.ru",
+      "password": "$2a$10$xWCkC1.Bv283Yb5ZxkyxdecgObvt/fLVv4yKur4P1930sHtkSHoe.",
       "id": 2
     },
     {
-      "login": "dsad@mail.ru",
-      "password": "12345678",
-      "confirmPassword": "12345678",
+      "email": "test2@mail.ru",
+      "password": "$2a$10$N3Cqf8EFEaykLQaeyTBpK.nl/GIXA3oaBFudxmnxbyUPl3SfhYa5y",
       "id": 3
-    },
-    {
-      "login": "dsadsa@mail.ry",
-      "password": "adadadad",
-      "id": 4
-    },
-    {
-      "login": "dim.kodolov@mail.dsads",
-      "password": "adadadadadadadadada",
-      "id": 5
-    },
-    {
-      "login": "dsad@mail.ru",
-      "password": "dsadsadsadasdsada",
-      "id": 6
     }
   ],
   "artists": [

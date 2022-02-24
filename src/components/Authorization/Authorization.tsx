@@ -26,7 +26,7 @@ type AuthorizationProp = {
 };
 
 const schema = yup.object({
-  login: yup.string().email().required('Enter your email address')
+  email: yup.string().email().required('Enter your email address')
     .max(50, 'Please make sure that youve entered your login and password correctly'),
   password: yup.string().required('Enter your password')
     .min(8, 'Password must be more than 8 symbols and have at least one number, one capital letter and one special symbol')
@@ -82,12 +82,12 @@ const Authorization: FC<AuthorizationProp> = ({
         <span className={style.authorization__nameModal}>AUTHORIZATION</span>
         <Input
           control={control}
-          {...register('login')}
+          {...register('email')}
           type="email"
           placeholder="Email"
-          name="login"
+          name="email"
           className={style.authorization__input}
-          errorMessage={errors.login?.message || false}
+          errorMessage={errors.email?.message || false}
         >
           <UserLogo />
         </Input>

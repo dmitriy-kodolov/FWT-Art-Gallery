@@ -1,12 +1,14 @@
+import { AxiosResponse } from 'axios';
 import instance from '.';
 import {
-  ControlSchema, GetArtistsResponseData, GetPaintingsResponseData, PostAuthRegistrat,
+  AuthResponse,
+  ControlSchema, Artist, Painting,
 } from '../../types/types';
 
-export const getArtists = (): Promise<GetArtistsResponseData> => instance.get('/artists');
+export const getArtists = (): Promise<AxiosResponse<Artist[]>> => instance.get('/artists');
 
-export const getPaintings = (): Promise<GetPaintingsResponseData> => instance.get('/paintings');
+export const getPaintings = (): Promise<AxiosResponse<Painting[]>> => instance.get('/paintings');
 
-export const createUser = (body: ControlSchema): Promise<PostAuthRegistrat> => instance.post('users', body); // TODO нужно будет менять
+export const createUser = (body: ControlSchema): Promise<AxiosResponse<AuthResponse>> => instance.post('register', body);
 
-export const postAuthorization = (body: ControlSchema): Promise<PostAuthRegistrat> => instance.post('users', body);
+export const postAuthorization = (body: ControlSchema): Promise<AxiosResponse<AuthResponse>> => instance.post('login', body);
