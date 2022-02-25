@@ -1,0 +1,51 @@
+@use '../../assets/variables' as v;
+.modal{
+    z-index: 1;
+    position: fixed;
+    background:rgba(0, 0, 0, 0.8);
+    display: flex;
+    width: 100%;
+    height: 100%;
+    top: 0;
+    left: 0;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+.addPainting{
+    width: 496px;
+    height: 650px;
+    background: #131313;
+    box-sizing: border-box;
+    padding: 20px;
+    &__footer{
+        display: flex;
+        justify-content: center;
+    }
+    &__header{
+        width: 100%;
+        display: flex;
+        justify-content: flex-start;
+        position: relative;
+        span{
+            padding-left: 35px;
+            line-height: 20px;
+            font-weight: normal;
+            color: v.$lightThemeColor
+        }
+        :nth-child(2){
+            position: absolute;
+            width: 15px;
+            height: 15px;
+            fill: v.$lightThemeColor;
+            top: 0;
+            right: 0;
+        }
+        :nth-child(1){
+            width: 19px;
+            height: 19px;  
+            top: 0;
+            left: 0; 
+        }
+    }
+}

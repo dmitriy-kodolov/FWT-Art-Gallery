@@ -10,6 +10,7 @@ import Loader from '../../Loader';
 import Slider from '../../Slider';
 import { patchFavoritePainting } from '../../../utils/api/methods';
 import { PatchFavoritePaintingRequest } from '../../../types/types';
+import ModalImage from '../../ModalImage/ModalImage';
 
 const cx = cn.bind(style);
 
@@ -68,6 +69,7 @@ const Artist: FC = () => {
 
   return (
     <div className={artistClassName}>
+      <ModalImage />
       <ArtistInfo
         artistInfo={artists[+id! - 1]}
         isDarkTheme={isDarkTheme}

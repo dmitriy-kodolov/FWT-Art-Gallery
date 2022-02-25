@@ -3,6 +3,7 @@ import React, { FC } from 'react';
 import Card from '../Card';
 import style from './style.module.scss';
 import { Painting, PatchFavoritePaintingRequest } from '../../types/types';
+import AddPaintingBlock from '../AddPaintingBlock';
 
 const cx = cn.bind(style);
 
@@ -25,6 +26,7 @@ const CardList: FC<CardListProps> = ({
 
   return (
     <div className={cardlistClassName}>
+      {isArtistPage && <AddPaintingBlock isDarkTheme={isDarkTheme} />}
       {info.map((infoItem) => (
         <div className={style.cardList__card} key={infoItem.id}>
           <Card
