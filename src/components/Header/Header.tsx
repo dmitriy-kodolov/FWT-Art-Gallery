@@ -30,30 +30,14 @@ const Header: FC = () => {
   const logoClassName = cx('header__logo', { header__logo_addLightTheme: !isDarkTheme });
   const openMobileBtn = cx('header__openMobileMenuBtn', { header__openMobileMenuBtn_addLighTheme: !isDarkTheme });
 
-  const setOpenMenu = () => {
-    setIsOpenMenu((prev: boolean) => !prev);
-  };
-
   const changeIsAuthorization = (flag: boolean) => {
     dispatch(changeIsAuth(flag));
   };
 
   useEffect(() => {
     dispatch(setTheme(JSON.parse(Cookies.get('isDarkTheme') || 'true')));
-    changeIsAuthorization(!!Cookies.get('accessToken'));
+    dispatch(changeIsAuth(!!Cookies.get('accessToken')));
   }, []);
-
-  const setIsDarkTheme = () => {
-    dispatch(changeTheme());
-  };
-
-  const setIsOpenRegistration = (flag: boolean) => {
-    dispatch(changeRegistration(flag));
-  };
-
-  const setIsOpenAuth = (flag: boolean) => {
-    dispatch(changeIsOpenModalAuth(flag));
-  };
 
   if (errorAuth && errorRegistrat) {
     changeIsAuthorization(false);
@@ -67,7 +51,7 @@ const Header: FC = () => {
         <Button
           aria-label="theme button"
           className={style.header__themeButton}
-          onClick={setIsDarkTheme}
+          onClick={() => dispatch(changeTheme())}
           isDarkTheme={isDarkTheme}
         >
           <ThemeIcon className={svgClassName} />
@@ -75,7 +59,7 @@ const Header: FC = () => {
         {!isAuth && (
         <Button
           className={style.header__logInBtn}
-          onClick={() => setIsOpenAuth(true)}
+          onClick={() => dispatch(changeIsOpenModalAuth(true))}
           isDarkTheme={isDarkTheme}
         >
           LOG IN
@@ -85,7 +69,7 @@ const Header: FC = () => {
         <Button
           className={style.header__signInBtn}
           isFilled
-          onClick={() => setIsOpenRegistration(true)}
+          onClick={() => dispatch(changeRegistration(true))}
           isDarkTheme={isDarkTheme}
         >
           SIGN UP
@@ -96,7 +80,7 @@ const Header: FC = () => {
           className={style.header__logInBtn}
           onClick={() => {
             Cookies.remove('accessToken');
-            changeIsAuthorization(false);
+            dispatch(changeIsAuth(false));
           }}
           isDarkTheme={isDarkTheme}
         >
@@ -107,7 +91,7 @@ const Header: FC = () => {
       {!isOpenMenu && (
         <Button
           className={openMobileBtn}
-          onClick={setOpenMenu}
+          onClick={() => setIsOpenMenu((prev: boolean) => !prev)}
           isDarkTheme={isDarkTheme}
         >
           <Menu className={svgClassName} />
@@ -116,27 +100,15 @@ const Header: FC = () => {
       {isOpenMenu && (
         <BurgerMenu
           isAuth={isAuth}
-          setOpenMenu={setOpenMenu}
-          setIsOpenRegistration={setIsOpenRegistration}
-          setIsOpenAuth={setIsOpenAuth}
+          setOpenMenu={() => setIsOpenMenu((prev: boolean) => !prev)}
           isDarkTheme={isDarkTheme}
-          setTheme={setIsDarkTheme}
-          changeIsAuthorization={changeIsAuthorization}
         />
       )}
       {isAuthOpen && (
-        <Authorization
-          setIsOpenAuth={setIsOpenAuth}
-          changeIsAuthorization={changeIsAuthorization}
-          setIsOpenRegistration={setIsOpenRegistration}
-        />
+        <Authorization />
       )}
       {isRegistrationOpen && (
-        <Registration
-          setIsOpenAuth={setIsOpenAuth}
-          setIsOpenRegistration={setIsOpenRegistration}
-          changeIsAuthorization={changeIsAuthorization}
-        />
+        <Registration />
       )}
     </div>
   );

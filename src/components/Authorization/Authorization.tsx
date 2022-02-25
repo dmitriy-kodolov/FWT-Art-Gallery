@@ -14,16 +14,11 @@ import { ReactComponent as LockLogo } from '../../assets/lockLogo.svg';
 import { ReactComponent as Exit } from '../../assets/smallCloseBtn.svg';
 import useOutsideClick from '../../hooks/useOutsideClick';
 import { ControlSchema } from '../../types/types';
-import { fetchAuthorization } from '../../store/slices/authorizationSlice';
+import { changeIsAuth, changeIsOpenModalAuth, fetchAuthorization } from '../../store/slices/authorizationSlice';
 import { useAppDispatch } from '../../hooks/redux';
+import { changeRegistration } from '../../store/slices/registrationSlice';
 
 const cx = cn.bind(style);
-
-type AuthorizationProp = {
-  setIsOpenAuth: (flag: boolean) => void,
-  changeIsAuthorization: (flag: boolean) => void,
-  setIsOpenRegistration: (flag: boolean) => void
-};
 
 const schema = yup.object({
   email: yup.string().email().required('Enter your email address')
@@ -33,10 +28,7 @@ const schema = yup.object({
     .matches(/[a-zA-Z0-9]/, 'Password must be more than 8 symbols and have at least one number, one capital letter and one special symbol'),
 }).required();
 
-const Authorization: FC<AuthorizationProp> = ({
-  setIsOpenRegistration,
-  changeIsAuthorization, setIsOpenAuth,
-}) => {
+const Authorization: FC = () => {
   const dispatch = useAppDispatch();
   const {
     register, handleSubmit, control, formState: { errors },
@@ -47,19 +39,19 @@ const Authorization: FC<AuthorizationProp> = ({
   const onSubmit: SubmitHandler<ControlSchema> = async (data) => {
     await dispatch(fetchAuthorization(data));
     console.log(data);
-    setIsOpenAuth(false);
-    changeIsAuthorization(true);
+    dispatch(changeIsOpenModalAuth(false));
+    dispatch(changeIsAuth(true));
   };
 
   const keyHandler = (e: { key: string; }) => {
     if (e.key === 'Escape') {
-      setIsOpenAuth(false);
+      dispatch(changeIsOpenModalAuth(false));
     }
   };
 
   const ref = useRef <HTMLDivElement>(null) as React.MutableRefObject<HTMLInputElement>;
 
-  useOutsideClick(ref, () => setIsOpenAuth(false));
+  useOutsideClick(ref, () => dispatch(changeIsOpenModalAuth(false)));
 
   useEffect(() => {
     document.addEventListener('keydown', keyHandler, false);
@@ -74,7 +66,7 @@ const Authorization: FC<AuthorizationProp> = ({
     <form className={modalClassName} onSubmit={handleSubmit(onSubmit)}>
       <div className={style.authorization} ref={ref}>
         <Button
-          onClick={() => setIsOpenAuth(false)}
+          onClick={() => dispatch(changeIsOpenModalAuth(false))}
           className={style.authorization__closeBtn}
         >
           <Exit />
@@ -114,8 +106,8 @@ const Authorization: FC<AuthorizationProp> = ({
           if you dont have an account yet,
           {' '}
           <MyLink onClick={() => {
-            setIsOpenAuth(false);
-            setIsOpenRegistration(true);
+            dispatch(changeIsOpenModalAuth(false));
+            dispatch(changeRegistration(true));
           }}
           >
             please sing up

@@ -6,16 +6,17 @@ import CardList from '../../CardList';
 import { fetchPaintings } from '../../../store/slices/getPaintingsSlice';
 
 const Main: FC = () => {
-  const navigate = useNavigate();
   const {
     theme: { isDarkTheme },
     paintings: { paintings, error, loading },
   } = useAppSelector((state) => state);
   const dispatch = useAppDispatch();
+  const navigate = useNavigate();
 
   useEffect(() => {
     dispatch(fetchPaintings());
   }, []);
+
   const clickHandler = (idPainting: number) => {
     navigate(`../artist/${idPainting}`);
   };

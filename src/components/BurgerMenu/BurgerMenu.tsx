@@ -4,23 +4,24 @@ import Button from '../Button';
 import style from './style.module.scss';
 import { ReactComponent as ThemeIcon } from '../../assets/ThemeIcon.svg';
 import { ReactComponent as Exit } from '../../assets/Exit.svg';
+import { useAppDispatch } from '../../hooks/redux';
+import { changeIsAuth, changeIsOpenModalAuth } from '../../store/slices/authorizationSlice';
+import { changeTheme } from '../../store/slices/changeThemeSlice';
+import { changeRegistration } from '../../store/slices/registrationSlice';
 
 type BurgerMenuProps = {
   setOpenMenu: () => void,
   isDarkTheme: boolean,
   isAuth: boolean,
-  setTheme: () => void,
-  setIsOpenAuth: (falg: boolean) => void,
-  setIsOpenRegistration: (falg: boolean) => void,
-  changeIsAuthorization: (falg: boolean) => void
 };
 
 const cx = cn.bind(style);
 
 const BurgerMenu: FC<BurgerMenuProps> = ({
-  setOpenMenu, setIsOpenAuth, setIsOpenRegistration,
-  isDarkTheme, setTheme, isAuth, changeIsAuthorization,
+  setOpenMenu,
+  isDarkTheme, isAuth,
 }) => {
+  const dispatch = useAppDispatch();
   const themeBtnClassName = cx('mobileMenu__btn', 'mobileMenu__svgBtn', { mobileMenu__svgBtn_addLightTheme: !isDarkTheme });
   const exitBtnClassName = cx('mobileMenu__closeBtn', { mobileMenu__closeBtn_addLightTheme: !isDarkTheme });
 
@@ -36,7 +37,7 @@ const BurgerMenu: FC<BurgerMenuProps> = ({
         </Button>
         <Button
           className={themeBtnClassName}
-          onClick={setTheme}
+          onClick={() => dispatch(changeTheme())}
           isDarkTheme={isDarkTheme}
         >
           <ThemeIcon />
@@ -44,7 +45,7 @@ const BurgerMenu: FC<BurgerMenuProps> = ({
         {!isAuth && (
         <Button
           className={style.mobileMenu__btn}
-          onClick={() => setIsOpenAuth(true)}
+          onClick={() => dispatch(changeIsOpenModalAuth(true))}
           isDarkTheme={isDarkTheme}
         >
           LOG IN
@@ -53,7 +54,7 @@ const BurgerMenu: FC<BurgerMenuProps> = ({
         {isAuth && (
         <Button
           className={style.mobileMenu__btn}
-          onClick={() => changeIsAuthorization(false)}
+          onClick={() => dispatch(changeIsAuth(false))}
           isDarkTheme={isDarkTheme}
         >
           LOG OUT
@@ -63,7 +64,7 @@ const BurgerMenu: FC<BurgerMenuProps> = ({
         <Button
           className={style.mobileMenu__btn}
           isFilled
-          onClick={() => setIsOpenRegistration(true)}
+          onClick={() => dispatch(changeRegistration(true))}
           isDarkTheme={isDarkTheme}
         >
           SIGN UP

@@ -12,16 +12,11 @@ import { ReactComponent as LockLogo } from '../../assets/lockLogo.svg';
 import { ReactComponent as Exit } from '../../assets/smallCloseBtn.svg';
 import useOutsideClick from '../../hooks/useOutsideClick';
 import { ControlSchema } from '../../types/types';
-import { fetchRegistration } from '../../store/slices/registrationSlice';
+import { changeRegistration, fetchRegistration } from '../../store/slices/registrationSlice';
 import { useAppDispatch } from '../../hooks/redux';
+import { changeIsAuth, changeIsOpenModalAuth } from '../../store/slices/authorizationSlice';
 
 const cx = cn.bind(style);
-
-type RegistrationProp = {
-  setIsOpenRegistration: (flag: boolean) => void,
-  changeIsAuthorization: (flag: boolean) => void,
-  setIsOpenAuth: (flag: boolean) => void,
-};
 
 const schema = yup.object({
   email: yup.string().email().required('Enter your email address')
@@ -34,10 +29,7 @@ const schema = yup.object({
     .matches(/[a-zA-Z0-9]/, 'Please make sure that youve entered your login and password correctly'),
 }).required();
 
-const Registration: FC<RegistrationProp> = ({
-  changeIsAuthorization, setIsOpenAuth,
-  setIsOpenRegistration,
-}) => {
+const Registration: FC = () => {
   const dispatch = useAppDispatch();
   const {
     register, handleSubmit, control, setError, setValue, formState: { errors },
@@ -53,18 +45,17 @@ const Registration: FC<RegistrationProp> = ({
     }
     delete data.confirmPassword;
     await dispatch(fetchRegistration(data));
-    setIsOpenRegistration(false);
-    changeIsAuthorization(true);
-    return console.log(data);
+    dispatch(changeRegistration(false));
+    return dispatch(changeIsAuth(true));
   };
 
   const ref = useRef <HTMLDivElement>(null) as React.MutableRefObject<HTMLInputElement>;
 
-  useOutsideClick(ref, () => setIsOpenRegistration(false));
+  useOutsideClick(ref, () => dispatch(changeRegistration(false)));
 
   const keyHandler = (e: { key: string; }) => {
     if (e.key === 'Escape') {
-      setIsOpenRegistration(false);
+      dispatch(changeRegistration(false));
     }
   };
 
@@ -82,7 +73,7 @@ const Registration: FC<RegistrationProp> = ({
     <form className={modalClassName} onSubmit={handleSubmit(onSubmit)}>
       <div className={style.registration} ref={ref}>
         <Button
-          onClick={() => setIsOpenRegistration(false)}
+          onClick={() => dispatch(changeRegistration((false)))}
           className={style.registration__closeBtn}
         >
           <Exit />
@@ -133,8 +124,8 @@ const Registration: FC<RegistrationProp> = ({
           if you already have an account,
           {' '}
           <MyLink onClick={() => {
-            setIsOpenRegistration(false);
-            setIsOpenAuth(true);
+            dispatch(changeRegistration(false));
+            dispatch(changeIsOpenModalAuth(true));
           }}
           >
             please log in
