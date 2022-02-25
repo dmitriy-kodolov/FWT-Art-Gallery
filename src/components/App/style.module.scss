@@ -1,0 +1,19 @@
+@use '../../assets/variables' as v;
+@import '../../assets/font';
+@import '../../assets/mobile';
+@import '../../assets/tablet';
+
+.app{
+    @include font;
+    padding: 20px 20px 40px 20px;
+    background: v.$darkThemeColor;
+    &_addLightTheme{
+        background: v.$lightThemeColor;
+    }
+    @include tablet{
+        padding: 20px 20px 156px 20px;
+    }
+    @include mobile{
+        padding: 15px 15px 30px 15px;
+    }
+}

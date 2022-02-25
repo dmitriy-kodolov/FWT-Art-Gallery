@@ -1,0 +1,63 @@
+@use '../../assets/variables' as v;
+@import '../../assets/mobile';
+
+.footer{
+    margin: 40px 0 0 0;
+    font-weight: normal;
+    font-size: 16px;
+    box-sizing: border-box;
+    display: grid;
+    border-top: 2px solid rgba(255, 255, 255, 0.3);
+    background: v.$darkThemeColor;
+    color: v.$lightThemeColor;
+    grid-template-areas: 
+        'footer__mainSite footer__social'
+        'footer__author footer__author';
+    @include mobile{
+        grid-template-areas: 
+        'footer__mainSite'
+        'footer__social'
+        'footer__author';
+    }
+    &__social{
+        grid-area: footer__social;
+        width: 100%;
+        gap: 20px;
+        display: flex;
+        justify-content: flex-end;
+            align-items: center;
+        padding: 20px 0 0 0;
+        @include mobile{
+            justify-content: flex-start;
+        }
+    }
+    &__mainSite{
+        padding: 20px 0 0 0; 
+        grid-area: footer__mainSite;
+    }
+    &__author{
+        &_addLightTheme{
+            color: rgba(0, 0, 0, 0.3);
+        };
+        padding: 20px 0 0 0; 
+        color: rgba(255, 255, 255, 0.3);
+        grid-area: footer__author;
+    }
+    &_addLightTheme{
+        background: v.$lightThemeColor;
+        color: v.$darkThemeColor;
+        border-top: 2px solid rgba(0, 0, 0, 0.3);
+    }
+    &__svg{
+        fill: v.$lightThemeColor;
+        :nth-child(2){
+            fill: v.$darkThemeColor;
+        }
+        &_addLightTheme{
+            fill: v.$darkThemeColor;
+            :nth-child(2){
+                fill: v.$lightThemeColor;
+            }
+        }
+    }
+}
