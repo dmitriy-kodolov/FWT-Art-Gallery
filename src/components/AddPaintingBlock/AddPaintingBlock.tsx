@@ -7,15 +7,16 @@ import Button from '../Button';
 const cx = cn.bind(style);
 
 type AddPaintingBlockProps = {
-  isDarkTheme: boolean
+  isDarkTheme: boolean,
+  setIsOpenPaintingLoader: (flag: boolean) => void
 };
 
-const AddPaintingBlock: FC<AddPaintingBlockProps> = ({ isDarkTheme }) => {
+const AddPaintingBlock: FC<AddPaintingBlockProps> = ({ isDarkTheme, setIsOpenPaintingLoader }) => {
   const addPaintingBlockClassName = cx('addPaintingBlock', { addPaintingBlock_addLightTheme: !isDarkTheme });
 
   return (
     <div className={addPaintingBlockClassName}>
-      <Button className={style.addPaintingBlock__btn}>
+      <Button onClick={() => setIsOpenPaintingLoader(true)} className={style.addPaintingBlock__btn}>
         <AddIcon />
       </Button>
     </div>

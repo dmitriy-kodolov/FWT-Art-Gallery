@@ -1,9 +1,11 @@
-export type Schema = 'email' | 'password' | 'confirmPassword';
+export type Schema = 'email' | 'password' | 'confirmPassword' | 'paintingName' | 'yearOfCreated';
 
 export type ControlSchema = {
   email: string,
   password: string,
-  confirmPassword?: string
+  confirmPassword?: string,
+  paintingName?: string,
+  yearOfCreated?: number
 };
 
 export type PatchFavoritePaintingRequest = {
@@ -23,12 +25,13 @@ export type AuthResponse = {
 };
 
 export type Artist = {
+  genres: string[],
   id: number,
-  birthCity: string,
   name: string,
   description: string,
   yearsOfLife: string,
-  genres: string[],
+  mainPainting: string,
+  birthCity: string,
   avatar: string,
   paintings: AuthorPaintings[],
 };

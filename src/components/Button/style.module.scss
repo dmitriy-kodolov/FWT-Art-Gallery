@@ -8,7 +8,10 @@
     font-weight: bold;
     margin: 0;
     &_disabled{
-        background: rgba(255, 255, 255, 0.3);
+        background: rgba(255, 255, 255, 0.3) !important;
+        &:hover{
+            color: v.$darkThemeColor !important;
+        }
     }
     &:hover{
         border: 1px solid v.$darkThemeHoverColor; 

@@ -13,11 +13,13 @@ type CardListProps = {
   clickHandler: (idPainting: number) => void,
   isDarkTheme: boolean,
   idArtist?: number,
+  setIsOpenPaintingLoader?: (flag: boolean) => void,
   favoritePaintingHandler?: (payload: PatchFavoritePaintingRequest) => void,
 };
 
 const CardList: FC<CardListProps> = ({
   info, isArtistPage, isDarkTheme, clickHandler, favoritePaintingHandler, idArtist,
+  setIsOpenPaintingLoader,
 }) => {
   const cardlistClassName = cx(
     'cardList',
@@ -26,7 +28,12 @@ const CardList: FC<CardListProps> = ({
 
   return (
     <div className={cardlistClassName}>
-      {isArtistPage && <AddPaintingBlock isDarkTheme={isDarkTheme} />}
+      {isArtistPage && (
+      <AddPaintingBlock
+        setIsOpenPaintingLoader={setIsOpenPaintingLoader!}
+        isDarkTheme={isDarkTheme}
+      />
+      )}
       {info.map((infoItem) => (
         <div className={style.cardList__card} key={infoItem.id}>
           <Card

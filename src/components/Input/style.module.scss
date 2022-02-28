@@ -23,6 +23,7 @@
         }
     }
     &__customPlaceHolder{
+        width: fit-content;
         display: inline;
         position: absolute;
         top: -20px;
@@ -30,6 +31,11 @@
         color: rgba(0, 0, 0, 0.3);
     }
     input{
+        &::-webkit-outer-spin-button,
+        &::-webkit-inner-spin-button {
+        -webkit-appearance: none;
+        margin: 0;
+        }
         width: inherit !important;
         height: 40px;
         border-radius: 6px;

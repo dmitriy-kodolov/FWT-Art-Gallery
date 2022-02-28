@@ -24,7 +24,7 @@ const Artist: FC = () => {
   const { id } = useParams();
   const { pathname } = useLocation();
   const isArtistPage = !!pathname.indexOf('artist');
-
+  const [isOpenPaintingLoader, setIsOpenPaintingLoader] = useState(false);
   const [isOpenSlider, setIsOpenSlider] = useState(false);
   const [curentIdPainting, setCurentIdPainting] = useState(0);
 
@@ -69,7 +69,7 @@ const Artist: FC = () => {
 
   return (
     <div className={artistClassName}>
-      <ModalImage />
+      {isOpenPaintingLoader && <ModalImage setIsOpenPaintingLoader={setIsOpenPaintingLoader} />}
       <ArtistInfo
         artistInfo={artists[+id! - 1]}
         isDarkTheme={isDarkTheme}
@@ -92,6 +92,7 @@ const Artist: FC = () => {
         )
       }
       <CardList
+        setIsOpenPaintingLoader={setIsOpenPaintingLoader}
         isArtistPage={isArtistPage}
         isDarkTheme={isDarkTheme}
         idArtist={+id!}

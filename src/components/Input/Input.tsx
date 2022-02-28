@@ -15,7 +15,8 @@ interface InputProps extends InputHTMLAttributes<HTMLInputElement> {
 }
 
 const Input: FC<InputProps> = ({
-  errorMessage, className, control, myPlaceholder, isDarkTheme, name, children, ...other
+  errorMessage, className, control,
+  myPlaceholder, isDarkTheme, name, children, ...other
 }) => {
   const inputClassName = cx(
     'input',
@@ -24,7 +25,7 @@ const Input: FC<InputProps> = ({
     { input_addErrorStyle: errorMessage },
   );
 
-  const customPlaceholderClassName = cx({ input__customPlaceHolder: myPlaceholder });
+  const customPlaceholderClassName = cx(className, { input__customPlaceHolder: myPlaceholder });
 
   return (
     <div className={inputClassName}>
