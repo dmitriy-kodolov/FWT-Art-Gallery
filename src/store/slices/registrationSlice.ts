@@ -6,19 +6,11 @@ import { createUser } from '../../utils/api/methods';
 type RegistrationSlice = {
   isRegistrationOpen: boolean,
   errorRegistrat: boolean,
-  profileInfo: {
-    email: string,
-    id: number,
-  }
 };
 
 const initialState: RegistrationSlice = {
   isRegistrationOpen: false,
   errorRegistrat: false,
-  profileInfo: {
-    email: '',
-    id: 0,
-  },
 };
 
 export const fetchRegistration = createAsyncThunk(
@@ -26,6 +18,7 @@ export const fetchRegistration = createAsyncThunk(
   async (body: ControlSchema) => {
     const response = await createUser(body);
     Cookies.set('accessToken', `${response.data.accessToken}`);
+    Cookies.set('refreshToken', `${response.data.refreshToken}`);
 
     return (response.data);
   },
@@ -40,10 +33,10 @@ const registrationSlice = createSlice({
     },
   },
   extraReducers: (builder) => {
-    builder.addCase(fetchRegistration.fulfilled, (state, action) => {
-      state.profileInfo = action.payload.user;
+    builder.addCase(fetchRegistration.fulfilled, (state) => {
+      state.errorRegistrat = false;
+      state.isRegistrationOpen = false;
     });
-
     builder.addCase(fetchRegistration.rejected, (state) => {
       state.errorRegistrat = true;
     });

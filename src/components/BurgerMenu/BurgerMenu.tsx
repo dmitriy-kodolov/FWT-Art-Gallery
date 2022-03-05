@@ -1,5 +1,6 @@
 import React, { FC } from 'react';
 import cn from 'classnames/bind';
+import { useNavigate } from 'react-router-dom';
 import Button from '../Button';
 import style from './style.module.scss';
 import { ReactComponent as ThemeIcon } from '../../assets/ThemeIcon.svg';
@@ -24,6 +25,7 @@ const BurgerMenu: FC<BurgerMenuProps> = ({
   const dispatch = useAppDispatch();
   const themeBtnClassName = cx('mobileMenu__btn', 'mobileMenu__svgBtn', { mobileMenu__svgBtn_addLightTheme: !isDarkTheme });
   const exitBtnClassName = cx('mobileMenu__closeBtn', { mobileMenu__closeBtn_addLightTheme: !isDarkTheme });
+  const navigate = useNavigate();
 
   return (
     <div className={style.mobileMenu}>
@@ -54,7 +56,10 @@ const BurgerMenu: FC<BurgerMenuProps> = ({
         {isAuth && (
         <Button
           className={style.mobileMenu__btn}
-          onClick={() => dispatch(changeIsAuth(false))}
+          onClick={() => {
+            dispatch(changeIsAuth(false));
+            navigate(-1);
+          }}
           isDarkTheme={isDarkTheme}
         >
           LOG OUT

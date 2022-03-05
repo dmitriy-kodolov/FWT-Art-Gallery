@@ -24,7 +24,7 @@ const cx = cn.bind(style);
 
 const schema = yup.object({
   paintingName: yup.string().required(),
-  yearOfCreated: yup.number().required(),
+  yearOfCreation: yup.number().required(),
 }).required();
 
 const ModalImage: FC<ModalImageProps> = ({ setIsOpenPaintingLoader }) => {
@@ -102,12 +102,12 @@ const ModalImage: FC<ModalImageProps> = ({ setIsOpenPaintingLoader }) => {
           <Input
             myPlaceholder="Year of creation"
             className={style.addPainting__inputPlaceholder}
-            {...register('yearOfCreated')}
+            {...register('yearOfCreation')}
             placeholder="Enter the year"
             isDarkTheme
             control={control}
             type="number"
-            name="yearOfCreated"
+            name="yearOfCreation"
           />
         </div>
         <div {...getRootProps({ className: dropZoneClassName })}>

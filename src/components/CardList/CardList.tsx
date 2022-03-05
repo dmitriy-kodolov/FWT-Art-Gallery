@@ -2,24 +2,26 @@ import cn from 'classnames/bind';
 import React, { FC } from 'react';
 import Card from '../Card';
 import style from './style.module.scss';
-import { Painting, PatchFavoritePaintingRequest } from '../../types/types';
+import {
+  StaticArtist, PatchFavoritePaintingRequest, AuthArtist, DeleteArtistPainting,
+} from '../../types/types';
 import AddPaintingBlock from '../AddPaintingBlock';
 
 const cx = cn.bind(style);
 
 type CardListProps = {
-  info: Painting[],
-  isArtistPage?: boolean,
-  clickHandler: (idPainting: number) => void,
+  mainPageInfo?: StaticArtist[],
+  artistPageInfo?: AuthArtist,
+  clickHandler: (idPainting: string | number) => void,
   isDarkTheme: boolean,
-  idArtist?: number,
   setIsOpenPaintingLoader?: (flag: boolean) => void,
   favoritePaintingHandler?: (payload: PatchFavoritePaintingRequest) => void,
+  deleteArtistPaintingHandler?: (body: DeleteArtistPainting) => void,
 };
 
 const CardList: FC<CardListProps> = ({
-  info, isArtistPage, isDarkTheme, clickHandler, favoritePaintingHandler, idArtist,
-  setIsOpenPaintingLoader,
+  artistPageInfo, mainPageInfo, isDarkTheme, clickHandler, favoritePaintingHandler,
+  setIsOpenPaintingLoader, deleteArtistPaintingHandler,
 }) => {
   const cardlistClassName = cx(
     'cardList',
@@ -28,20 +30,28 @@ const CardList: FC<CardListProps> = ({
 
   return (
     <div className={cardlistClassName}>
-      {isArtistPage && (
+      {artistPageInfo && (
       <AddPaintingBlock
         setIsOpenPaintingLoader={setIsOpenPaintingLoader!}
         isDarkTheme={isDarkTheme}
       />
       )}
-      {info.map((infoItem) => (
-        <div className={style.cardList__card} key={infoItem.id}>
+      {artistPageInfo && artistPageInfo!.paintings.map((infoItem, id) => (
+        <div className={style.cardList__card} key={infoItem._id}>
           <Card
+            idPaintingArtist={id}
+            artistPageInfo={infoItem}
             clickHandler={clickHandler}
-            idAuthor={idArtist}
+            deleteArtistPaintingHandler={deleteArtistPaintingHandler}
             favoritePaintingHandler={favoritePaintingHandler}
-            cardInfo={infoItem}
-            isArtistPage={isArtistPage}
+          />
+        </div>
+      ))}
+      {mainPageInfo && mainPageInfo!.map((infoItem) => (
+        <div className={style.cardList__card} key={infoItem._id}>
+          <Card
+            mainPageInfo={infoItem}
+            clickHandler={clickHandler}
           />
         </div>
       ))}

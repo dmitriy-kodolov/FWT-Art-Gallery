@@ -1,8 +1,8 @@
 import { configureStore } from '@reduxjs/toolkit';
 import authorizationSlice from './slices/authorizationSlice';
 import changeThemeSlice from './slices/changeThemeSlice';
-import getArtistsSlice from './slices/getArtistsSlice';
-import getPaintingsSlice from './slices/getPaintingsSlice';
+import getArtistsSlice from './slices/artistsSlice';
+import getPaintingsSlice from './slices/paintingsSlice';
 import registrationSlice from './slices/registrationSlice';
 
 const store = configureStore({

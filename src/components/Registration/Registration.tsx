@@ -1,3 +1,5 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
+/* eslint-disable max-len */
 import React, { FC, useEffect, useRef } from 'react';
 import cn from 'classnames/bind';
 import { SubmitHandler, useForm } from 'react-hook-form';
@@ -13,29 +15,38 @@ import { ReactComponent as Exit } from '../../assets/smallCloseBtn.svg';
 import useOutsideClick from '../../hooks/useOutsideClick';
 import { ControlSchema } from '../../types/types';
 import { changeRegistration, fetchRegistration } from '../../store/slices/registrationSlice';
-import { useAppDispatch } from '../../hooks/redux';
+import { useAppDispatch, useAppSelector } from '../../hooks/redux';
 import { changeIsAuth, changeIsOpenModalAuth } from '../../store/slices/authorizationSlice';
 
 const cx = cn.bind(style);
 
 const schema = yup.object({
-  email: yup.string().email().required('Enter your email address')
-    .max(50, 'Please make sure that youve entered your login and password correctly'),
-  password: yup.string().required('Enter your password')
-    .min(8, 'Please make sure that youve entered your login and password correctly')
-    .matches(/[a-zA-Z0-9]/, 'Please make sure that youve entered your login and password correctly'),
-  confirmPassword: yup.string().required('Enter your password')
-    .min(8, 'Please make sure that youve entered your login and password correctly')
-    .matches(/[a-zA-Z0-9]/, 'Please make sure that youve entered your login and password correctly'),
+//   username: yup.string().email().required('Enter your email address')
+//     .max(50, 'Please make sure that youve entered your login and password correctly'),
+//   password: yup.string().required('Enter your password')
+//     .min(8, 'Please make sure that youve entered your login and password correctly')
+//     .matches(/[a-zA-Z0-9]/, 'Please make sure that youve entered your login and password correctly'),
+//   confirmPassword: yup.string().required('Enter your password')
+//     .min(8, 'Please make sure that youve entered your login and password correctly')
+//     .matches(/[a-zA-Z0-9]/, 'Please make sure that youve entered your login and password correctly'),
 }).required();
 
 const Registration: FC = () => {
   const dispatch = useAppDispatch();
+  const { registration: { errorRegistrat } } = useAppSelector((state) => state);
+  const { auth: { errorAuth } } = useAppSelector((state) => state);
   const {
     register, handleSubmit, control, setError, setValue, formState: { errors },
   } = useForm<ControlSchema>({
     resolver: yupResolver(schema),
   });
+
+  useEffect(() => {
+    if (!errorRegistrat && !errorAuth) {
+      dispatch(changeRegistration(false));
+      dispatch(changeIsAuth(true));
+    }
+  }, [errorRegistrat]);
 
   const onSubmit: SubmitHandler<ControlSchema> = async (data) => {
     if (data.confirmPassword !== data.password) {
@@ -44,9 +55,7 @@ const Registration: FC = () => {
       return setValue('confirmPassword', '');
     }
     delete data.confirmPassword;
-    await dispatch(fetchRegistration(data));
-    dispatch(changeRegistration(false));
-    return dispatch(changeIsAuth(true));
+    return dispatch(fetchRegistration(data));
   };
 
   const ref = useRef <HTMLDivElement>(null) as React.MutableRefObject<HTMLInputElement>;
@@ -81,12 +90,12 @@ const Registration: FC = () => {
         <span className={style.registration__nameModal}>СREATE YOUR PROFILE</span>
         <Input
           control={control}
-          {...register('email')}
+          {...register('username')}
           type="email"
-          name="email"
+          name="username"
           placeholder="Email"
           className={style.registration__input}
-          errorMessage={errors.email?.message || false}
+          errorMessage={errors.username?.message || false}
         >
           <UserLogo />
         </Input>

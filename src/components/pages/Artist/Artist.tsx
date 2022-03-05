@@ -1,15 +1,15 @@
 import React, { FC, useEffect, useState } from 'react';
 import cn from 'classnames/bind';
-import { useNavigate, useParams, useLocation } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import style from './style.module.scss';
 import CardList from '../../CardList';
-import { fetchArtists } from '../../../store/slices/getArtistsSlice';
+import { fetchArtist, fetchDeleteArtistsPainting } from '../../../store/slices/artistsSlice';
 import { useAppSelector, useAppDispatch } from '../../../hooks/redux';
 import ArtistInfo from '../../ArtistInfo';
 import Loader from '../../Loader';
 import Slider from '../../Slider';
 import { patchFavoritePainting } from '../../../utils/api/methods';
-import { PatchFavoritePaintingRequest } from '../../../types/types';
+import { DeleteArtistPainting, PatchFavoritePaintingRequest } from '../../../types/types';
 import ModalImage from '../../ModalImage/ModalImage';
 
 const cx = cn.bind(style);
@@ -19,23 +19,19 @@ const Artist: FC = () => {
   const navigate = useNavigate();
   const {
     theme: { isDarkTheme },
-    artists: { artists, error, loading },
+    artists: { artist, error, loading },
   } = useAppSelector((state) => state);
   const { id } = useParams();
-  const { pathname } = useLocation();
-  const isArtistPage = !!pathname.indexOf('artist');
   const [isOpenPaintingLoader, setIsOpenPaintingLoader] = useState(false);
   const [isOpenSlider, setIsOpenSlider] = useState(false);
-  const [curentIdPainting, setCurentIdPainting] = useState(0);
+  const [curentIdPainting, setCurentIdPainting] = useState<string | number>();
 
   const favoritePaintingHandler = (payload: PatchFavoritePaintingRequest) => {
     patchFavoritePainting(payload);
   };
 
   useEffect(() => {
-    if (!artists.length) {
-      dispatch(fetchArtists());
-    }
+    dispatch(fetchArtist(id!));
   }, []);
 
   const artistClassName = cx('artist', { artist_addLightTheme: !isDarkTheme });
@@ -52,7 +48,11 @@ const Artist: FC = () => {
     console.log('delete'); // здесь пока затычка
   };
 
-  const openHandler = (idPainting: number) => {
+  const deleteArtistPaintingHandler = (body: DeleteArtistPainting) => {
+    dispatch(fetchDeleteArtistsPainting(body));
+  };
+
+  const openHandler = (idPainting: string | number) => {
     setIsOpenSlider(true);
     setCurentIdPainting(idPainting);
   };
@@ -71,7 +71,7 @@ const Artist: FC = () => {
     <div className={artistClassName}>
       {isOpenPaintingLoader && <ModalImage setIsOpenPaintingLoader={setIsOpenPaintingLoader} />}
       <ArtistInfo
-        artistInfo={artists[+id! - 1]}
+        artistInfo={artist}
         isDarkTheme={isDarkTheme}
         backToMainHandler={backToMainHandler}
         deleteArtistHandler={deleteArtistHandler}
@@ -81,10 +81,10 @@ const Artist: FC = () => {
         isOpenSlider
         && (
         <Slider
-          paintings={artists[+id! - 1].paintings}
-          idArtist={+id!}
+          deleteArtistPaintingHandler={deleteArtistPaintingHandler}
+          paintings={artist.paintings}
           closeHandler={setIsOpenSlider}
-          curentIdPainting={curentIdPainting - 1}
+          curentIdPainting={+curentIdPainting!}
           setCurentIdPainting={setCurentIdPainting}
           isDarkTheme={isDarkTheme}
           favoritePaintingHandler={favoritePaintingHandler}
@@ -93,11 +93,10 @@ const Artist: FC = () => {
       }
       <CardList
         setIsOpenPaintingLoader={setIsOpenPaintingLoader}
-        isArtistPage={isArtistPage}
+        deleteArtistPaintingHandler={deleteArtistPaintingHandler}
         isDarkTheme={isDarkTheme}
-        idArtist={+id!}
         favoritePaintingHandler={favoritePaintingHandler}
-        info={typeof id === 'string' ? artists[+id - 1].paintings : artists[0].paintings}
+        artistPageInfo={artist}
         clickHandler={openHandler}
       />
     </div>

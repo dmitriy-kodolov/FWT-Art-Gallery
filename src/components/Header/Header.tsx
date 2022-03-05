@@ -1,6 +1,7 @@
 import React, { FC, useEffect, useState } from 'react';
 import cn from 'classnames/bind';
 import Cookies from 'js-cookie';
+import { useNavigate } from 'react-router-dom';
 import { ReactComponent as Logo } from '../../assets/Logo.svg';
 import { ReactComponent as ThemeIcon } from '../../assets/ThemeIcon.svg';
 import { ReactComponent as Menu } from '../../assets/Menu.svg';
@@ -18,6 +19,7 @@ const cx = cn.bind(style);
 
 const Header: FC = () => {
   const dispatch = useAppDispatch();
+  const navigate = useNavigate();
   const {
     theme: { isDarkTheme },
     auth: { isAuthOpen, isAuth, errorAuth },
@@ -34,6 +36,13 @@ const Header: FC = () => {
     dispatch(changeIsAuth(flag));
   };
 
+  const logoutHandler = () => {
+    Cookies.remove('accessToken');
+    Cookies.remove('refreshToken');
+    dispatch(changeIsAuth(false));
+    navigate(-1);
+  };
+
   useEffect(() => {
     dispatch(setTheme(JSON.parse(Cookies.get('isDarkTheme') || 'true')));
     dispatch(changeIsAuth(!!Cookies.get('accessToken')));
@@ -41,7 +50,6 @@ const Header: FC = () => {
 
   if (errorAuth && errorRegistrat) {
     changeIsAuthorization(false);
-    alert('Не удалось');
   }
 
   return (
@@ -78,10 +86,7 @@ const Header: FC = () => {
         {isAuth && (
         <Button
           className={style.header__logInBtn}
-          onClick={() => {
-            Cookies.remove('accessToken');
-            dispatch(changeIsAuth(false));
-          }}
+          onClick={logoutHandler}
           isDarkTheme={isDarkTheme}
         >
           LOG OUT

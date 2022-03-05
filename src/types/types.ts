@@ -1,15 +1,20 @@
-export type Schema = 'email' | 'password' | 'confirmPassword' | 'paintingName' | 'yearOfCreated';
+export type Schema = 'username' | 'password' | 'confirmPassword' | 'paintingName' | 'yearOfCreation';
 
 export type ControlSchema = {
-  email: string,
+  username: string,
   password: string,
   confirmPassword?: string,
   paintingName?: string,
-  yearOfCreated?: number
+  yearOfCreation?: number
+};
+
+export type DeleteArtistPainting = {
+  idArtist: string,
+  idPainting: string,
 };
 
 export type PatchFavoritePaintingRequest = {
-  id: number,
+  id: string,
   body: {
     painting: string,
   }
@@ -17,33 +22,74 @@ export type PatchFavoritePaintingRequest = {
 
 export type AuthResponse = {
   accessToken: string,
-  user: {
-    email: string,
-    id: number
-  }
-
+  refreshToken: string,
 };
 
-export type Artist = {
+export type AuthorPaintings = {
+  _id: string,
+  name: string,
+  yearOfCreation?: string,
+  image: Image
+};
+
+export type Genre = {
+  _id: string,
+  name: string,
+};
+
+export type Image = {
+  _id: string,
+  src: string,
+  webp: string,
+  src2x: string,
+  webp2x: string,
+  original: string,
+};
+
+export type ArtistPainting = {
+  _id: string,
+  name: string,
+  yearOfCreation?: string,
+  image: Image,
+  artist: string,
+};
+
+export type StaticArtist = {
   genres: string[],
-  id: number,
+  _id: string,
+  name: string,
+  yearsOfLife: string,
+  description: string,
+  __v: string,
+  mainPainting: ArtistPainting,
+};
+
+export type GetAuthArtistsRespons = {
+  data: AuthArtist[]
+};
+
+export type AuthArtist = {
+  paintings: ArtistPainting[],
+  genres: Genre[],
+  _id: string,
   name: string,
   description: string,
   yearsOfLife: string,
-  mainPainting: string,
-  birthCity: string,
-  avatar: string,
-  paintings: AuthorPaintings[],
+  avatar: {
+    _id: string,
+    src: string,
+    webp: string,
+    src2x: string,
+    webp2x: string,
+    original: string,
+  }
+  __v: string,
+  mainPainting: ArtistPainting,
+  country: string
 };
 
-export interface Painting extends AuthorPaintings {
-  authorName?: string,
-  yearOfAuthor?: string,
-}
-
-export type AuthorPaintings = {
-  id: number,
-  name: string,
-  yearOfCreated?: string,
-  painting: string
+export type RejectRequest = {
+  statusCode: number,
+  message: string,
+  error: string
 };

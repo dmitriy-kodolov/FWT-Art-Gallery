@@ -16,8 +16,8 @@ const App = () => {
 
   return (
     <div className={appClassName}>
-      <Header />
       <BrowserRouter>
+        <Header />
         <Routes>
           <Route path="/FWT-Art-Gallery" element={<Main />} />
           <Route path="/artist/:id" element={<Artist />} />

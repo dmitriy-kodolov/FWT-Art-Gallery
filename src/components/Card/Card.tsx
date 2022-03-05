@@ -1,6 +1,9 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
 import cn from 'classnames/bind';
 import React, { FC } from 'react';
-import { Painting, PatchFavoritePaintingRequest } from '../../types/types';
+import {
+  ArtistPainting, DeleteArtistPainting, PatchFavoritePaintingRequest, StaticArtist,
+} from '../../types/types';
 import Button from '../Button';
 import style from './style.module.scss';
 import { ReactComponent as EditIcon } from '../../assets/editIcon.svg';
@@ -8,63 +11,72 @@ import { ReactComponent as DeleteIcon } from '../../assets/deleteIcon.svg';
 import { ReactComponent as Favorite } from '../../assets/favoriteIcon.svg';
 
 type CardProps = {
-  cardInfo: Painting,
-  clickHandler: (idPainting: number) => void,
-  isArtistPage?: boolean,
-  idAuthor?: number,
+  mainPageInfo?: StaticArtist,
+  artistPageInfo?: ArtistPainting,
+  idPaintingArtist?: number,
+  clickHandler: (idPainting: string | number) => void,
   favoritePaintingHandler?: (payload: PatchFavoritePaintingRequest) => void,
+  deleteArtistPaintingHandler?: (body: DeleteArtistPainting) => void,
 };
 
 const cx = cn.bind(style);
 
+const baseUrl = process.env.REACT_APP_BASE_URL_DEV;
+
 const Card: FC<CardProps> = ({
-  cardInfo: {
-    id, authorName, yearOfAuthor, name, yearOfCreated, painting,
-  }, clickHandler, isArtistPage, favoritePaintingHandler, idAuthor,
+  mainPageInfo, artistPageInfo, idPaintingArtist, deleteArtistPaintingHandler,
+  clickHandler, favoritePaintingHandler,
 }) => {
-  const slidePanelClassName = cx('card__slidePanel', { card__slidePanel_abc: isArtistPage });
+  const slidePanelClassName = cx('card__slidePanel', { card__slidePanel_abc: artistPageInfo });
+  console.log(artistPageInfo);
 
   return (
-    <div className={style.card} onClick={() => clickHandler(id)}>
+    <div
+      className={style.card}
+      onClick={() => clickHandler(mainPageInfo!?._id || idPaintingArtist!)}
+    >
       <div className={slidePanelClassName}>
-        {isArtistPage && (
+        {artistPageInfo && (
           <span>
-            {name}
+            {artistPageInfo!.name}
             {' '}
-            {yearOfCreated}
+            {artistPageInfo!.yearOfCreation}
           </span>
         )}
-        {!isArtistPage && (
+        {mainPageInfo && (
           <>
-            <span>{authorName}</span>
-            <span className={style.card__authorYear}>{yearOfAuthor}</span>
-            {name && (
+            <span>{mainPageInfo!.name}</span>
+            <span className={style.card__authorYear}>{mainPageInfo!.yearsOfLife}</span>
+            {mainPageInfo.mainPainting.name && (
             <span className={style.card__paintingName}>
               Name:
               {' '}
-              {name}
+              {mainPageInfo.mainPainting.name}
             </span>
             )}
-            {yearOfCreated && (
+            {mainPageInfo.mainPainting.yearOfCreation && (
             <span className={style.card__paintingCreated}>
               Created:
               {' '}
-              {yearOfCreated}
+              {mainPageInfo.mainPainting.yearOfCreation}
             </span>
             )}
           </>
         )}
       </div>
-      <img className={style.card__img} src={painting} alt="#paintOfAuthor" />
-      {isArtistPage && (
+      {mainPageInfo && <img className={style.card__img} src={`${baseUrl!}${mainPageInfo.mainPainting.image.src}`} alt="#paintOfAuthor" />}
+      {/* TODO webp сделать  */}
+      {artistPageInfo && <img className={style.card__img} src={`${baseUrl!}${artistPageInfo.image.src}`} alt="#paintOfAuthor" />}
+      {/* TODO webp сделать  */}
+      {artistPageInfo && (
       <div className={style.card__changeBtns}>
         <Button
           aria-label="favorite button"
           className={style.card__changeBtn}
-          onClick={(e) => {
-            e.stopPropagation();
-            favoritePaintingHandler!({ id: idAuthor!, body: { painting } });
-          }}
+          // onClick={(e) => {
+          //   e.stopPropagation();
+          //   favoritePaintingHandler!({ id: artistPageInfo!._id, body: { cardInfo });
+          // }}
         >
           <Favorite />
         </Button>
@@ -78,7 +90,12 @@ const Card: FC<CardProps> = ({
         <Button
           aria-label="delete button"
           className={style.card__changeBtn}
-          onClick={() => {}}
+          onClick={(e) => {
+            e.stopPropagation();
+            deleteArtistPaintingHandler!(
+              { idArtist: artistPageInfo?.artist, idPainting: artistPageInfo?._id },
+            );
+          }}
         >
           <DeleteIcon />
         </Button>

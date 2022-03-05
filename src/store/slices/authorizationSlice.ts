@@ -6,7 +6,7 @@ import { postAuthorization } from '../../utils/api/methods';
 type AuthorizationSlice = {
   isAuthOpen: boolean,
   isAuth: boolean,
-  errorAuth: boolean,
+  errorAuth?: boolean,
 };
 
 const initialState: AuthorizationSlice = {
@@ -20,7 +20,7 @@ export const fetchAuthorization = createAsyncThunk(
   async (body: ControlSchema) => {
     const response = await postAuthorization(body);
     Cookies.set('accessToken', `${response.data.accessToken}`);
-
+    Cookies.set('refreshToken', `${response.data.refreshToken}`);
     return (response.data);
   },
 );
@@ -34,11 +34,15 @@ const authorizationSlice = createSlice({
     },
     changeIsAuth(state, action: PayloadAction<boolean>) {
       state.isAuth = action.payload;
+      state.errorAuth = !action.payload;
     },
   },
   extraReducers: (builder) => {
     builder.addCase(fetchAuthorization.fulfilled, (state) => {
+      console.log('fullfiled');
+
       state.isAuth = true;
+      state.errorAuth = false;
     });
     builder.addCase(fetchAuthorization.rejected, (state) => {
       state.errorAuth = true;

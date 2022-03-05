@@ -1,7 +1,7 @@
 @use '../../assets/variables' as v;
 @import '../../assets/mobile';
-
 .accardeon{
+    cursor: pointer;
     gap: 5px;
     display: flex;
     flex-direction: row;

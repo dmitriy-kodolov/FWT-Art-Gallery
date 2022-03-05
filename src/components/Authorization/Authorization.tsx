@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
 import React, {
   FC, useEffect, useRef,
 } from 'react';
@@ -15,32 +16,45 @@ import { ReactComponent as Exit } from '../../assets/smallCloseBtn.svg';
 import useOutsideClick from '../../hooks/useOutsideClick';
 import { ControlSchema } from '../../types/types';
 import { changeIsAuth, changeIsOpenModalAuth, fetchAuthorization } from '../../store/slices/authorizationSlice';
-import { useAppDispatch } from '../../hooks/redux';
+import { useAppDispatch, useAppSelector } from '../../hooks/redux';
 import { changeRegistration } from '../../store/slices/registrationSlice';
 
 const cx = cn.bind(style);
-
+// TODO вернуть обратно перед заливкой
+// const schema = yup.object({
+//   username: yup.string().email().required('Enter your email address')
+//     .max(50, 'Please make sure that youve entered your login and password correctly'),
+//   password: yup.string().required('Enter your password')
+//     .min(8, 'Password must be more than 8 symbols and have
+//  at least one number, one capital letter and one special symbol')
+//     .matches(/[a-zA-Z0-9]/, 'Password must be more than 8 symbols
+//  and have at least one number, one capital letter and one special symbol'),
+// }).required();
 const schema = yup.object({
-  email: yup.string().email().required('Enter your email address')
+  username: yup.string()
     .max(50, 'Please make sure that youve entered your login and password correctly'),
-  password: yup.string().required('Enter your password')
-    .min(8, 'Password must be more than 8 symbols and have at least one number, one capital letter and one special symbol')
-    .matches(/[a-zA-Z0-9]/, 'Password must be more than 8 symbols and have at least one number, one capital letter and one special symbol'),
+  password: yup.string().required('Enter your password'),
 }).required();
 
 const Authorization: FC = () => {
   const dispatch = useAppDispatch();
+  const { auth: { errorAuth } } = useAppSelector((state) => state);
+
   const {
     register, handleSubmit, control, formState: { errors },
   } = useForm<ControlSchema>({
     resolver: yupResolver(schema),
   });
 
-  const onSubmit: SubmitHandler<ControlSchema> = async (data) => {
-    await dispatch(fetchAuthorization(data));
-    console.log(data);
-    dispatch(changeIsOpenModalAuth(false));
-    dispatch(changeIsAuth(true));
+  useEffect(() => {
+    if (!errorAuth) {
+      dispatch(changeIsOpenModalAuth(false));
+      dispatch(changeIsAuth(true));
+    }
+  }, [errorAuth]);
+
+  const onSubmit: SubmitHandler<ControlSchema> = (data) => {
+    dispatch(fetchAuthorization(data));
   };
 
   const keyHandler = (e: { key: string; }) => {
@@ -74,12 +88,12 @@ const Authorization: FC = () => {
         <span className={style.authorization__nameModal}>AUTHORIZATION</span>
         <Input
           control={control}
-          {...register('email')}
+          {...register('username')}
           type="email"
           placeholder="Email"
-          name="email"
+          name="username"
           className={style.authorization__input}
-          errorMessage={errors.email?.message || false}
+          errorMessage={errors.username?.message || false}
         >
           <UserLogo />
         </Input>

@@ -81,13 +81,16 @@
     }
     &__closeBtn{
         position: absolute;
-        background: inherit;
+        background: none;
         top: 20px;
         right: 60px;
         padding: 0;
         border: none !important;
         width: 12px;
         height: 12px;
+        svg{
+            fill: v.$lightThemeColor
+        }
         @include tablet {
             right: 50px;
         }

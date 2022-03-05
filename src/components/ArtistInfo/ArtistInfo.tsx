@@ -6,7 +6,7 @@ import { ReactComponent as EditIcon } from '../../assets/editIcon.svg';
 import { ReactComponent as DeleteIcon } from '../../assets/deleteIcon.svg';
 import style from './style.module.scss';
 import Button from '../Button';
-import { Artist } from '../../types/types';
+import { AuthArtist } from '../../types/types';
 import Accardeon from '../Accardeon';
 
 type ArtistInfoProps = {
@@ -14,10 +14,12 @@ type ArtistInfoProps = {
   backToMainHandler: () => void,
   deleteArtistHandler: () => void,
   editArtistHandler: () => void,
-  artistInfo: Artist,
+  artistInfo: AuthArtist,
 };
 
 const cx = cn.bind(style);
+
+const baseUrl = process.env.REACT_APP_BASE_URL_DEV;
 
 const ArtistInfo: FC<ArtistInfoProps> = ({
   backToMainHandler,
@@ -25,7 +27,7 @@ const ArtistInfo: FC<ArtistInfoProps> = ({
   editArtistHandler,
   isDarkTheme,
   artistInfo: {
-    avatar, birthCity, description, genres, name, yearsOfLife,
+    avatar, description, genres, name, yearsOfLife, country,
   },
 }) => {
   const artistInfoClassName = cx('artistInfo', { artistInfo_addLightTheme: !isDarkTheme });
@@ -60,7 +62,8 @@ const ArtistInfo: FC<ArtistInfoProps> = ({
         </Button>
       </div>
       <div className={style.artistInfo__portrait}>
-        <LazyLoadImage src={avatar} effect="blur" width="100%" height="100%" />
+        {/* TODO надо доделать путь webp */}
+        <LazyLoadImage src={`${baseUrl}${avatar.src}`} effect="blur" width="100%" height="100%" />
       </div>
       <div className={style.artistInfo__info}>
         <span>{name}</span>
@@ -68,9 +71,13 @@ const ArtistInfo: FC<ArtistInfoProps> = ({
       </div>
       <div className={style.artistInfo__descriprion}>
         <Accardeon text={description} isDarkTheme={isDarkTheme} />
-        <span>{birthCity}</span>
+        <span>{country}</span>
         <div className={style.artistInfo__genres}>
-          {genres.map((genre, id) => <p key={id} className={style.artistInfo__genre}>{genre}</p>)}
+          {genres.map((genre) => (
+            <p key={genre._id} className={style.artistInfo__genre}>
+              {genre.name}
+            </p>
+          ))}
         </div>
       </div>
     </div>

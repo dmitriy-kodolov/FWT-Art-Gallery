@@ -3,36 +3,29 @@ import { useNavigate } from 'react-router-dom';
 import { useAppSelector, useAppDispatch } from '../../../hooks/redux';
 import Loader from '../../Loader';
 import CardList from '../../CardList';
-import { fetchPaintings } from '../../../store/slices/getPaintingsSlice';
+import { fetchMainPaintings } from '../../../store/slices/paintingsSlice';
 
 const Main: FC = () => {
   const {
     theme: { isDarkTheme },
     paintings: { paintings, error, loading },
+    auth: { isAuth },
   } = useAppSelector((state) => state);
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
 
   useEffect(() => {
-    dispatch(fetchPaintings());
+    dispatch(fetchMainPaintings());
   }, []);
 
-  const clickHandler = (idPainting: number) => {
-    navigate(`../artist/${idPainting}`);
-  };
+  const clickHandler = (idPainting: string | number) => (isAuth ? navigate(`../artist/${idPainting}`) : alert('xyi'));
 
-  if (error) {
-    return <h1>Error</h1>;
-  }
+  if (error) <h1>Error</h1>;
 
-  if (loading) {
-    return (
-      <Loader isDarkTheme={isDarkTheme} />
-    );
-  }
+  if (loading) <Loader isDarkTheme={isDarkTheme} />;
 
   return (
-    <CardList isDarkTheme={isDarkTheme} info={paintings} clickHandler={clickHandler} />
+    <CardList isDarkTheme={isDarkTheme} mainPageInfo={paintings} clickHandler={clickHandler} />
   );
 };
 

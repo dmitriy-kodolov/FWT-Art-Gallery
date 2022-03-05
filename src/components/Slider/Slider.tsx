@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
 import React, { FC, useEffect, useRef } from 'react';
 import cn from 'classnames/bind';
 import style from './style.module.scss';
@@ -8,7 +9,7 @@ import { ReactComponent as EditIcon } from '../../assets/editIcon.svg';
 import { ReactComponent as DeleteIcon } from '../../assets/deleteIcon.svg';
 import { ReactComponent as Favorite } from '../../assets/favoriteIcon.svg';
 import Button from '../Button/Button';
-import { AuthorPaintings, PatchFavoritePaintingRequest } from '../../types/types';
+import { AuthorPaintings, DeleteArtistPainting, PatchFavoritePaintingRequest } from '../../types/types';
 
 const cx = cn.bind(style);
 
@@ -19,12 +20,12 @@ type SliderProps = {
   curentIdPainting: number,
   setCurentIdPainting: (id: number) => void,
   favoritePaintingHandler: (payload: PatchFavoritePaintingRequest) => void,
-  idArtist: number,
+  deleteArtistPaintingHandler: (body: DeleteArtistPainting) => void,
 };
 
 const Slider: FC<SliderProps> = ({
   curentIdPainting, isDarkTheme, closeHandler, paintings, setCurentIdPainting,
-  favoritePaintingHandler, idArtist,
+  favoritePaintingHandler, deleteArtistPaintingHandler,
 }) => {
   const circle = cx(
     'sliderContainer__circle',
@@ -41,16 +42,16 @@ const Slider: FC<SliderProps> = ({
 
   const nexpPaintingHandler = () => {
     if (curentIdPainting === paintings.length - 1) {
-      return setCurentIdPainting(1);
+      return setCurentIdPainting(0);
     }
-    return setCurentIdPainting(curentIdPainting + 2);
+    return setCurentIdPainting(curentIdPainting + 1);
   };
 
   const prevPaintingHandler = () => {
     if (curentIdPainting === 0) {
-      return setCurentIdPainting(paintings.length);
+      return setCurentIdPainting(paintings.length - 1);
     }
-    return setCurentIdPainting(curentIdPainting);
+    return setCurentIdPainting(curentIdPainting - 1);
   };
 
   const keyHandler = (e: { key: string; }) => {
@@ -86,18 +87,19 @@ const Slider: FC<SliderProps> = ({
         <Exit />
       </Button>
       <div className={style.sliderContainer__item}>
-        <img src={paintings[curentIdPainting].painting} alt="" />
+        <img src={paintings[curentIdPainting].image.src} alt="" />
+        {/* TODO webp */}
         <div className={style.sliderContainer__buttons}>
           <Button
             aria-label="favorite button"
             isDarkTheme={isDarkTheme}
             className={btnClassName}
-            onClick={() => favoritePaintingHandler({
-              id: idArtist!,
-              body: {
-                painting: paintings[curentIdPainting].painting,
-              },
-            })}
+            // onClick={() => favoritePaintingHandler({
+            //   id: 0,
+            //   body: {
+            //     painting: paintings[curentIdPainting].image,
+            //   },
+            // })}
           >
             <Favorite />
           </Button>
@@ -113,22 +115,22 @@ const Slider: FC<SliderProps> = ({
             aria-label="delete button"
             isDarkTheme={isDarkTheme}
             className={btnClassName}
-            onClick={() => {}}
+            onClick={() => deleteArtistPaintingHandler}
           >
             <DeleteIcon />
           </Button>
         </div>
         <div className={style.sliderContainer__bottomMenu}>
           <div className={style.sliderContainer__circles}>
-            {paintings.map((item) => (
+            {paintings.map((paintingsInfo, id) => (
               <div
                 onClick={() => {
-                  setCurentIdPainting(item.id);
+                  setCurentIdPainting(id);
                 }}
-                className={curentIdPainting + 1 === item.id
+                className={curentIdPainting === id
                   ? circle
                   : style.sliderContainer__circle}
-                key={item.id}
+                key={paintingsInfo._id}
               />
             ))}
           </div>
@@ -136,10 +138,10 @@ const Slider: FC<SliderProps> = ({
             <span className={style.sliderContainer__text}>
               {paintings[curentIdPainting].name}
             </span>
-            {paintings[curentIdPainting].yearOfCreated
+            {paintings[curentIdPainting].yearOfCreation
             && (
             <span className={style.sliderContainer__text}>
-              {paintings[curentIdPainting].yearOfCreated}
+              {paintings[curentIdPainting].yearOfCreation}
             </span>
             )}
           </div>
