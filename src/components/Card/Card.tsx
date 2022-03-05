@@ -1,6 +1,7 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 import cn from 'classnames/bind';
 import React, { FC } from 'react';
+import LazyLoad from 'react-lazyload';
 import {
   ArtistPainting, DeleteArtistPainting, PatchFavoritePaintingRequest, StaticArtist,
 } from '../../types/types';
@@ -28,7 +29,6 @@ const Card: FC<CardProps> = ({
   clickHandler, favoritePaintingHandler,
 }) => {
   const slidePanelClassName = cx('card__slidePanel', { card__slidePanel_abc: artistPageInfo });
-  console.log(artistPageInfo);
 
   return (
     <div
@@ -64,15 +64,28 @@ const Card: FC<CardProps> = ({
           </>
         )}
       </div>
-      {mainPageInfo && <img className={style.card__img} src={`${baseUrl!}${mainPageInfo.mainPainting.image.src}`} alt="#paintOfAuthor" />}
-      {/* TODO webp сделать  */}
-      {artistPageInfo && <img className={style.card__img} src={`${baseUrl!}${artistPageInfo.image.src}`} alt="#paintOfAuthor" />}
-      {/* TODO webp сделать  */}
+      <LazyLoad height="100%">
+        {mainPageInfo
+        && (
+          <picture className={style.card__img}>
+            <source type="image/webp" srcSet={`${baseUrl!}${mainPageInfo.mainPainting.image.webp}`} />
+            <img className={style.card__img} src={`${baseUrl!}${mainPageInfo.mainPainting.image.src}`} alt="#paintOfAuthor" />
+          </picture>
+        )}
+        {artistPageInfo
+        && (
+        <picture>
+          <source type="image/webp" srcSet={`${baseUrl!}${artistPageInfo.image.webp}`} />
+          <img className={style.card__img} src={`${baseUrl!}${artistPageInfo.image.src}`} alt="#paintOfAuthor" />
+        </picture>
+        )}
+      </LazyLoad>
       {artistPageInfo && (
       <div className={style.card__changeBtns}>
         <Button
           aria-label="favorite button"
           className={style.card__changeBtn}
+          // TODO
           // onClick={(e) => {
           //   e.stopPropagation();
           //   favoritePaintingHandler!({ id: artistPageInfo!._id, body: { cardInfo });

@@ -87,13 +87,16 @@ const Slider: FC<SliderProps> = ({
         <Exit />
       </Button>
       <div className={style.sliderContainer__item}>
-        <img src={paintings[curentIdPainting].image.src} alt="" />
-        {/* TODO webp */}
+        <picture>
+          <source type="image/webp" srcSet={paintings[curentIdPainting].image.webp} />
+          <img src={paintings[curentIdPainting].image.src} alt="" />
+        </picture>
         <div className={style.sliderContainer__buttons}>
           <Button
             aria-label="favorite button"
             isDarkTheme={isDarkTheme}
             className={btnClassName}
+            // TODO
             // onClick={() => favoritePaintingHandler({
             //   id: 0,
             //   body: {

@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/no-unused-vars */
 import React, {
   FC, useEffect, useRef,
 } from 'react';
@@ -20,20 +19,12 @@ import { useAppDispatch, useAppSelector } from '../../hooks/redux';
 import { changeRegistration } from '../../store/slices/registrationSlice';
 
 const cx = cn.bind(style);
-// TODO вернуть обратно перед заливкой
-// const schema = yup.object({
-//   username: yup.string().email().required('Enter your email address')
-//     .max(50, 'Please make sure that youve entered your login and password correctly'),
-//   password: yup.string().required('Enter your password')
-//     .min(8, 'Password must be more than 8 symbols and have
-//  at least one number, one capital letter and one special symbol')
-//     .matches(/[a-zA-Z0-9]/, 'Password must be more than 8 symbols
-//  and have at least one number, one capital letter and one special symbol'),
-// }).required();
 const schema = yup.object({
-  username: yup.string()
+  username: yup.string().email().required('Enter your email address')
     .max(50, 'Please make sure that youve entered your login and password correctly'),
-  password: yup.string().required('Enter your password'),
+  password: yup.string().required('Enter your password')
+    .min(8, 'Password must be more than 8 symbols and have at least one number, one capital letter and one special symbol')
+    .matches(/[a-zA-Z0-9]/, 'Password must be more than 8 symbols and have at least one number, one capital letter and one special symbol'),
 }).required();
 
 const Authorization: FC = () => {

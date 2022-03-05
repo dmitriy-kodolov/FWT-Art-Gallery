@@ -1,6 +1,5 @@
 import React, { FC } from 'react';
 import cn from 'classnames/bind';
-import { LazyLoadImage } from 'react-lazy-load-image-component';
 import { ReactComponent as BackIcon } from '../../assets/backIcon.svg';
 import { ReactComponent as EditIcon } from '../../assets/editIcon.svg';
 import { ReactComponent as DeleteIcon } from '../../assets/deleteIcon.svg';
@@ -62,8 +61,10 @@ const ArtistInfo: FC<ArtistInfoProps> = ({
         </Button>
       </div>
       <div className={style.artistInfo__portrait}>
-        {/* TODO надо доделать путь webp */}
-        <LazyLoadImage src={`${baseUrl}${avatar.src}`} effect="blur" width="100%" height="100%" />
+        <picture>
+          <source type="image/webp" srcSet={`${baseUrl!}${avatar.webp}`} />
+          <img src={`${baseUrl}${avatar.src}`} alt="#paintOfAuthor" />
+        </picture>
       </div>
       <div className={style.artistInfo__info}>
         <span>{name}</span>

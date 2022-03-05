@@ -1,5 +1,3 @@
-/* eslint-disable @typescript-eslint/no-unused-vars */
-/* eslint-disable max-len */
 import React, { FC, useEffect, useRef } from 'react';
 import cn from 'classnames/bind';
 import { SubmitHandler, useForm } from 'react-hook-form';
@@ -21,14 +19,14 @@ import { changeIsAuth, changeIsOpenModalAuth } from '../../store/slices/authoriz
 const cx = cn.bind(style);
 
 const schema = yup.object({
-//   username: yup.string().email().required('Enter your email address')
-//     .max(50, 'Please make sure that youve entered your login and password correctly'),
-//   password: yup.string().required('Enter your password')
-//     .min(8, 'Please make sure that youve entered your login and password correctly')
-//     .matches(/[a-zA-Z0-9]/, 'Please make sure that youve entered your login and password correctly'),
-//   confirmPassword: yup.string().required('Enter your password')
-//     .min(8, 'Please make sure that youve entered your login and password correctly')
-//     .matches(/[a-zA-Z0-9]/, 'Please make sure that youve entered your login and password correctly'),
+  username: yup.string().email().required('Enter your email address')
+    .max(50, 'Please make sure that youve entered your login and password correctly'),
+  password: yup.string().required('Enter your password')
+    .min(8, 'Please make sure that youve entered your login and password correctly')
+    .matches(/[a-zA-Z0-9]/, 'Please make sure that youve entered your login and password correctly'),
+  confirmPassword: yup.string().required('Enter your password')
+    .min(8, 'Please make sure that youve entered your login and password correctly')
+    .matches(/[a-zA-Z0-9]/, 'Please make sure that youve entered your login and password correctly'),
 }).required();
 
 const Registration: FC = () => {
