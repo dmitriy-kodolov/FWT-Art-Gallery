@@ -5,17 +5,21 @@ export type ControlSchema = {
   password: string,
   confirmPassword?: string,
   name?: string,
-  yearOfCreation?: number
+  yearOfCreation?: string
 };
 
 export type PostNewPaintingRequest = {
-  id: string,
+  idArtist: string,
   body: {
     name: string,
     yearOfCreation: string,
-    image: File,
+    image?: File,
   }
 };
+
+export interface PatchPainintgInfoRequest extends PostNewPaintingRequest {
+  idPainting: string,
+}
 
 export type DeleteArtistPainting = {
   idArtist: string,

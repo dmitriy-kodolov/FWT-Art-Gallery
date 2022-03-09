@@ -20,11 +20,12 @@ type SliderProps = {
   setCurentIdPainting: (id: number) => void,
   favoritePaintingHandler: (payload: PatchFavoritePaintingRequest) => void,
   deleteArtistPaintingHandler: () => void,
+  editArtistPaintingHandler: () => void,
 };
 
 const Slider: FC<SliderProps> = ({
   curentIdPainting, isDarkTheme, closeHandler, paintings, setCurentIdPainting,
-  favoritePaintingHandler, deleteArtistPaintingHandler,
+  favoritePaintingHandler, deleteArtistPaintingHandler, editArtistPaintingHandler,
 }) => {
   const circle = cx(
     'sliderContainer__circle',
@@ -108,7 +109,7 @@ const Slider: FC<SliderProps> = ({
             aria-label="edit button"
             isDarkTheme={isDarkTheme}
             className={btnClassName}
-            onClick={() => {}}
+            onClick={editArtistPaintingHandler}
           >
             <EditIcon />
           </Button>

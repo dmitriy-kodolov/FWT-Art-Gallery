@@ -5,7 +5,7 @@ import {
   PatchFavoritePaintingRequest,
   ControlSchema, GetAuthArtistsRespons,
   AuthArtist, ArtistPainting, DeleteArtistPainting,
-  StaticArtist, AuthStaticArtist, PostNewPaintingRequest,
+  StaticArtist, AuthStaticArtist, PostNewPaintingRequest, PatchPainintgInfoRequest,
 } from '../../types/types';
 
 export const getAuthArtists = (): Promise<AxiosResponse<GetAuthArtistsRespons>> => instance.get('/artists');
@@ -26,13 +26,15 @@ export const patchFavoritePainting = ({ id, body }: PatchFavoritePaintingRequest
 
 export const deleteArtistPainting = ({ idArtist, idPainting }: DeleteArtistPainting): Promise<AxiosResponse<string>> => instance.delete(`artists/${idArtist}/paintings/${idPainting}`);
 
-export const postNewPainting = ({ id, body }: PostNewPaintingRequest):
+export const postNewPainting = ({ idArtist, body }: PostNewPaintingRequest):
 Promise<AxiosResponse<any>> => {
-  console.log(body.image);
-
   const formData = new FormData();
   formData.append('name', body.name);
   formData.append('yearOfCreation', body.yearOfCreation);
-  formData.append('image', body.image);
-  return instance.post(`artists/${id}/paintings`, formData);
+  formData.append('image', body.image!);
+
+  return instance.post(`artists/${idArtist}/paintings`, formData);
 };
+
+export const patchPaintingInfo = ({ idArtist, idPainting, body }: PatchPainintgInfoRequest):
+Promise<AxiosResponse<any>> => instance.put(`artists/${idArtist}/paintings/${idPainting}`, body);

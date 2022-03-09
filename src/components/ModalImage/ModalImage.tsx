@@ -1,5 +1,5 @@
 import React, {
-  FC, ReactNode, useEffect, useRef, useState,
+  FC, useEffect, useRef, useState,
 } from 'react';
 import { useDropzone } from 'react-dropzone';
 import cn from 'classnames/bind';
@@ -14,11 +14,14 @@ import Button from '../Button';
 import Input from '../Input';
 import { ControlSchema } from '../../types/types';
 import useOutsideClick from '../../hooks/useOutsideClick';
-import { postNewPainting } from '../../utils/api/methods';
+import { patchPaintingInfo, postNewPainting } from '../../utils/api/methods';
 
 type ModalImageProps = {
-  children?: ReactNode,
+  paintingName?: string,
+  created?: string,
   idArtist: string,
+  idPainting?: string,
+  paintingSrc?: string,
   refreshArtistHandler: () => void,
   setIsOpenPaintingLoader: (flag: boolean) => void
 };
@@ -30,9 +33,11 @@ const schema = yup.object({
   yearOfCreation: yup.string().required(),
 }).required();
 
+const baseUrl = process.env.REACT_APP_BASE_URL_DEV;
+
 const ModalImage: FC<ModalImageProps> = ({
-  setIsOpenPaintingLoader,
-  idArtist, refreshArtistHandler,
+  setIsOpenPaintingLoader, paintingName, created,
+  idArtist, refreshArtistHandler, idPainting, paintingSrc,
 }) => {
   const ref = useRef <HTMLDivElement>(null) as React.MutableRefObject<HTMLInputElement>;
   const [myError, setMyError] = useState(true);
@@ -47,6 +52,10 @@ const ModalImage: FC<ModalImageProps> = ({
   const {
     register, handleSubmit, control, formState: { isValid },
   } = useForm<ControlSchema>({
+    defaultValues: {
+      name: paintingName || '',
+      yearOfCreation: created || 'null',
+    },
     mode: 'all',
     resolver: yupResolver(schema),
   });
@@ -63,21 +72,39 @@ const ModalImage: FC<ModalImageProps> = ({
   });
 
   const onSubmit: SubmitHandler<ControlSchema> = async (data) => {
-    if (acceptedFiles[0]) {
-      postNewPainting({
-        id: idArtist,
-        body:
-        {
-          yearOfCreation: data.yearOfCreation!.toString(),
-          name: data.name!,
-          image: acceptedFiles[0],
-        },
-      })
-        .then(() => {
-          setIsOpenPaintingLoader(false);
-          refreshArtistHandler();
+    // Возможно стоит вынести в отдельный хук
+    if (acceptedFiles[0] || paintingSrc) {
+      if (paintingName) {
+        patchPaintingInfo({
+          idArtist,
+          idPainting: idPainting as string,
+          body:
+          {
+            yearOfCreation: data.yearOfCreation!.toString(),
+            name: data.name!,
+          },
         })
-        .catch((message) => alert(message));
+          .then(() => {
+            setIsOpenPaintingLoader(false);
+            refreshArtistHandler();
+          })
+          .catch((message) => alert(message));
+      } else {
+        postNewPainting({
+          idArtist,
+          body:
+          {
+            yearOfCreation: data.yearOfCreation!.toString(),
+            name: data.name!,
+            image: acceptedFiles[0],
+          },
+        })
+          .then(() => {
+            setIsOpenPaintingLoader(false);
+            refreshArtistHandler();
+          })
+          .catch((message) => alert(message));
+      }
     }
   };
 
@@ -97,7 +124,7 @@ const ModalImage: FC<ModalImageProps> = ({
   }, []);
 
   useEffect(
-    () => ((isValid && !!acceptedFiles.length)
+    () => ((isValid && (!!acceptedFiles.length || paintingSrc))
       ? setMyError(false)
       : setMyError(true)),
     [isValid, acceptedFiles],
@@ -140,8 +167,9 @@ const ModalImage: FC<ModalImageProps> = ({
           />
         </div>
         <div {...getRootProps({ className: dropZoneClassName })}>
+          {paintingSrc && <img src={`${baseUrl!}${paintingSrc}`} alt="" className={style.addPainting__painting} />}
           {acceptedFiles[0] && <img src={URL.createObjectURL(acceptedFiles[0])} alt="" className={style.addPainting__painting} />}
-          {!acceptedFiles[0] && (
+          {!acceptedFiles[0] && !paintingSrc && (
           <div className={style.addPainting__dropZoneInfo}>
             <DropIcon />
             <span>Drag and Drop file here</span>

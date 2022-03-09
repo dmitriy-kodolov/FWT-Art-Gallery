@@ -16,12 +16,15 @@ type CardListProps = {
   isDarkTheme: boolean,
   setIsOpenPaintingLoader?: (flag: boolean) => void,
   favoritePaintingHandler?: (payload: PatchFavoritePaintingRequest) => void,
+  curentIdPaintingHandler?: (idPaintng: number) => void,
   deleteArtistPaintingHandler?: () => void,
+  editArtistPaintingHandler?: () => void,
 };
 
 const CardList: FC<CardListProps> = ({
   artistPageInfo, mainPageInfo, isDarkTheme, clickHandler, favoritePaintingHandler,
-  setIsOpenPaintingLoader, deleteArtistPaintingHandler,
+  setIsOpenPaintingLoader, deleteArtistPaintingHandler, editArtistPaintingHandler,
+  curentIdPaintingHandler,
 }) => {
   const cardlistClassName = cx(
     'cardList',
@@ -42,8 +45,10 @@ const CardList: FC<CardListProps> = ({
             idPaintingArtist={id}
             artistPageInfo={infoItem}
             clickHandler={clickHandler}
+            curentIdPaintingHandler={curentIdPaintingHandler}
             deleteArtistPaintingHandler={deleteArtistPaintingHandler}
             favoritePaintingHandler={favoritePaintingHandler}
+            editArtistPaintingHandler={editArtistPaintingHandler}
           />
         </div>
       ))}

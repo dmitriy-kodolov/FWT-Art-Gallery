@@ -16,7 +16,9 @@ type CardProps = {
   idPaintingArtist?: number,
   clickHandler: (idPainting: string | number) => void,
   favoritePaintingHandler?: (payload: PatchFavoritePaintingRequest) => void,
+  curentIdPaintingHandler?: (idPainting: number) => void,
   deleteArtistPaintingHandler?: () => void,
+  editArtistPaintingHandler?: () => void,
 };
 
 const cx = cn.bind(style);
@@ -25,7 +27,7 @@ const baseUrl = process.env.REACT_APP_BASE_URL_DEV;
 
 const Card: FC<CardProps> = ({
   mainPageInfo, artistPageInfo, idPaintingArtist, deleteArtistPaintingHandler,
-  clickHandler, favoritePaintingHandler,
+  clickHandler, favoritePaintingHandler, editArtistPaintingHandler, curentIdPaintingHandler,
 }) => {
   const slidePanelClassName = cx('card__slidePanel', { card__slidePanel_abc: artistPageInfo });
 
@@ -97,7 +99,11 @@ const Card: FC<CardProps> = ({
         <Button
           aria-label="edit button"
           className={style.card__changeBtn}
-          onClick={() => {}}
+          onClick={(e) => {
+            e.stopPropagation();
+            curentIdPaintingHandler!(idPaintingArtist!);
+            editArtistPaintingHandler!();
+          }}
         >
           <EditIcon />
         </Button>

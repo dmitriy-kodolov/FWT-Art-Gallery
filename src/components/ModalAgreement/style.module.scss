@@ -1,4 +1,5 @@
 @use '../../assets/variables' as v;
+@import '../../assets/mobile';
 .modal{
     z-index: 3;
     position: fixed;
@@ -22,6 +23,10 @@
     padding: 40px 15px;
     background: rgba(0, 0, 0, 0.8);
     border-radius: 6px;
+    @include mobile{
+        position: absolute;
+        bottom: 0;
+    }
     &__text{
         display: flex;
         align-items: center;

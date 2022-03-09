@@ -27,7 +27,7 @@ const Artist: FC = () => {
   const [isOpenSlider, setIsOpenSlider] = useState(false);
   const [curentIdPainting, setCurentIdPainting] = useState<string | number>();
   const [isOpenAgreement, setIsOpenAgreement] = useState(false);
-
+  const [isOpenPaintingEdit, setIsOpenPaintingEdit] = useState(false);
   const favoritePaintingHandler = (payload: PatchFavoritePaintingRequest) => {
     patchFavoritePainting(payload);
   };
@@ -67,6 +67,10 @@ const Artist: FC = () => {
     setCurentIdPainting(idPainting);
   };
 
+  const curentIdPaintingHandler = (idPainting: number) => {
+    setCurentIdPainting(idPainting);
+  };
+
   if (error) {
     return <h1>Error</h1>;
   }
@@ -88,6 +92,17 @@ const Artist: FC = () => {
          picture
        </ModalAgreement>
        )}
+      {isOpenPaintingEdit && (
+      <ModalImage
+        refreshArtistHandler={refreshArtistHandler}
+        idArtist={artist._id}
+        paintingSrc={artist.paintings[+curentIdPainting!].image.src}
+        idPainting={artist?.paintings.find((_, idPicture) => idPicture === curentIdPainting)?._id}
+        setIsOpenPaintingLoader={setIsOpenPaintingEdit}
+        created={artist.paintings[+curentIdPainting!]?.yearOfCreation}
+        paintingName={artist.paintings[+curentIdPainting!]?.name}
+      />
+      )}
       {isOpenPaintingLoader
       && (
       <ModalImage
@@ -114,16 +129,19 @@ const Artist: FC = () => {
           setCurentIdPainting={setCurentIdPainting}
           isDarkTheme={isDarkTheme}
           favoritePaintingHandler={favoritePaintingHandler}
+          editArtistPaintingHandler={() => setIsOpenPaintingEdit(true)}
         />
         )
       }
       <CardList
         setIsOpenPaintingLoader={setIsOpenPaintingLoader}
         deleteArtistPaintingHandler={() => setIsOpenAgreement(true)}
+        editArtistPaintingHandler={() => setIsOpenPaintingEdit(true)}
         isDarkTheme={isDarkTheme}
         favoritePaintingHandler={favoritePaintingHandler}
         artistPageInfo={artist}
         clickHandler={openSliderHandler}
+        curentIdPaintingHandler={curentIdPaintingHandler}
       />
     </div>
   );
