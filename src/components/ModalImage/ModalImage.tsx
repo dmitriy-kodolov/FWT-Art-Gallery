@@ -1,5 +1,5 @@
 import React, {
-  FC, ReactNode, useEffect, useRef,
+  FC, ReactNode, useEffect, useRef, useState,
 } from 'react';
 import { useDropzone } from 'react-dropzone';
 import cn from 'classnames/bind';
@@ -14,22 +14,28 @@ import Button from '../Button';
 import Input from '../Input';
 import { ControlSchema } from '../../types/types';
 import useOutsideClick from '../../hooks/useOutsideClick';
+import { postNewPainting } from '../../utils/api/methods';
 
 type ModalImageProps = {
   children?: ReactNode,
+  idArtist: string,
+  refreshArtistHandler: () => void,
   setIsOpenPaintingLoader: (flag: boolean) => void
 };
 
 const cx = cn.bind(style);
 
 const schema = yup.object({
-  paintingName: yup.string().required(),
-  yearOfCreation: yup.number().required(),
+  name: yup.string().min(3).required(),
+  yearOfCreation: yup.string().required(),
 }).required();
 
-const ModalImage: FC<ModalImageProps> = ({ setIsOpenPaintingLoader }) => {
+const ModalImage: FC<ModalImageProps> = ({
+  setIsOpenPaintingLoader,
+  idArtist, refreshArtistHandler,
+}) => {
   const ref = useRef <HTMLDivElement>(null) as React.MutableRefObject<HTMLInputElement>;
-
+  const [myError, setMyError] = useState(true);
   useOutsideClick(ref, () => setIsOpenPaintingLoader(false));
 
   const keyHandler = (e: { key: string; }) => {
@@ -39,9 +45,9 @@ const ModalImage: FC<ModalImageProps> = ({ setIsOpenPaintingLoader }) => {
   };
 
   const {
-    register, handleSubmit, control,
+    register, handleSubmit, control, formState: { isValid },
   } = useForm<ControlSchema>({
-    mode: 'onChange',
+    mode: 'all',
     resolver: yupResolver(schema),
   });
 
@@ -57,7 +63,22 @@ const ModalImage: FC<ModalImageProps> = ({ setIsOpenPaintingLoader }) => {
   });
 
   const onSubmit: SubmitHandler<ControlSchema> = async (data) => {
-    if (acceptedFiles[0]) console.log(data, URL.createObjectURL(acceptedFiles[0]));
+    if (acceptedFiles[0]) {
+      postNewPainting({
+        id: idArtist,
+        body:
+        {
+          yearOfCreation: data.yearOfCreation!.toString(),
+          name: data.name!,
+          image: acceptedFiles[0],
+        },
+      })
+        .then(() => {
+          setIsOpenPaintingLoader(false);
+          refreshArtistHandler();
+        })
+        .catch((message) => alert(message));
+    }
   };
 
   const dropZoneClassName = cx(
@@ -74,6 +95,13 @@ const ModalImage: FC<ModalImageProps> = ({ setIsOpenPaintingLoader }) => {
       document.removeEventListener('keydown', keyHandler, false);
     };
   }, []);
+
+  useEffect(
+    () => ((isValid && !!acceptedFiles.length)
+      ? setMyError(false)
+      : setMyError(true)),
+    [isValid, acceptedFiles],
+  );
 
   return (
     <form className={style.modal} onSubmit={handleSubmit(onSubmit)}>
@@ -93,11 +121,12 @@ const ModalImage: FC<ModalImageProps> = ({ setIsOpenPaintingLoader }) => {
           <Input
             myPlaceholder="The name of the picture"
             className={style.addPainting__inputPlaceholder}
-            {...register('paintingName')}
+            {...register('name')}
             placeholder="Enter a name"
             isDarkTheme
             control={control}
-            name="paintingName"
+            value=""
+            name="name"
           />
           <Input
             myPlaceholder="Year of creation"
@@ -125,7 +154,7 @@ const ModalImage: FC<ModalImageProps> = ({ setIsOpenPaintingLoader }) => {
         <div className={style.addPainting__footer}>
           <span>.jpg .png</span>
           <Button
-            disabled
+            disabled={myError}
             onClick={handleSubmit(onSubmit)}
             className={style.addPainting__acceptBtn}
           >

@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/no-unused-vars */
 import React, { FC, useEffect, useRef } from 'react';
 import cn from 'classnames/bind';
 import style from './style.module.scss';
@@ -9,7 +8,7 @@ import { ReactComponent as EditIcon } from '../../assets/editIcon.svg';
 import { ReactComponent as DeleteIcon } from '../../assets/deleteIcon.svg';
 import { ReactComponent as Favorite } from '../../assets/favoriteIcon.svg';
 import Button from '../Button/Button';
-import { AuthorPaintings, DeleteArtistPainting, PatchFavoritePaintingRequest } from '../../types/types';
+import { AuthorPaintings, PatchFavoritePaintingRequest } from '../../types/types';
 
 const cx = cn.bind(style);
 
@@ -20,7 +19,7 @@ type SliderProps = {
   curentIdPainting: number,
   setCurentIdPainting: (id: number) => void,
   favoritePaintingHandler: (payload: PatchFavoritePaintingRequest) => void,
-  deleteArtistPaintingHandler: (body: DeleteArtistPainting) => void,
+  deleteArtistPaintingHandler: () => void,
 };
 
 const Slider: FC<SliderProps> = ({
@@ -96,13 +95,12 @@ const Slider: FC<SliderProps> = ({
             aria-label="favorite button"
             isDarkTheme={isDarkTheme}
             className={btnClassName}
-            // TODO
-            // onClick={() => favoritePaintingHandler({
-            //   id: 0,
-            //   body: {
-            //     painting: paintings[curentIdPainting].image,
-            //   },
-            // })}
+            onClick={() => {
+              favoritePaintingHandler!({
+                id: paintings[curentIdPainting].artist,
+                body: { mainPainting: paintings[curentIdPainting]._id },
+              });
+            }}
           >
             <Favorite />
           </Button>
@@ -118,7 +116,7 @@ const Slider: FC<SliderProps> = ({
             aria-label="delete button"
             isDarkTheme={isDarkTheme}
             className={btnClassName}
-            onClick={() => deleteArtistPaintingHandler}
+            onClick={() => deleteArtistPaintingHandler()}
           >
             <DeleteIcon />
           </Button>

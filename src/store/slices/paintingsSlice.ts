@@ -1,6 +1,6 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 import { ArtistPainting, StaticArtist } from '../../types/types';
-import { getMainPaintings, getArtistPaintings } from '../../utils/api/methods';
+import { getMainPaintings, getAuthMainPaintings } from '../../utils/api/methods';
 
 type PaintingsSlice = {
   paintings: StaticArtist[],
@@ -24,11 +24,12 @@ export const fetchMainPaintings = createAsyncThunk(
   },
 );
 
-export const fetchArtistPaintings = createAsyncThunk(
-  'artistPaintings',
-  async (id: string) => {
-    const response = await getArtistPaintings(id);
-    return (response.data);
+export const fetchAuthMainPaintings = createAsyncThunk(
+  'authPaintings',
+  async () => {
+    const response = await getAuthMainPaintings();
+
+    return (response.data.data);
   },
 );
 
@@ -48,14 +49,14 @@ const getPaintingsSlice = createSlice({
       state.loading = false;
       state.error = true;
     });
-    builder.addCase(fetchArtistPaintings.fulfilled, (state, action) => {
+    builder.addCase(fetchAuthMainPaintings.fulfilled, (state, action) => {
       state.loading = false;
-      state.artistPaintings = action.payload;
+      state.paintings = action.payload;
     });
-    builder.addCase(fetchArtistPaintings.pending, (state) => {
+    builder.addCase(fetchAuthMainPaintings.pending, (state) => {
       state.loading = true;
     });
-    builder.addCase(fetchArtistPaintings.rejected, (state) => {
+    builder.addCase(fetchAuthMainPaintings.rejected, (state) => {
       state.loading = false;
       state.error = true;
     });

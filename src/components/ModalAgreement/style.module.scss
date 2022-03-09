@@ -1,0 +1,53 @@
+@use '../../assets/variables' as v;
+.modal{
+    z-index: 3;
+    position: fixed;
+    background: rgba(13, 13, 13, 0.8);
+    display: flex;
+    width: 100%;
+    height: 100%;
+    top: 0;
+    left: 0;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+.modalAgreement{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 320px;
+    height: 202px;
+    box-sizing: border-box;
+    padding: 40px 15px;
+    background: rgba(0, 0, 0, 0.8);
+    border-radius: 6px;
+    &__text{
+        display: flex;
+        align-items: center;
+        text-align: center;
+        font-size: 22px;
+        line-height: 26px;
+        color: v.$lightThemeColor;
+        max-width: 213px
+    }
+    &__btns{
+        padding-top: 30px;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 14px;
+    }
+    &__cancelBtn{
+        width: 138px;
+        height: 40px;
+        background: #262626;
+        border-radius: 6px;
+        color: v.$lightThemeColor;
+    }
+    &__deleteBtn{
+        width: 138px;
+        height: 40px;
+        border-radius: 6px;
+    }
+}

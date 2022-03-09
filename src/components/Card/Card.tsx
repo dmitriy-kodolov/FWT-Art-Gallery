@@ -1,9 +1,8 @@
-/* eslint-disable @typescript-eslint/no-unused-vars */
 import cn from 'classnames/bind';
 import React, { FC } from 'react';
 import LazyLoad from 'react-lazyload';
 import {
-  ArtistPainting, DeleteArtistPainting, PatchFavoritePaintingRequest, StaticArtist,
+  ArtistPainting, PatchFavoritePaintingRequest, StaticArtist,
 } from '../../types/types';
 import Button from '../Button';
 import style from './style.module.scss';
@@ -17,7 +16,7 @@ type CardProps = {
   idPaintingArtist?: number,
   clickHandler: (idPainting: string | number) => void,
   favoritePaintingHandler?: (payload: PatchFavoritePaintingRequest) => void,
-  deleteArtistPaintingHandler?: (body: DeleteArtistPainting) => void,
+  deleteArtistPaintingHandler?: () => void,
 };
 
 const cx = cn.bind(style);
@@ -33,7 +32,7 @@ const Card: FC<CardProps> = ({
   return (
     <div
       className={style.card}
-      onClick={() => clickHandler(mainPageInfo!?._id || idPaintingArtist!)}
+      onClick={() => clickHandler(mainPageInfo?._id || idPaintingArtist!)}
     >
       <div className={slidePanelClassName}>
         {artistPageInfo && (
@@ -45,16 +44,16 @@ const Card: FC<CardProps> = ({
         )}
         {mainPageInfo && (
           <>
-            <span>{mainPageInfo!.name}</span>
-            <span className={style.card__authorYear}>{mainPageInfo!.yearsOfLife}</span>
-            {mainPageInfo.mainPainting.name && (
+            <span>{mainPageInfo.name}</span>
+            <span className={style.card__authorYear}>{mainPageInfo.yearsOfLife}</span>
+            {mainPageInfo.mainPainting?.name && (
             <span className={style.card__paintingName}>
               Name:
               {' '}
               {mainPageInfo.mainPainting.name}
             </span>
             )}
-            {mainPageInfo.mainPainting.yearOfCreation && (
+            {mainPageInfo.mainPainting?.yearOfCreation && (
             <span className={style.card__paintingCreated}>
               Created:
               {' '}
@@ -68,8 +67,8 @@ const Card: FC<CardProps> = ({
         {mainPageInfo
         && (
           <picture className={style.card__img}>
-            <source type="image/webp" srcSet={`${baseUrl!}${mainPageInfo.mainPainting.image.webp}`} />
-            <img className={style.card__img} src={`${baseUrl!}${mainPageInfo.mainPainting.image.src}`} alt="#paintOfAuthor" />
+            <source type="image/webp" srcSet={`${baseUrl!}${mainPageInfo.mainPainting?.image.webp}`} />
+            <img className={style.card__img} src={`${baseUrl!}${mainPageInfo.mainPainting?.image.src}`} alt="#paintOfAuthor" />
           </picture>
         )}
         {artistPageInfo
@@ -85,11 +84,13 @@ const Card: FC<CardProps> = ({
         <Button
           aria-label="favorite button"
           className={style.card__changeBtn}
-          // TODO
-          // onClick={(e) => {
-          //   e.stopPropagation();
-          //   favoritePaintingHandler!({ id: artistPageInfo!._id, body: { cardInfo });
-          // }}
+          onClick={(e) => {
+            e.stopPropagation();
+            favoritePaintingHandler!({
+              id: artistPageInfo!._id,
+              body: { mainPainting: artistPageInfo!._id },
+            });
+          }}
         >
           <Favorite />
         </Button>
@@ -105,9 +106,7 @@ const Card: FC<CardProps> = ({
           className={style.card__changeBtn}
           onClick={(e) => {
             e.stopPropagation();
-            deleteArtistPaintingHandler!(
-              { idArtist: artistPageInfo?.artist, idPainting: artistPageInfo?._id },
-            );
+            deleteArtistPaintingHandler!();
           }}
         >
           <DeleteIcon />

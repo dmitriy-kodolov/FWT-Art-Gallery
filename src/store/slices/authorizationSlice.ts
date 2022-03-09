@@ -39,8 +39,6 @@ const authorizationSlice = createSlice({
   },
   extraReducers: (builder) => {
     builder.addCase(fetchAuthorization.fulfilled, (state) => {
-      console.log('fullfiled');
-
       state.isAuth = true;
       state.errorAuth = false;
     });

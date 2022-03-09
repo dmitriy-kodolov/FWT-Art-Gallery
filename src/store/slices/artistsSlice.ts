@@ -69,7 +69,8 @@ const getArtistsSlice = createSlice({
     });
     builder.addCase(fetchDeleteArtistsPainting.fulfilled, (state, action) => {
       state.loading = false;
-      state.artist.paintings.map((painting) => painting._id !== action.payload);
+      state.artist.paintings = state.artist.paintings
+        .filter((painting) => painting._id !== action.payload);
     });
     builder.addCase(fetchDeleteArtistsPainting.pending, (state) => {
       state.loading = true;

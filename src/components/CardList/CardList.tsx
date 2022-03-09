@@ -3,7 +3,7 @@ import React, { FC } from 'react';
 import Card from '../Card';
 import style from './style.module.scss';
 import {
-  StaticArtist, PatchFavoritePaintingRequest, AuthArtist, DeleteArtistPainting,
+  StaticArtist, PatchFavoritePaintingRequest, AuthArtist,
 } from '../../types/types';
 import AddPaintingBlock from '../AddPaintingBlock';
 
@@ -16,7 +16,7 @@ type CardListProps = {
   isDarkTheme: boolean,
   setIsOpenPaintingLoader?: (flag: boolean) => void,
   favoritePaintingHandler?: (payload: PatchFavoritePaintingRequest) => void,
-  deleteArtistPaintingHandler?: (body: DeleteArtistPainting) => void,
+  deleteArtistPaintingHandler?: () => void,
 };
 
 const CardList: FC<CardListProps> = ({

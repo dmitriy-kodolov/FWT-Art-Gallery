@@ -1,11 +1,20 @@
-export type Schema = 'username' | 'password' | 'confirmPassword' | 'paintingName' | 'yearOfCreation';
+export type Schema = 'username' | 'password' | 'confirmPassword' | 'name' | 'yearOfCreation';
 
 export type ControlSchema = {
   username: string,
   password: string,
   confirmPassword?: string,
-  paintingName?: string,
+  name?: string,
   yearOfCreation?: number
+};
+
+export type PostNewPaintingRequest = {
+  id: string,
+  body: {
+    name: string,
+    yearOfCreation: string,
+    image: File,
+  }
 };
 
 export type DeleteArtistPainting = {
@@ -16,7 +25,7 @@ export type DeleteArtistPainting = {
 export type PatchFavoritePaintingRequest = {
   id: string,
   body: {
-    painting: string,
+    mainPainting: string,
   }
 };
 
@@ -26,6 +35,7 @@ export type AuthResponse = {
 };
 
 export type AuthorPaintings = {
+  artist: string,
   _id: string,
   name: string,
   yearOfCreation?: string,
@@ -52,6 +62,10 @@ export type ArtistPainting = {
   yearOfCreation?: string,
   image: Image,
   artist: string,
+};
+
+export type AuthStaticArtist = {
+  data: StaticArtist[]
 };
 
 export type StaticArtist = {

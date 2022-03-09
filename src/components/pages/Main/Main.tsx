@@ -1,9 +1,10 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
 import React, { FC, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useAppSelector, useAppDispatch } from '../../../hooks/redux';
 import Loader from '../../Loader';
 import CardList from '../../CardList';
-import { fetchMainPaintings } from '../../../store/slices/paintingsSlice';
+import { fetchAuthMainPaintings, fetchMainPaintings } from '../../../store/slices/paintingsSlice';
 
 const Main: FC = () => {
   const {
@@ -15,8 +16,8 @@ const Main: FC = () => {
   const navigate = useNavigate();
 
   useEffect(() => {
-    dispatch(fetchMainPaintings());
-  }, []);
+    dispatch(isAuth ? fetchAuthMainPaintings() : fetchMainPaintings());
+  }, [isAuth]);
 
   const clickHandler = (idPainting: string | number) => (isAuth ? navigate(`../artist/${idPainting}`) : alert('xyi'));
 
