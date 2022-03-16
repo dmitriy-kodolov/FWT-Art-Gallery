@@ -1,0 +1,39 @@
+@use '../../assets/variables' as v;
+@import '../../assets/mobile';
+@import '../../assets/tablet';
+.filtredBar{
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    padding-bottom: 40px;
+    @include mobile{
+        flex-direction: column;
+        padding-bottom: 30px;
+    }
+    &__addArtistBtn{
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        gap: 10px;
+        svg{
+            fill: v.$darkThemeColor;
+            width: 16px;
+            height: 16px;
+        }
+        &_addLightTheme{
+            svg{
+                fill: v.$lightThemeColor;
+            }    
+        }
+        width: 204px;
+        height: 46px;
+        @include tablet{
+            width: 146px;
+            height: 46px;
+        }
+        @include mobile{
+            width: 290px;
+            height: 40px;            
+        }
+    }
+}

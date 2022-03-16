@@ -27,7 +27,7 @@ const Accardeon: FC<AccardeonProps> = ({ text, isDarkTheme }) => {
       {!isOpen
       && (
       <span>
-          {text.slice(0, 100)}
+          {text?.slice(0, 100)}
         ...
         <div className={style.accardeon} onClick={() => setIsOpen((prev) => !prev)}>
           <span className={titleClassName}>SHOW ALL</span>

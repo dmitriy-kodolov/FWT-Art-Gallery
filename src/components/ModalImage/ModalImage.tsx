@@ -14,15 +14,13 @@ import Button from '../Button';
 import Input from '../Input';
 import { ControlSchema } from '../../types/types';
 import useOutsideClick from '../../hooks/useOutsideClick';
-import { patchPaintingInfo, postNewPainting } from '../../utils/api/methods';
 
 type ModalImageProps = {
+  submitHandler?: (data?: ControlSchema, acceptedFiles?: File) => void,
+  isArtistEdit?: boolean
   paintingName?: string,
   created?: string,
-  idArtist: string,
-  idPainting?: string,
   paintingSrc?: string,
-  refreshArtistHandler: () => void,
   setIsOpenPaintingLoader: (flag: boolean) => void
 };
 
@@ -36,18 +34,14 @@ const schema = yup.object({
 const baseUrl = process.env.REACT_APP_BASE_URL_DEV;
 
 const ModalImage: FC<ModalImageProps> = ({
-  setIsOpenPaintingLoader, paintingName, created,
-  idArtist, refreshArtistHandler, idPainting, paintingSrc,
+  setIsOpenPaintingLoader, paintingName, created, isArtistEdit, submitHandler,
+  paintingSrc,
 }) => {
   const ref = useRef <HTMLDivElement>(null) as React.MutableRefObject<HTMLInputElement>;
   const [myError, setMyError] = useState(true);
   useOutsideClick(ref, () => setIsOpenPaintingLoader(false));
 
-  const keyHandler = (e: { key: string; }) => {
-    if (e.key === 'Escape') {
-      setIsOpenPaintingLoader(false);
-    }
-  };
+  const keyHandler = (e: { key: string; }) => ((e.key === 'Escape') ? setIsOpenPaintingLoader(false) : null);
 
   const {
     register, handleSubmit, control, formState: { isValid },
@@ -71,42 +65,7 @@ const ModalImage: FC<ModalImageProps> = ({
     maxFiles: 1, maxSize: 3145728, noClick: true, accept: 'image/png, image/jpg',
   });
 
-  const onSubmit: SubmitHandler<ControlSchema> = async (data) => {
-    // Возможно стоит вынести в отдельный хук
-    if (acceptedFiles[0] || paintingSrc) {
-      if (paintingName) {
-        patchPaintingInfo({
-          idArtist,
-          idPainting: idPainting as string,
-          body:
-          {
-            yearOfCreation: data.yearOfCreation!.toString(),
-            name: data.name!,
-          },
-        })
-          .then(() => {
-            setIsOpenPaintingLoader(false);
-            refreshArtistHandler();
-          })
-          .catch((message) => alert(message));
-      } else {
-        postNewPainting({
-          idArtist,
-          body:
-          {
-            yearOfCreation: data.yearOfCreation!.toString(),
-            name: data.name!,
-            image: acceptedFiles[0],
-          },
-        })
-          .then(() => {
-            setIsOpenPaintingLoader(false);
-            refreshArtistHandler();
-          })
-          .catch((message) => alert(message));
-      }
-    }
-  };
+  const onSubmit: SubmitHandler<ControlSchema> = (data) => submitHandler!(data, acceptedFiles[0]);
 
   const dropZoneClassName = cx(
     'addPainting__dropZone',
@@ -123,12 +82,16 @@ const ModalImage: FC<ModalImageProps> = ({
     };
   }, []);
 
-  useEffect(
-    () => ((isValid && (!!acceptedFiles.length || paintingSrc))
-      ? setMyError(false)
-      : setMyError(true)),
-    [isValid, acceptedFiles],
-  );
+  useEffect(() => {
+    if (isArtistEdit) {
+      if (acceptedFiles.length) return setMyError(false);
+
+      return setMyError(true);
+    }
+    if (isValid && (!!acceptedFiles.length || paintingSrc)) return setMyError(false);
+
+    return setMyError(true);
+  }, [isValid, acceptedFiles]);
 
   return (
     <form className={style.modal} onSubmit={handleSubmit(onSubmit)}>
@@ -136,14 +99,18 @@ const ModalImage: FC<ModalImageProps> = ({
         <div className={style.addPainting__header}>
           <ImageLogo />
           <Button
-            onClick={() => setIsOpenPaintingLoader(false)}
+            onClick={(e) => {
+              e.stopPropagation();
+              setIsOpenPaintingLoader(false);
+            }}
             className={style.addPainting__closeBtn}
           >
             <Exit />
           </Button>
           <span>Image</span>
         </div>
-        {/* TODO снизу это будет children либо по условию отображаться */}
+        {!isArtistEdit
+        && (
         <div className={style.addPainting__descriptionPainting}>
           <Input
             myPlaceholder="The name of the picture"
@@ -166,6 +133,7 @@ const ModalImage: FC<ModalImageProps> = ({
             name="yearOfCreation"
           />
         </div>
+        )}
         <div {...getRootProps({ className: dropZoneClassName })}>
           {paintingSrc && <img src={`${baseUrl!}${paintingSrc}`} alt="" className={style.addPainting__painting} />}
           {acceptedFiles[0] && <img src={URL.createObjectURL(acceptedFiles[0])} alt="" className={style.addPainting__painting} />}
@@ -182,8 +150,11 @@ const ModalImage: FC<ModalImageProps> = ({
         <div className={style.addPainting__footer}>
           <span>.jpg .png</span>
           <Button
+            type="submit"
             disabled={myError}
-            onClick={handleSubmit(onSubmit)}
+            onClick={() => (!isArtistEdit
+              ? handleSubmit(onSubmit)
+              : submitHandler!({} as ControlSchema, acceptedFiles[0]))}
             className={style.addPainting__acceptBtn}
           >
             save

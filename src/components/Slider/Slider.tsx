@@ -23,6 +23,8 @@ type SliderProps = {
   editArtistPaintingHandler: () => void,
 };
 
+const baseUrl = process.env.REACT_APP_BASE_URL_DEV;
+
 const Slider: FC<SliderProps> = ({
   curentIdPainting, isDarkTheme, closeHandler, paintings, setCurentIdPainting,
   favoritePaintingHandler, deleteArtistPaintingHandler, editArtistPaintingHandler,
@@ -40,19 +42,13 @@ const Slider: FC<SliderProps> = ({
     }
   }, []);
 
-  const nexpPaintingHandler = () => {
-    if (curentIdPainting === paintings.length - 1) {
-      return setCurentIdPainting(0);
-    }
-    return setCurentIdPainting(curentIdPainting + 1);
-  };
+  const nexpPaintingHandler = () => ((curentIdPainting === paintings.length - 1)
+    ? setCurentIdPainting(0)
+    : setCurentIdPainting(curentIdPainting + 1));
 
-  const prevPaintingHandler = () => {
-    if (curentIdPainting === 0) {
-      return setCurentIdPainting(paintings.length - 1);
-    }
-    return setCurentIdPainting(curentIdPainting - 1);
-  };
+  const prevPaintingHandler = () => ((curentIdPainting === 0)
+    ? setCurentIdPainting(paintings.length - 1)
+    : setCurentIdPainting(curentIdPainting - 1));
 
   const keyHandler = (e: { key: string; }) => {
     if (e.key === 'Escape') {
@@ -88,7 +84,7 @@ const Slider: FC<SliderProps> = ({
       </Button>
       <div className={style.sliderContainer__item}>
         <picture>
-          <source type="image/webp" srcSet={paintings[curentIdPainting].image.webp} />
+          <source type="image/webp" srcSet={`${baseUrl}${paintings[curentIdPainting]?.image.webp}`} />
           <img src={paintings[curentIdPainting].image.src} alt="" />
         </picture>
         <div className={style.sliderContainer__buttons}>

@@ -1,4 +1,5 @@
-export type Schema = 'username' | 'password' | 'confirmPassword' | 'name' | 'yearOfCreation';
+export type Schema = 'username' | 'password' | 'confirmPassword'
+| 'name' | 'yearOfCreation' | 'artistName' | 'yearOfLife' | 'location';
 
 export type ControlSchema = {
   username: string,
@@ -6,6 +7,12 @@ export type ControlSchema = {
   confirmPassword?: string,
   name?: string,
   yearOfCreation?: string
+  artistName?: string,
+  yearOfLife?: string,
+  location?: string,
+  description?: string,
+  genres?: Genre[]
+
 };
 
 export type PostNewPaintingRequest = {
@@ -110,4 +117,18 @@ export type RejectRequest = {
   statusCode: number,
   message: string,
   error: string
+};
+
+export type PostNewArtistRequset = {
+  name: string,
+  yearsOfLife?: string,
+  description?: string,
+  location?: string,
+  avatar?: File,
+  genres: string[]
+};
+
+export type PatchArtistInfoRequest = {
+  id: string,
+  body: PostNewArtistRequset
 };

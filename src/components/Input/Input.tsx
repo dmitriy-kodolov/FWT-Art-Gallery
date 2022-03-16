@@ -29,7 +29,7 @@ const Input: FC<InputProps> = ({
 
   return (
     <div className={inputClassName}>
-      <span className={customPlaceholderClassName}>{myPlaceholder}</span>
+      {myPlaceholder && <span className={customPlaceholderClassName}>{myPlaceholder}</span>}
       <Controller
         name={name}
         control={control}
@@ -43,7 +43,7 @@ const Input: FC<InputProps> = ({
           />
         )}
       />
-      <span className={style.input__errorMessage}>{errorMessage}</span>
+      {errorMessage && <span className={style.input__errorMessage}>{errorMessage}</span>}
       {children}
     </div>
   );

@@ -69,15 +69,15 @@ const Card: FC<CardProps> = ({
         {mainPageInfo
         && (
           <picture className={style.card__img}>
-            <source type="image/webp" srcSet={`${baseUrl!}${mainPageInfo.mainPainting?.image.webp}`} />
-            <img className={style.card__img} src={`${baseUrl!}${mainPageInfo.mainPainting?.image.src}`} alt="#paintOfAuthor" />
+            <source type="image/webp" srcSet={`${baseUrl!}${mainPageInfo?.mainPainting?.image.webp}`} />
+            <img className={style.card__img} src={`${baseUrl!}${mainPageInfo.mainPainting?.image?.src}`} alt="#paintOfAuthor" />
           </picture>
         )}
         {artistPageInfo
         && (
         <picture>
-          <source type="image/webp" srcSet={`${baseUrl!}${artistPageInfo.image.webp}`} />
-          <img className={style.card__img} src={`${baseUrl!}${artistPageInfo.image.src}`} alt="#paintOfAuthor" />
+          <source type="image/webp" srcSet={`${baseUrl!}${artistPageInfo?.image.webp}`} />
+          <img className={style.card__img} src={`${baseUrl!}${artistPageInfo?.image?.src}`} alt="#paintOfAuthor" />
         </picture>
         )}
       </LazyLoad>
@@ -89,7 +89,7 @@ const Card: FC<CardProps> = ({
           onClick={(e) => {
             e.stopPropagation();
             favoritePaintingHandler!({
-              id: artistPageInfo!._id,
+              id: artistPageInfo!.artist,
               body: { mainPainting: artistPageInfo!._id },
             });
           }}

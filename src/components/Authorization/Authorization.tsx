@@ -37,22 +37,9 @@ const Authorization: FC = () => {
     resolver: yupResolver(schema),
   });
 
-  useEffect(() => {
-    if (!errorAuth) {
-      dispatch(changeIsOpenModalAuth(false));
-      dispatch(changeIsAuth(true));
-    }
-  }, [errorAuth]);
+  const onSubmit: SubmitHandler<ControlSchema> = (data) => dispatch(fetchAuthorization(data));
 
-  const onSubmit: SubmitHandler<ControlSchema> = (data) => {
-    dispatch(fetchAuthorization(data));
-  };
-
-  const keyHandler = (e: { key: string; }) => {
-    if (e.key === 'Escape') {
-      dispatch(changeIsOpenModalAuth(false));
-    }
-  };
+  const keyHandler = (e: { key: string; }) => (e.key === 'Escape') && dispatch(changeIsOpenModalAuth(false));
 
   const ref = useRef <HTMLDivElement>(null) as React.MutableRefObject<HTMLInputElement>;
 
@@ -64,6 +51,13 @@ const Authorization: FC = () => {
       document.removeEventListener('keydown', keyHandler, false);
     };
   }, []);
+
+  useEffect(() => {
+    if (!errorAuth) {
+      dispatch(changeIsOpenModalAuth(false));
+      dispatch(changeIsAuth(true));
+    }
+  }, [errorAuth]);
 
   const modalClassName = cx('modal');
 

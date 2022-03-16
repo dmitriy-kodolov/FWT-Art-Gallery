@@ -62,8 +62,8 @@ const ArtistInfo: FC<ArtistInfoProps> = ({
       </div>
       <div className={style.artistInfo__portrait}>
         <picture>
-          <source type="image/webp" srcSet={`${baseUrl!}${avatar.webp}`} />
-          <img src={`${baseUrl}${avatar.src}`} alt="#paintOfAuthor" />
+          <source type="image/webp" srcSet={`${baseUrl!}${avatar?.webp}`} />
+          <img src={`${baseUrl}${avatar?.src}`} alt="#paintOfAuthor" />
         </picture>
       </div>
       <div className={style.artistInfo__info}>
@@ -74,7 +74,7 @@ const ArtistInfo: FC<ArtistInfoProps> = ({
         <Accardeon text={description} isDarkTheme={isDarkTheme} />
         <span>{country}</span>
         <div className={style.artistInfo__genres}>
-          {genres.map((genre) => (
+          {genres?.map((genre) => (
             <p key={genre._id} className={style.artistInfo__genre}>
               {genre.name}
             </p>

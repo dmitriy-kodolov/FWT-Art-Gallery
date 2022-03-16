@@ -4,6 +4,7 @@ import changeThemeSlice from './slices/changeThemeSlice';
 import getArtistsSlice from './slices/artistsSlice';
 import getPaintingsSlice from './slices/paintingsSlice';
 import registrationSlice from './slices/registrationSlice';
+import getGenreSlice from './slices/genresSlice';
 
 const store = configureStore({
   reducer: {
@@ -12,6 +13,7 @@ const store = configureStore({
     paintings: getPaintingsSlice,
     auth: authorizationSlice,
     registration: registrationSlice,
+    genres: getGenreSlice,
   },
 });
 

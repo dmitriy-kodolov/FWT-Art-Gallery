@@ -53,6 +53,7 @@ const Registration: FC = () => {
       return setValue('confirmPassword', '');
     }
     delete data.confirmPassword;
+
     return dispatch(fetchRegistration(data));
   };
 

@@ -32,9 +32,7 @@ const Header: FC = () => {
   const logoClassName = cx('header__logo', { header__logo_addLightTheme: !isDarkTheme });
   const openMobileBtn = cx('header__openMobileMenuBtn', { header__openMobileMenuBtn_addLighTheme: !isDarkTheme });
 
-  const changeIsAuthorization = (flag: boolean) => {
-    dispatch(changeIsAuth(flag));
-  };
+  const changeIsAuthorization = (flag: boolean) => dispatch(changeIsAuth(flag));
 
   const logoutHandler = () => {
     Cookies.remove('accessToken');
@@ -48,9 +46,7 @@ const Header: FC = () => {
     dispatch(changeIsAuth(!!Cookies.get('accessToken')));
   }, []);
 
-  if (errorAuth && errorRegistrat) {
-    changeIsAuthorization(false);
-  }
+  if (errorAuth && errorRegistrat) changeIsAuthorization(false);
 
   return (
     <div className={headerClassName}>

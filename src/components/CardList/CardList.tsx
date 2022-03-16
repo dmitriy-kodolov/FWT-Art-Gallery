@@ -39,7 +39,7 @@ const CardList: FC<CardListProps> = ({
         isDarkTheme={isDarkTheme}
       />
       )}
-      {artistPageInfo && artistPageInfo!.paintings.map((infoItem, id) => (
+      {artistPageInfo && artistPageInfo!.paintings?.map((infoItem, id) => (
         <div className={style.cardList__card} key={infoItem._id}>
           <Card
             idPaintingArtist={id}

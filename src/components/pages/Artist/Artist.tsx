@@ -3,15 +3,18 @@ import cn from 'classnames/bind';
 import { useNavigate, useParams } from 'react-router-dom';
 import style from './style.module.scss';
 import CardList from '../../CardList';
-import { fetchArtist, fetchDeleteArtistsPainting } from '../../../store/slices/artistsSlice';
+import {
+  fetchArtist, fetchDeleteArtistsPainting, fetchPatchArtistPainting, fetchCreateArtistPainitng,
+} from '../../../store/slices/artistsSlice';
 import { useAppSelector, useAppDispatch } from '../../../hooks/redux';
 import ArtistInfo from '../../ArtistInfo';
 import Loader from '../../Loader';
 import Slider from '../../Slider';
 import { patchFavoritePainting } from '../../../utils/api/methods';
-import { PatchFavoritePaintingRequest } from '../../../types/types';
+import { ControlSchema, PatchFavoritePaintingRequest } from '../../../types/types';
 import ModalImage from '../../ModalImage/ModalImage';
 import ModalAgreement from '../../ModalAgreement/ModalAgreement';
+import ModalArtist from '../../ModalArtist/ModalArtist';
 
 const cx = cn.bind(style);
 
@@ -28,36 +31,26 @@ const Artist: FC = () => {
   const [curentIdPainting, setCurentIdPainting] = useState<string | number>();
   const [isOpenAgreement, setIsOpenAgreement] = useState(false);
   const [isOpenPaintingEdit, setIsOpenPaintingEdit] = useState(false);
+  const [isOpenArtsitEdit, setIsOpenArtsitEdit] = useState(false);
+
   const favoritePaintingHandler = (payload: PatchFavoritePaintingRequest) => {
     patchFavoritePainting(payload);
   };
 
-  const refreshArtistHandler = () => {
-    dispatch(fetchArtist(id!));
-  };
-
   useEffect(() => {
-    refreshArtistHandler();
+    dispatch(fetchArtist(id!));
   }, []);
 
   const artistClassName = cx('artist', { artist_addLightTheme: !isDarkTheme });
 
-  const backToMainHandler = () => {
-    navigate(-1);
-  };
+  const backToMainHandler = () => navigate(-1);
 
-  const editArtistHandler = () => {
-    console.log('edit'); // здесь пока затычка
-  };
-
-  const deleteArtistHandler = () => {
-    console.log('delete'); // здесь пока затычка
-  };
+  const deleteArtistHandler = () => console.log('delete');
 
   const deleteArtistPaintingHandler = () => {
     setIsOpenSlider(false);
     dispatch(fetchDeleteArtistsPainting(
-      { idArtist: artist._id, idPainting: artist.paintings[curentIdPainting as number]._id },
+      { idArtist: artist?._id, idPainting: artist?.paintings[curentIdPainting as number]._id },
     ));
     setIsOpenAgreement(false);
   };
@@ -67,22 +60,53 @@ const Artist: FC = () => {
     setCurentIdPainting(idPainting);
   };
 
-  const curentIdPaintingHandler = (idPainting: number) => {
-    setCurentIdPainting(idPainting);
+  const curentIdPaintingHandler = (idPainting: number) => setCurentIdPainting(idPainting);
+
+  if (error) <h1>Error</h1>;
+
+  if (loading) <Loader isDarkTheme={isDarkTheme} />;
+
+  const createPaintingHandler = (data?: ControlSchema, acceptedFiles?: File) => {
+    dispatch(fetchCreateArtistPainitng(
+      {
+        idArtist: artist._id,
+        body:
+        {
+          yearOfCreation: data!.yearOfCreation!.toString(),
+          name: data!.name!,
+          image: acceptedFiles!,
+        },
+      },
+    ));
+    setIsOpenPaintingLoader(false);
   };
 
-  if (error) {
-    return <h1>Error</h1>;
-  }
-
-  if (loading) {
-    return (
-      <Loader isDarkTheme={isDarkTheme} />
-    );
-  }
+  const patchPaintingHandler = (data?: ControlSchema) => {
+    dispatch(fetchPatchArtistPainting(
+      ({
+        idArtist: artist._id,
+        idPainting: artist?.paintings.find(
+          (_, idPicture) => idPicture === curentIdPainting,
+        )?._id as string,
+        body:
+        {
+          yearOfCreation: data!.yearOfCreation!.toString(),
+          name: data!.name!,
+        },
+      }),
+    ));
+    setIsOpenPaintingEdit(false);
+  };
 
   return (
     <div className={artistClassName}>
+      {isOpenArtsitEdit && (
+        <ModalArtist
+          artistInfo={artist}
+          isUpdateArtstInfo
+          setIsOpenArtsitEdit={() => setIsOpenArtsitEdit(false)}
+        />
+      )}
       {isOpenAgreement
        && (
        <ModalAgreement
@@ -94,10 +118,8 @@ const Artist: FC = () => {
        )}
       {isOpenPaintingEdit && (
       <ModalImage
-        refreshArtistHandler={refreshArtistHandler}
-        idArtist={artist._id}
+        submitHandler={patchPaintingHandler}
         paintingSrc={artist.paintings[+curentIdPainting!].image.src}
-        idPainting={artist?.paintings.find((_, idPicture) => idPicture === curentIdPainting)?._id}
         setIsOpenPaintingLoader={setIsOpenPaintingEdit}
         created={artist.paintings[+curentIdPainting!]?.yearOfCreation}
         paintingName={artist.paintings[+curentIdPainting!]?.name}
@@ -106,8 +128,7 @@ const Artist: FC = () => {
       {isOpenPaintingLoader
       && (
       <ModalImage
-        refreshArtistHandler={refreshArtistHandler}
-        idArtist={artist._id}
+        submitHandler={createPaintingHandler}
         setIsOpenPaintingLoader={setIsOpenPaintingLoader}
       />
       )}
@@ -116,7 +137,7 @@ const Artist: FC = () => {
         isDarkTheme={isDarkTheme}
         backToMainHandler={backToMainHandler}
         deleteArtistHandler={deleteArtistHandler}
-        editArtistHandler={editArtistHandler}
+        editArtistHandler={() => setIsOpenArtsitEdit(true)}
       />
       {
         isOpenSlider

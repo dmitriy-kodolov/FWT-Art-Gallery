@@ -1,10 +1,11 @@
-/* eslint-disable @typescript-eslint/no-unused-vars */
-import React, { FC, useEffect } from 'react';
+import React, { FC, useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useAppSelector, useAppDispatch } from '../../../hooks/redux';
 import Loader from '../../Loader';
 import CardList from '../../CardList';
 import { fetchAuthMainPaintings, fetchMainPaintings } from '../../../store/slices/paintingsSlice';
+import FiltredBar from '../../FiltredBar';
+import ModalArtist from '../../ModalArtist';
 
 const Main: FC = () => {
   const {
@@ -14,6 +15,7 @@ const Main: FC = () => {
   } = useAppSelector((state) => state);
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
+  const [isOpenArtsitEdit, setIsOpenArtsitEdit] = useState(false);
 
   useEffect(() => {
     dispatch(isAuth ? fetchAuthMainPaintings() : fetchMainPaintings());
@@ -26,7 +28,20 @@ const Main: FC = () => {
   if (loading) <Loader isDarkTheme={isDarkTheme} />;
 
   return (
-    <CardList isDarkTheme={isDarkTheme} mainPageInfo={paintings} clickHandler={clickHandler} />
+    <>
+      {isOpenArtsitEdit && (
+      <ModalArtist
+        setIsOpenArtsitEdit={() => setIsOpenArtsitEdit(false)}
+      />
+      )}
+      {isAuth && (
+      <FiltredBar
+        isDarkTheme={isDarkTheme}
+        setIsOpenArtsitEdit={() => setIsOpenArtsitEdit(true)}
+      />
+      )}
+      <CardList isDarkTheme={isDarkTheme} mainPageInfo={paintings} clickHandler={clickHandler} />
+    </>
   );
 };
 
