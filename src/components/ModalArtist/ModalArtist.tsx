@@ -16,7 +16,8 @@ import MultiSelect from '../MultiSelect';
 import { fetchGenres } from '../../store/slices/genresSlice';
 import { useAppDispatch, useAppSelector } from '../../hooks/redux';
 import ModalImage from '../ModalImage';
-import { fetchCreateArtist, fetchPatchArtistInfo } from '../../store/slices/artistsSlice';
+import { fetchPatchArtistInfo } from '../../store/slices/artistsSlice';
+import { fetchCreateArtist } from '../../store/slices/paintingsSlice';
 
 type ModalArtistProps = {
   setIsOpenArtsitEdit: () => void,
@@ -97,6 +98,7 @@ const ModalArtist: FC<ModalArtistProps> = ({
   useEffect(() => {
     dispatch(fetchGenres());
     document.addEventListener('keydown', keyHandler, false);
+
     return () => {
       document.removeEventListener('keydown', keyHandler, false);
     };
@@ -112,6 +114,7 @@ const ModalArtist: FC<ModalArtistProps> = ({
   const addGenresHandler = (selecetedGenre: Genre) => {
     setGenresBySelelcet((prev) => {
       if (prev.find((genre) => genre.name === selecetedGenre.name)) return prev;
+
       return [...prev, selecetedGenre];
     });
   };

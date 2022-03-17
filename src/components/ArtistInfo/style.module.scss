@@ -17,6 +17,46 @@
         flex-direction: column;
         align-items: center;
     }
+    &__plugAvatar{
+        font-weight: 400;
+        font-size: 22px;
+        line-height: 26px;
+        width: 482px;
+        height: 350px;
+        @include tablet{
+            font-size: 18px;
+            line-height: 21px;
+            width: 354px;
+            height: 310px;
+        }
+        @include mobile{
+            font-size: 14px;
+            line-height: 16px;
+            width: 290px;
+            height: 250px;
+        }
+        span{
+            max-width: 280px;
+            @include tablet{
+                max-width: 229px;
+            }
+            @include mobile{
+                max-width: 178px;
+            }
+        }
+        svg{
+            width: 150px;
+            height: 150px;
+            @include tablet{
+                width: 110px;
+                height: 110px;
+            }
+            @include mobile{
+                width: 80px;
+                height: 80px;
+            }
+        }
+    }
     &__genres{
         display: flex;
         flex-wrap: wrap;

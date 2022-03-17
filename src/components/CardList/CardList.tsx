@@ -55,6 +55,7 @@ const CardList: FC<CardListProps> = ({
       {mainPageInfo && mainPageInfo!.map((infoItem) => (
         <div className={style.cardList__card} key={infoItem._id}>
           <Card
+            isDarkTheme={isDarkTheme}
             mainPageInfo={infoItem}
             clickHandler={clickHandler}
           />

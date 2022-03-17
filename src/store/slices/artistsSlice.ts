@@ -1,11 +1,11 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 import {
   AuthArtist, DeleteArtistPainting, PatchArtistInfoRequest, PatchPainintgInfoRequest,
-  PostNewArtistRequset, PostNewPaintingRequest,
+  PostNewPaintingRequest,
 } from '../../types/types';
 import {
   getAuthArtist, getAuthArtists, deleteArtistPainting, patchPaintingInfo,
-  postNewPainting, postNewArtist, patchArtistInfo,
+  postNewPainting, patchArtistInfo, deleteArtist,
 } from '../../utils/api/methods';
 
 type ArtistsSlice = {
@@ -46,6 +46,14 @@ export const fetchDeleteArtistsPainting = createAsyncThunk(
   },
 );
 
+export const fetchDeleteArtist = createAsyncThunk(
+  'artist/delete',
+  async (id: string) => {
+    const response = await deleteArtist(id);
+    return (response.data);
+  },
+);
+
 export const fetchPatchArtistPainting = createAsyncThunk(
   'painting/patch',
   async (body: PatchPainintgInfoRequest) => {
@@ -58,14 +66,6 @@ export const fetchCreateArtistPainitng = createAsyncThunk(
   'painting/post',
   async (body: PostNewPaintingRequest) => {
     const response = await postNewPainting(body);
-    return (response.data);
-  },
-);
-
-export const fetchCreateArtist = createAsyncThunk(
-  'artists/post',
-  async (body: PostNewArtistRequset) => {
-    const response = await postNewArtist(body);
     return (response.data);
   },
 );
@@ -150,17 +150,6 @@ const getArtistsSlice = createSlice({
       state.loading = false;
       state.error = true;
     });
-    builder.addCase(fetchCreateArtist.fulfilled, (state, action) => {
-      state.loading = false;
-      state.artists = [...state.artists, action.payload];
-    });
-    builder.addCase(fetchCreateArtist.pending, (state) => {
-      state.loading = true;
-    });
-    builder.addCase(fetchCreateArtist.rejected, (state) => {
-      state.loading = false;
-      state.error = true;
-    });
     builder.addCase(fetchPatchArtistInfo.fulfilled, (state, action) => {
       state.loading = false;
       state.artist = action.payload;
@@ -169,6 +158,16 @@ const getArtistsSlice = createSlice({
       state.loading = true;
     });
     builder.addCase(fetchPatchArtistInfo.rejected, (state) => {
+      state.loading = false;
+      state.error = true;
+    });
+    builder.addCase(fetchDeleteArtist.fulfilled, (state) => {
+      state.loading = false;
+    });
+    builder.addCase(fetchDeleteArtist.pending, (state) => {
+      state.loading = true;
+    });
+    builder.addCase(fetchDeleteArtist.rejected, (state) => {
       state.loading = false;
       state.error = true;
     });

@@ -9,11 +9,13 @@ import style from './style.module.scss';
 import { ReactComponent as EditIcon } from '../../assets/editIcon.svg';
 import { ReactComponent as DeleteIcon } from '../../assets/deleteIcon.svg';
 import { ReactComponent as Favorite } from '../../assets/favoriteIcon.svg';
+import PlugPhoto from '../PlugPhoto';
 
 type CardProps = {
   mainPageInfo?: StaticArtist,
   artistPageInfo?: ArtistPainting,
   idPaintingArtist?: number,
+  isDarkTheme?: boolean,
   clickHandler: (idPainting: string | number) => void,
   favoritePaintingHandler?: (payload: PatchFavoritePaintingRequest) => void,
   curentIdPaintingHandler?: (idPainting: number) => void,
@@ -26,10 +28,18 @@ const cx = cn.bind(style);
 const baseUrl = process.env.REACT_APP_BASE_URL_DEV;
 
 const Card: FC<CardProps> = ({
-  mainPageInfo, artistPageInfo, idPaintingArtist, deleteArtistPaintingHandler,
+  mainPageInfo, artistPageInfo, idPaintingArtist, deleteArtistPaintingHandler, isDarkTheme,
   clickHandler, favoritePaintingHandler, editArtistPaintingHandler, curentIdPaintingHandler,
 }) => {
-  const slidePanelClassName = cx('card__slidePanel', { card__slidePanel_abc: artistPageInfo });
+  const slidePanelClassName = cx(
+    'card__slidePanel',
+    { card__slidePanel_abc: artistPageInfo },
+    {
+      card__slidePanel_addLightTheme:
+      !mainPageInfo?.mainPainting && !isDarkTheme && !artistPageInfo,
+    },
+  );
+  const plugClassName = cx('card__plug', { card__plug_addLightTheme: !isDarkTheme });
 
   return (
     <div
@@ -68,10 +78,17 @@ const Card: FC<CardProps> = ({
       <LazyLoad height="100%">
         {mainPageInfo
         && (
+          (mainPageInfo.mainPainting && (
           <picture className={style.card__img}>
             <source type="image/webp" srcSet={`${baseUrl!}${mainPageInfo?.mainPainting?.image.webp}`} />
             <img className={style.card__img} src={`${baseUrl!}${mainPageInfo.mainPainting?.image?.src}`} alt="#paintOfAuthor" />
           </picture>
+          )) || (
+          <PlugPhoto isDarkTheme={isDarkTheme!} className={plugClassName}>
+            The paintings of this artist
+            have not been uploaded yet
+          </PlugPhoto>
+          )
         )}
         {artistPageInfo
         && (
@@ -112,6 +129,7 @@ const Card: FC<CardProps> = ({
           className={style.card__changeBtn}
           onClick={(e) => {
             e.stopPropagation();
+            curentIdPaintingHandler!(idPaintingArtist!);
             deleteArtistPaintingHandler!();
           }}
         >

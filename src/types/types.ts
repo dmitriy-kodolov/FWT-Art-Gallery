@@ -80,7 +80,7 @@ export type AuthStaticArtist = {
 };
 
 export type StaticArtist = {
-  genres: string[],
+  genres: Genre[],
   _id: string,
   name: string,
   yearsOfLife: string,

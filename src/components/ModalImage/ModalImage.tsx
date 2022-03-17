@@ -27,28 +27,28 @@ type ModalImageProps = {
 const cx = cn.bind(style);
 
 const schema = yup.object({
-  name: yup.string().min(3).required(),
-  yearOfCreation: yup.string().required(),
+  name: yup.string().min(3, 'Больше 3-еx символов').required('Поле обязательно'),
+  yearOfCreation: yup.string().required('Поле обязательно'),
 }).required();
 
 const baseUrl = process.env.REACT_APP_BASE_URL_DEV;
-
 const ModalImage: FC<ModalImageProps> = ({
   setIsOpenPaintingLoader, paintingName, created, isArtistEdit, submitHandler,
   paintingSrc,
 }) => {
   const ref = useRef <HTMLDivElement>(null) as React.MutableRefObject<HTMLInputElement>;
   const [myError, setMyError] = useState(true);
+
   useOutsideClick(ref, () => setIsOpenPaintingLoader(false));
 
   const keyHandler = (e: { key: string; }) => ((e.key === 'Escape') ? setIsOpenPaintingLoader(false) : null);
 
   const {
-    register, handleSubmit, control, formState: { isValid },
+    register, handleSubmit, control, formState: { isValid, errors },
   } = useForm<ControlSchema>({
     defaultValues: {
       name: paintingName || '',
-      yearOfCreation: created || 'null',
+      yearOfCreation: created || '',
     },
     mode: 'all',
     resolver: yupResolver(schema),
@@ -121,6 +121,7 @@ const ModalImage: FC<ModalImageProps> = ({
             control={control}
             value=""
             name="name"
+            errorMessage={errors.name?.message || false}
           />
           <Input
             myPlaceholder="Year of creation"
@@ -131,6 +132,7 @@ const ModalImage: FC<ModalImageProps> = ({
             control={control}
             type="number"
             name="yearOfCreation"
+            errorMessage={errors.yearOfCreation?.message || false}
           />
         </div>
         )}

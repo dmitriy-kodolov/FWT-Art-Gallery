@@ -4,7 +4,8 @@ import { useNavigate, useParams } from 'react-router-dom';
 import style from './style.module.scss';
 import CardList from '../../CardList';
 import {
-  fetchArtist, fetchDeleteArtistsPainting, fetchPatchArtistPainting, fetchCreateArtistPainitng,
+  fetchArtist, fetchDeleteArtistsPainting, fetchPatchArtistPainting,
+  fetchCreateArtistPainitng, fetchDeleteArtist,
 } from '../../../store/slices/artistsSlice';
 import { useAppSelector, useAppDispatch } from '../../../hooks/redux';
 import ArtistInfo from '../../ArtistInfo';
@@ -29,9 +30,10 @@ const Artist: FC = () => {
   const [isOpenPaintingLoader, setIsOpenPaintingLoader] = useState(false);
   const [isOpenSlider, setIsOpenSlider] = useState(false);
   const [curentIdPainting, setCurentIdPainting] = useState<string | number>();
-  const [isOpenAgreement, setIsOpenAgreement] = useState(false);
+  const [isOpenPaintingAgreement, setIsOpenPaintingAgreement] = useState(false);
   const [isOpenPaintingEdit, setIsOpenPaintingEdit] = useState(false);
   const [isOpenArtsitEdit, setIsOpenArtsitEdit] = useState(false);
+  const [isOpenArtistAgreement, setIsOpenArtistAgreement] = useState(false);
 
   const favoritePaintingHandler = (payload: PatchFavoritePaintingRequest) => {
     patchFavoritePainting(payload);
@@ -43,16 +45,18 @@ const Artist: FC = () => {
 
   const artistClassName = cx('artist', { artist_addLightTheme: !isDarkTheme });
 
-  const backToMainHandler = () => navigate(-1);
-
-  const deleteArtistHandler = () => console.log('delete');
+  const deleteArtistHandler = () => {
+    dispatch(fetchDeleteArtist(artist._id));
+    navigate(-1);
+    setIsOpenArtistAgreement(false);
+  };
 
   const deleteArtistPaintingHandler = () => {
     setIsOpenSlider(false);
     dispatch(fetchDeleteArtistsPainting(
       { idArtist: artist?._id, idPainting: artist?.paintings[curentIdPainting as number]._id },
     ));
-    setIsOpenAgreement(false);
+    setIsOpenPaintingAgreement(false);
   };
 
   const openSliderHandler = (idPainting: string | number) => {
@@ -66,6 +70,7 @@ const Artist: FC = () => {
 
   if (loading) <Loader isDarkTheme={isDarkTheme} />;
 
+  // создание и обновление артиста мб в отудльный хук
   const createPaintingHandler = (data?: ControlSchema, acceptedFiles?: File) => {
     dispatch(fetchCreateArtistPainitng(
       {
@@ -107,11 +112,20 @@ const Artist: FC = () => {
           setIsOpenArtsitEdit={() => setIsOpenArtsitEdit(false)}
         />
       )}
-      {isOpenAgreement
+      {isOpenArtistAgreement
+      && (
+        <ModalAgreement
+          deleteHandler={deleteArtistHandler}
+          closeModalHandler={() => setIsOpenArtistAgreement(false)}
+        >
+          artist profile
+        </ModalAgreement>
+      )}
+      {isOpenPaintingAgreement
        && (
        <ModalAgreement
          deleteHandler={deleteArtistPaintingHandler}
-         closeModalHandler={() => setIsOpenAgreement(false)}
+         closeModalHandler={() => setIsOpenPaintingAgreement(false)}
        >
          picture
        </ModalAgreement>
@@ -135,15 +149,15 @@ const Artist: FC = () => {
       <ArtistInfo
         artistInfo={artist}
         isDarkTheme={isDarkTheme}
-        backToMainHandler={backToMainHandler}
-        deleteArtistHandler={deleteArtistHandler}
+        backToMainHandler={() => navigate(-1)}
+        deleteArtistHandler={() => setIsOpenArtistAgreement(true)}
         editArtistHandler={() => setIsOpenArtsitEdit(true)}
       />
       {
         isOpenSlider
         && (
         <Slider
-          deleteArtistPaintingHandler={() => setIsOpenAgreement(true)}
+          deleteArtistPaintingHandler={() => setIsOpenPaintingAgreement(true)}
           paintings={artist.paintings}
           closeHandler={setIsOpenSlider}
           curentIdPainting={+curentIdPainting!}
@@ -156,7 +170,7 @@ const Artist: FC = () => {
       }
       <CardList
         setIsOpenPaintingLoader={setIsOpenPaintingLoader}
-        deleteArtistPaintingHandler={() => setIsOpenAgreement(true)}
+        deleteArtistPaintingHandler={() => setIsOpenPaintingAgreement(true)}
         editArtistPaintingHandler={() => setIsOpenPaintingEdit(true)}
         isDarkTheme={isDarkTheme}
         favoritePaintingHandler={favoritePaintingHandler}

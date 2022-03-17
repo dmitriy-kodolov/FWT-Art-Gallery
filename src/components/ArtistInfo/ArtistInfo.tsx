@@ -7,6 +7,7 @@ import style from './style.module.scss';
 import Button from '../Button';
 import { AuthArtist } from '../../types/types';
 import Accardeon from '../Accardeon';
+import PlugPhoto from '../PlugPhoto';
 
 type ArtistInfoProps = {
   isDarkTheme: boolean,
@@ -61,10 +62,19 @@ const ArtistInfo: FC<ArtistInfoProps> = ({
         </Button>
       </div>
       <div className={style.artistInfo__portrait}>
+        {(!avatar && (
+        <PlugPhoto isDarkTheme={isDarkTheme} className={style.artistInfo__plugAvatar}>
+          Profile photo have
+          {' '}
+          not been uploaded yet
+        </PlugPhoto>
+        ))
+        || (
         <picture>
           <source type="image/webp" srcSet={`${baseUrl!}${avatar?.webp}`} />
           <img src={`${baseUrl}${avatar?.src}`} alt="#paintOfAuthor" />
         </picture>
+        )}
       </div>
       <div className={style.artistInfo__info}>
         <span>{name}</span>

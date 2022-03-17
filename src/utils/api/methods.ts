@@ -33,10 +33,8 @@ export const patchFavoritePainting = ({ id, body }: PatchFavoritePaintingRequest
 
 export const deleteArtistPainting = ({ idArtist, idPainting }: DeleteArtistPainting): Promise<AxiosResponse<string>> => instance.delete(`artists/${idArtist}/paintings/${idPainting}`);
 
-// TODO убрать все any
-
 export const postNewPainting = ({ idArtist, body }: PostNewPaintingRequest):
-Promise<AxiosResponse<any>> => {
+Promise<AxiosResponse<ArtistPainting>> => {
   const formData = new FormData();
   formData.append('name', body.name);
   formData.append('yearOfCreation', body.yearOfCreation);
@@ -46,14 +44,14 @@ Promise<AxiosResponse<any>> => {
 };
 
 export const patchPaintingInfo = ({ idArtist, idPainting, body }: PatchPainintgInfoRequest):
-Promise<AxiosResponse<any>> => instance.put(`artists/${idArtist}/paintings/${idPainting}`, body);
+Promise<AxiosResponse<ArtistPainting>> => instance.put(`artists/${idArtist}/paintings/${idPainting}`, body);
 
 export const getAuthGenres = (): Promise<AxiosResponse<Genre[]>> => instance.get('/genres/');
 
 export const postNewArtist = ({
   name, description, avatar, yearsOfLife, location, genres,
 }: PostNewArtistRequset):
-Promise<AxiosResponse<any>> => {
+Promise<AxiosResponse<AuthArtist>> => {
   const formData = new FormData();
   formData.append('name', name);
   formData.append('country', location!);
@@ -70,7 +68,7 @@ export const patchArtistInfo = ({
     name, description, avatar, yearsOfLife, location, genres,
   },
 }: PatchArtistInfoRequest):
-Promise<AxiosResponse<any>> => {
+Promise<AxiosResponse<AuthArtist>> => {
   const formData = new FormData();
   formData.append('name', name);
   formData.append('country', location!);
@@ -81,3 +79,5 @@ Promise<AxiosResponse<any>> => {
 
   return instance.put(`artists/${id}`, formData);
 };
+
+export const deleteArtist = (id: string): Promise<AxiosResponse<string>> => instance.delete(`artists/${id}`);
