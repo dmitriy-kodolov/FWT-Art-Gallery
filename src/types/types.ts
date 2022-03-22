@@ -15,6 +15,12 @@ export type ControlSchema = {
 
 };
 
+export type GetBodyRequestMainPaintings = {
+  sortBy?: string | null,
+  orderBy?: string | null,
+  genres?: string[] | [],
+};
+
 export type PostNewPaintingRequest = {
   idArtist: string,
   body: {

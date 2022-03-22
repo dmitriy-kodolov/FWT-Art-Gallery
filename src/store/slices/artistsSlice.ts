@@ -152,7 +152,7 @@ const getArtistsSlice = createSlice({
     });
     builder.addCase(fetchPatchArtistInfo.fulfilled, (state, action) => {
       state.loading = false;
-      state.artist = action.payload;
+      state.artist = { ...state.artist, ...action.payload };
     });
     builder.addCase(fetchPatchArtistInfo.pending, (state) => {
       state.loading = true;

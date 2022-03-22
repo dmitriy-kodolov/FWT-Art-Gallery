@@ -18,6 +18,7 @@ import { useAppDispatch, useAppSelector } from '../../hooks/redux';
 import ModalImage from '../ModalImage';
 import { fetchPatchArtistInfo } from '../../store/slices/artistsSlice';
 import { fetchCreateArtist } from '../../store/slices/paintingsSlice';
+import setIdGenresForRequest from '../../utils/getIdGenresForRequest';
 
 type ModalArtistProps = {
   setIsOpenArtsitEdit: () => void,
@@ -37,9 +38,7 @@ const ModalArtist: FC<ModalArtistProps> = ({
   const [genresBySelelcet, setGenresBySelelcet] = useState<Genre[]>(artistInfo?.genres || []);
   const [isOpenArtistAvatarLoader, setIsOpenArtistAvatarLoader] = useState(false);
   const [avatarImage, setAvatarImage] = useState<File>();
-  const {
-    genres: { genres },
-  } = useAppSelector((state) => state);
+  const { theme: { isDarkTheme }, genres: { genres } } = useAppSelector((state) => state);
   const {
     register, handleSubmit, control, formState: { errors }, setValue, clearErrors,
     setError,
@@ -53,15 +52,23 @@ const ModalArtist: FC<ModalArtistProps> = ({
     },
   });
 
-  const idGenresForRequest = () => {
-    const result = [] as string[];
-    genres.forEach(({ name }) => {
-      genresBySelelcet.forEach((genre) => {
-        if (name === genre.name) result.push(genre._id);
-      });
-    });
-    return result;
-  };
+  const keyHandler = (e: KeyboardEvent) => ((e.key === 'Escape' && !isOpenArtistAvatarLoader) ? setIsOpenArtsitEdit() : () => {});
+
+  useEffect(() => {
+    if (!genres.length) dispatch(fetchGenres());
+    document.addEventListener('keydown', keyHandler);
+
+    return () => {
+      document.removeEventListener('keydown', keyHandler);
+    };
+  }, [isOpenArtistAvatarLoader]);
+
+  useEffect(() => {
+    if (genresBySelelcet.length) {
+      clearErrors('genres');
+      setValue('genres', genresBySelelcet);
+    }
+  }, [genresBySelelcet]);
 
   const onSubmit: SubmitHandler<ControlSchema> = (data) => {
     if (!isUpdateArtstInfo) {
@@ -71,7 +78,7 @@ const ModalArtist: FC<ModalArtistProps> = ({
         description: data.description || '',
         yearsOfLife: data.yearOfLife || '',
         location: data.location || '',
-        genres: idGenresForRequest(),
+        genres: setIdGenresForRequest(genres, genresBySelelcet),
       }));
     } else {
       dispatch(fetchPatchArtistInfo({
@@ -82,34 +89,16 @@ const ModalArtist: FC<ModalArtistProps> = ({
           description: data.description || '',
           yearsOfLife: data.yearOfLife || '',
           location: data.location || '',
-          genres: idGenresForRequest(),
+          genres: setIdGenresForRequest(genres, genresBySelelcet),
         },
       }));
     }
     setIsOpenArtsitEdit();
   };
 
-  const keyHandler = (e: { key: string; }) => ((e.key === 'Escape' && !isOpenArtistAvatarLoader) ? setIsOpenArtsitEdit() : null);
-
   const ref = useRef <HTMLDivElement>(null) as React.MutableRefObject<HTMLInputElement>;
 
   useOutsideClick(ref, () => !isOpenArtistAvatarLoader && setIsOpenArtsitEdit());
-
-  useEffect(() => {
-    dispatch(fetchGenres());
-    document.addEventListener('keydown', keyHandler, false);
-
-    return () => {
-      document.removeEventListener('keydown', keyHandler, false);
-    };
-  }, []);
-
-  useEffect(() => {
-    if (genresBySelelcet.length) {
-      clearErrors('genres');
-      setValue('genres', genresBySelelcet);
-    }
-  }, [genresBySelelcet]);
 
   const addGenresHandler = (selecetedGenre: Genre) => {
     setGenresBySelelcet((prev) => {
@@ -122,10 +111,8 @@ const ModalArtist: FC<ModalArtistProps> = ({
   const removeGenresHandler = (selecetedGenre: Genre) => {
     setGenresBySelelcet((prev) => {
       const result = prev.filter(({ name }) => name !== selecetedGenre.name);
-      if (!result.length) {
-        setError('genres', { type: 'required', message: 'Поле обязательно' });
-        return result;
-      }
+      if (!result.length) setError('genres', { type: 'required', message: 'Поле обязательно' });
+
       return result;
     });
   };
@@ -134,6 +121,8 @@ const ModalArtist: FC<ModalArtistProps> = ({
     setIsOpenArtistAvatarLoader(false);
     setAvatarImage(acceptedFiles);
   };
+  // аватарка не обновляется в ответе
+  // валидация снова кривая на жанры,
 
   return (
     <div className={style.modal}>
@@ -199,6 +188,7 @@ const ModalArtist: FC<ModalArtistProps> = ({
           </TextArea>
           <MultiSelect
             myPlaceholder="Genre*"
+            isDarkTheme={isDarkTheme}
             removeGenresHandler={removeGenresHandler}
             addGenresHandler={addGenresHandler}
             selectInfo={genres}

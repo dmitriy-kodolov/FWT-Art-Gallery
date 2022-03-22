@@ -1,7 +1,7 @@
 @use '../../assets/variables' as v;
 @import '../../assets/mobile';
 .modal{
-    z-index: 2;
+    z-index: 4;
     position: fixed;
     background:rgba(0, 0, 0, 0.8);
     display: flex;

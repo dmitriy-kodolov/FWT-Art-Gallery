@@ -1,5 +1,7 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
-import { ArtistPainting, PostNewArtistRequset, StaticArtist } from '../../types/types';
+import {
+  ArtistPainting, GetBodyRequestMainPaintings, PostNewArtistRequset, StaticArtist,
+} from '../../types/types';
 import { getMainPaintings, getAuthMainPaintings, postNewArtist } from '../../utils/api/methods';
 
 type PaintingsSlice = {
@@ -26,8 +28,8 @@ export const fetchMainPaintings = createAsyncThunk(
 
 export const fetchAuthMainPaintings = createAsyncThunk(
   'authPaintings',
-  async () => {
-    const response = await getAuthMainPaintings();
+  async (payload: GetBodyRequestMainPaintings) => {
+    const response = await getAuthMainPaintings(payload);
 
     return (response.data.data);
   },

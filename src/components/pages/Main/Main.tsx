@@ -3,7 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import { useAppSelector, useAppDispatch } from '../../../hooks/redux';
 import Loader from '../../Loader';
 import CardList from '../../CardList';
-import { fetchAuthMainPaintings, fetchMainPaintings } from '../../../store/slices/paintingsSlice';
+import { fetchMainPaintings } from '../../../store/slices/paintingsSlice';
 import FiltredBar from '../../FiltredBar';
 import ModalArtist from '../../ModalArtist';
 
@@ -18,7 +18,7 @@ const Main: FC = () => {
   const [isOpenArtsitEdit, setIsOpenArtsitEdit] = useState(false);
 
   useEffect(() => {
-    dispatch(isAuth ? fetchAuthMainPaintings() : fetchMainPaintings());
+    if (!isAuth) dispatch(fetchMainPaintings());
   }, [isAuth]);
 
   const clickHandler = (idPainting: string | number) => (isAuth ? navigate(`../artist/${idPainting}`) : alert('xyi'));

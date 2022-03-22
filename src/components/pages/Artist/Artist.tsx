@@ -16,6 +16,7 @@ import { ControlSchema, PatchFavoritePaintingRequest } from '../../../types/type
 import ModalImage from '../../ModalImage/ModalImage';
 import ModalAgreement from '../../ModalAgreement/ModalAgreement';
 import ModalArtist from '../../ModalArtist/ModalArtist';
+import MyLink from '../../MyLink/MyLink';
 
 const cx = cn.bind(style);
 
@@ -44,6 +45,7 @@ const Artist: FC = () => {
   }, []);
 
   const artistClassName = cx('artist', { artist_addLightTheme: !isDarkTheme });
+  const footerInfoClassName = cx('artist__footerInfo', { artist__footerInfo_addLightTheme: !isDarkTheme });
 
   const deleteArtistHandler = () => {
     dispatch(fetchDeleteArtist(artist._id));
@@ -178,6 +180,12 @@ const Artist: FC = () => {
         clickHandler={openSliderHandler}
         curentIdPaintingHandler={curentIdPaintingHandler}
       />
+      {!artist?.paintings?.length && (
+        <div className={footerInfoClassName}>
+          <span>the paintings of this artist have not been uploaded yet.</span>
+          <MyLink onClick={() => setIsOpenPaintingLoader(true)}>add them first!</MyLink>
+        </div>
+      )}
     </div>
   );
 };

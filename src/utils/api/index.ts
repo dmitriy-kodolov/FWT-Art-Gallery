@@ -10,8 +10,9 @@ const instance = axios.create({
 });
 
 instance.interceptors.request.use((config) => ({ ...config, headers: { ...config.headers, Authorization: `Bearer ${Cookies.get('accessToken')}` } }));
+// TODO возмодно не все кейсы обработал
 instance.interceptors.response.use((config) => config, async (error) => {
-  if (error.response.status === 401) {
+  if (error.response.status === 401 && !error.response.data.message.includes('expired')) {
     const originalRequest = error.config;
     try {
       const refreshToken = Cookies.get('refreshToken');

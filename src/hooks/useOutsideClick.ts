@@ -2,7 +2,7 @@ import { useEffect, MutableRefObject } from 'react';
 
 const useOutsideClick = (
   ref: MutableRefObject<HTMLDivElement | undefined>,
-  handler: any,
+  handler: () => void,
 ) => {
   useEffect(
     () => {

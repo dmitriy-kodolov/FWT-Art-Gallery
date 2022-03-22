@@ -1,21 +1,41 @@
 @use '../../assets/variables' as v;
 @import '../../assets/mobile';
 .multiSelect{
-    position: relative;
     height: 45px;
-    padding: 15px 12px;
     display: flex;
     align-items: center;
     position: relative;
-    justify-content: flex-start;
+    justify-content: center;
     color: v.$lightThemeColor;
     background: #0C0C0C;
     border: 1px solid rgba(255, 255, 255, 0.3);
     box-sizing: border-box;
     border-radius: 8px;
     font-weight: 400;
+    z-index: 2;
+    &:hover{
+        border: 1px solid v.$lightThemeColor;
+    }
+    &:focus{
+        border: 1px solid v.$lightThemeColor;
+    }
+    &_addLightTheme{
+        color: v.$darkThemeColor;
+        border: 1px solid rgba(0, 0, 0, 0.3);
+        background: v.$lightThemeColor;
+        &:hover{
+            border: 1px solid #000000;
+        }
+        &:focus{
+            border: 1px solid #000000;
+        } 
+    }
     &_addErrorStyle{
         border: 1px solid #FF0000 !important;
+    }
+    &_removeBorderRadius{
+        border-bottom-left-radius: 0;
+        border-bottom-right-radius: 0;
     }
     &__errorMessage{
         position: absolute;
@@ -45,44 +65,32 @@
         display: flex;
         gap: 12px;
     }
-    &_removeBorderRadius{
-        border-bottom-left-radius: 0;
-        border-bottom-right-radius: 0;
-    }
-    &:hover{
-        border: 1px solid v.$lightThemeColor;
-    }
-    &:focus{
-        border: 1px solid v.$lightThemeColor;
-    }
     &__selectItems{
-        max-height: 445px; // TODO  в макетах нету варианта для ограничения высоты у селекта
-        width: 376px;
+        // max-height: 445px; // TODO  в макетах нету варианта для ограничения высоты у селекта
+        height: 400px;
+        width: 100%;
         position: absolute;
         top: 43px;
-        left: -1px;
-        overflow-y: auto;
+        overflow: auto;
         cursor: pointer;
         display: flex;
         font-weight: 500;
         font-size: 16px;
         line-height: 19px;
-        border: 1px solid v.$lightThemeColor;
-        box-sizing: border-box;
+        border: inherit;
         border-bottom-left-radius: 8px;
         border-bottom-right-radius: 8px;
         border-top: 1px solid rgba(255, 255, 255, 0.3);
         flex-direction: column;
-        align-items: flex-start;
-        justify-content: center;
-        padding: 20px 16px;
         background: #0C0C0C;
+        padding-bottom: 20px;
         &_addLightTheme{
-            border: 1px solid #000000;
             border-top: 1px solid rgba(0, 0, 0, 0.3);
             background: v.$lightThemeColor;
         }
         & > div{
+            box-sizing: border-box;
+            padding: 20px 0 0 16px;
             display: flex;
             align-items: center;
             :hover{
@@ -115,16 +123,5 @@
         &_rotateDropBtn{
             transform: rotate(-180deg);
         }
-    }
-    &_addLightTheme{
-        color: v.$darkThemeColor;
-        border: 1px solid rgba(0, 0, 0, 0.3);
-        background: v.$lightThemeColor;
-        &:hover{
-            border: 1px solid #000000;
-        }
-        &:focus{
-            border: 1px solid #000000;
-        } 
     }
 }

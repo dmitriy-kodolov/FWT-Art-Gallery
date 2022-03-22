@@ -4,17 +4,84 @@
 .filtredBar{
     display: flex;
     align-items: center;
-    justify-content: flex-start;
+    justify-content: space-between;
+    gap: 20px;
     padding-bottom: 40px;
     @include mobile{
+        gap: 15px;
         flex-direction: column;
         padding-bottom: 30px;
+    }
+    &__input{
+        width: 240px;
+        height: 45px !important;
+        border: none !important;
+        svg{
+            position: absolute;
+            top: 12px;
+            right: 18px;
+            fill: rgba(255, 255, 255, 0.3);
+        }
+        input{
+            border: 1px solid rgba(255, 255, 255, 0.3) !important;
+            background: #0C0C0C !important;
+            height: 45px !important;
+            &:hover{
+                border: 1px solid #FFFFFF !important;
+            }
+        }
+        @include tablet{
+            width: 174px;
+        }
+        @include mobile{
+            width: 290px;
+        }
+        &_addLightTheme{
+            background: v.$lightThemeColor !important;
+            input{
+                border: 1px solid rgba(0, 0, 0, 0.3) !important;
+                background: v.$lightThemeColor !important;
+                &:hover{
+                    border: 1px solid #000000 !important;
+                }
+            }
+            svg{
+                fill: rgba(0, 0, 0, 0.3);
+            }
+        }
+    }
+    &__select{
+        width: 240px;
+        @include tablet{
+            width: 174px;
+        }
+        @include mobile{
+            width: 290px;
+        }
+    }
+    &__multiSelect{
+        width: 240px;
+        @include tablet{
+            width: 174px;
+        }
+        @include mobile{
+            width: 290px;
+        }
     }
     &__addArtistBtn{
         display: flex;
         justify-content: center;
         align-items: center;
         gap: 10px;
+        width: 204px;
+        height: 45px;
+        @include tablet{
+            width: 146px;
+        }
+        @include mobile{
+            width: 290px;
+            height: 40px;
+        }
         svg{
             fill: v.$darkThemeColor;
             width: 16px;
@@ -24,16 +91,6 @@
             svg{
                 fill: v.$lightThemeColor;
             }    
-        }
-        width: 204px;
-        height: 46px;
-        @include tablet{
-            width: 146px;
-            height: 46px;
-        }
-        @include mobile{
-            width: 290px;
-            height: 40px;            
         }
     }
 }

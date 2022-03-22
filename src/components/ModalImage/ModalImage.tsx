@@ -75,10 +75,10 @@ const ModalImage: FC<ModalImageProps> = ({
   const infoMessageClassName = cx('addPainting__infoMessage', { addPainting__infoMessage_addRedColor: isDragReject });
 
   useEffect(() => {
-    document.addEventListener('keydown', keyHandler, false);
+    document.addEventListener('keydown', keyHandler);
 
     return () => {
-      document.removeEventListener('keydown', keyHandler, false);
+      document.removeEventListener('keydown', keyHandler);
     };
   }, []);
 
