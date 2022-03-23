@@ -6,6 +6,8 @@ import CardList from '../../CardList';
 import { fetchMainPaintings } from '../../../store/slices/paintingsSlice';
 import FiltredBar from '../../FiltredBar';
 import ModalArtist from '../../ModalArtist';
+import Pagination from '../../Pagination/Pagination';
+import style from './style.module.scss';
 
 const Main: FC = () => {
   const {
@@ -28,7 +30,7 @@ const Main: FC = () => {
   if (loading) <Loader isDarkTheme={isDarkTheme} />;
 
   return (
-    <>
+    <div className={style.main}>
       {isOpenArtsitEdit && (
       <ModalArtist
         setIsOpenArtsitEdit={() => setIsOpenArtsitEdit(false)}
@@ -41,7 +43,8 @@ const Main: FC = () => {
       />
       )}
       <CardList isDarkTheme={isDarkTheme} mainPageInfo={paintings} clickHandler={clickHandler} />
-    </>
+      <Pagination />
+    </div>
   );
 };
 

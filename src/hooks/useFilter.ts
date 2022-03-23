@@ -11,8 +11,6 @@ const useFilter = () => {
   });
 
   const updateURL = (payload: any) => {
-    console.log(payload);
-
     // TODO либо оставить урлу как есть, либо придумавать так чтобы это все складировалось в масив
     const resultParams = {
       ...state,

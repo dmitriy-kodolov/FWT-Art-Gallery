@@ -71,8 +71,8 @@ const ArtistInfo: FC<ArtistInfoProps> = ({
         ))
         || (
         <picture>
-          <source type="image/webp" srcSet={`${baseUrl!}${avatar?.webp}`} />
-          <img src={`${baseUrl}${avatar?.src}`} alt="#paintOfAuthor" />
+          <source type="image/webp" srcSet={`${baseUrl!}${avatar?.webp}?${new Date().getTime()}`} />
+          <img src={`${baseUrl}${avatar?.src}?${new Date().getTime()}`} alt="#paintOfAuthor" />
         </picture>
         )}
       </div>

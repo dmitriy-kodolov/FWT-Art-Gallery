@@ -1,0 +1,112 @@
+@use '../../assets/variables' as v;
+@import '../../assets/mobile';
+.pagination{
+    cursor: pointer;
+    margin-top: 40px;
+    font-weight: 500;
+    font-size: 18px;
+    line-height: 20px;
+    display: flex;
+    align-items: center;
+    width: 290px;
+    height: 42px;
+    background: v.$darkThemeColor;
+    color: v.$lightThemeColor;
+    & > div {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        width: 100%;
+        height: 100%;
+        max-width: 40px;
+        border: 1px solid v.$lightThemeColor;
+        &:hover{
+            background: #0C0C0C;
+        }
+    }
+    & svg{
+        fill: v.$lightThemeColor;
+    }
+    &_addLightTheme{
+        background: v.$lightThemeColor;
+        color: v.$darkThemeColor;
+        & > div {
+            border: 1px solid v.$darkThemeColor;
+            &:hover{
+                background: #EFEFEF;
+            }
+    
+        }
+        & svg{
+            fill: v.$darkThemeColor;
+        }
+    }
+    &__curentPage{
+        color: v.$darkThemeColor;
+        background: v.$lightThemeColor;
+        &:hover{
+            background: v.$lightThemeColor !important;
+        }
+        &_addLightTheme{
+            color: v.$lightThemeColor; 
+            background: v.$darkThemeColor;
+            &:hover{
+                background: v.$darkThemeColor !important;
+            }
+        }
+    }
+    &__page{
+        border-left: none !important;
+    }
+    &__nextPage{
+        border-left: none !important;
+        &_addDisabled{
+            &:hover{
+                background:  none !important;    
+            }
+            svg{
+                fill: rgba(255, 255, 255, 0.3);
+            }
+            border-color:  rgba(255, 255, 255, 0.3) !important;
+        }
+    }
+    &__prevPage{
+        &_addDisabled{
+            &:hover{
+                background:  none !important;    
+            }
+            svg{
+                fill: rgba(255, 255, 255, 0.3);
+            }
+            border-color:  rgba(255, 255, 255, 0.3) !important;
+        }
+    }
+    &__firstPage{
+        border-right: none !important;
+        border-top-left-radius: 8px;
+        border-bottom-left-radius: 8px;
+        &_addDisabled{
+            &:hover{
+                background:  none !important;    
+            }
+            svg{
+                fill: rgba(255, 255, 255, 0.3);
+            }
+            border-color:  rgba(255, 255, 255, 0.3) !important;
+        }
+    }
+    &__lastPage{
+        border-left: none !important;
+        border-top-right-radius: 8px;
+        border-bottom-right-radius: 8px;
+        &_addDisabled{
+            &:hover{
+                background:  none !important;    
+            }
+            svg{
+                fill: rgba(255, 255, 255, 0.3);
+            }
+            border-color:  rgba(255, 255, 255, 0.3) !important;
+        }
+    }
+}

@@ -2,14 +2,13 @@ import React, { FC, useState } from 'react';
 import cn from 'classnames/bind';
 import style from './style.module.scss';
 import { ReactComponent as ArrowSelect } from '../../assets/arrowSelect.svg';
-import { GetBodyRequestMainPaintings } from '../../types/types';
 
 const cx = cn.bind(style);
 
 type SelectProps = {
   sortInfo: string[],
-  sortHandler: (info: GetBodyRequestMainPaintings) => void
-  checkedSortName: string,
+  sortHandler: (selectedSortName: string) => void
+  checkedSortName?: string,
   isDarkTheme: boolean,
   className: string,
 };
@@ -46,7 +45,7 @@ const Select: FC<SelectProps> = ({
                 id={sortName}
                 type="checkbox"
                 checked={sortName === checkedSortName}
-                onChange={() => sortHandler({ orderBy: sortName })}
+                onChange={() => sortHandler(sortName)}
               />
               <span />
             </label>

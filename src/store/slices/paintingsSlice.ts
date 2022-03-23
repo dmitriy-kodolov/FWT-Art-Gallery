@@ -1,6 +1,7 @@
+/* eslint-disable @typescript-eslint/no-unused-expressions */
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 import {
-  ArtistPainting, GetBodyRequestMainPaintings, PostNewArtistRequset, StaticArtist,
+  GetBodyRequestMainPaintings, PostNewArtistRequset, StaticArtist,
 } from '../../types/types';
 import { getMainPaintings, getAuthMainPaintings, postNewArtist } from '../../utils/api/methods';
 
@@ -8,14 +9,27 @@ type PaintingsSlice = {
   paintings: StaticArtist[],
   loading: boolean,
   error: boolean,
-  artistPaintings: ArtistPainting[]
+  meta: {
+    pageNumber: number,
+    perPage: number,
+    count: number,
+    totalCount: number,
+  }
+  pages: number
 };
 
 const initialState: PaintingsSlice = {
   paintings: [],
   loading: true,
   error: false,
-  artistPaintings: [],
+  pages: 1,
+  meta: {
+    pageNumber: 1,
+    perPage: 9,
+    count: 0,
+    // TODO
+    totalCount: 9,
+  },
 };
 
 export const fetchMainPaintings = createAsyncThunk(
@@ -31,7 +45,7 @@ export const fetchAuthMainPaintings = createAsyncThunk(
   async (payload: GetBodyRequestMainPaintings) => {
     const response = await getAuthMainPaintings(payload);
 
-    return (response.data.data);
+    return (response.data);
   },
 );
 
@@ -46,7 +60,27 @@ export const fetchCreateArtist = createAsyncThunk(
 const getPaintingsSlice = createSlice({
   name: 'getPaintings',
   initialState,
-  reducers: {},
+  reducers: {
+    setAllPagesCount: (state, action) => {
+      state.pages = action.payload;
+    },
+    setPerPage: (state, action) => {
+      if (action.payload <= 768) state.meta.perPage = 8;
+    },
+    setStartPage: (state) => { state.meta.pageNumber = 1; },
+    setLastPage: (state) => { state.meta.pageNumber = state.pages; },
+    setCurentPage: (state, action) => { state.meta.pageNumber = action.payload; },
+    incrementPage: (state) => {
+      state.meta.pageNumber === state.pages
+        ? state.meta.pageNumber = state.pages
+        : state.meta.pageNumber += 1;
+    },
+    decrementPage: (state) => {
+      state.meta.pageNumber === 1
+        ? state.meta.pageNumber = 1
+        : state.meta.pageNumber -= 1;
+    },
+  },
   extraReducers: (builder) => {
     builder.addCase(fetchMainPaintings.fulfilled, (state, action) => {
       state.loading = false;
@@ -61,7 +95,8 @@ const getPaintingsSlice = createSlice({
     });
     builder.addCase(fetchAuthMainPaintings.fulfilled, (state, action) => {
       state.loading = false;
-      state.paintings = action.payload;
+      state.paintings = action.payload.data;
+      state.meta = { ...state.meta, ...action.payload.meta };
     });
     builder.addCase(fetchAuthMainPaintings.pending, (state) => {
       state.loading = true;
@@ -83,5 +118,10 @@ const getPaintingsSlice = createSlice({
     });
   },
 });
+
+export const {
+  incrementPage, setAllPagesCount, setPerPage, setStartPage, decrementPage, setLastPage,
+  setCurentPage,
+} = getPaintingsSlice.actions;
 
 export default getPaintingsSlice.reducer;

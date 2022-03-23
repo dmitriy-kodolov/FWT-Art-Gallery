@@ -82,7 +82,7 @@ Promise<AxiosResponse<AuthArtist>> => {
 export const deleteArtist = (id: string): Promise<AxiosResponse<string>> => instance.delete(`artists/${id}`);
 
 export const getAuthMainPaintings = ({
-  orderBy, genres, sortBy,
+  orderBy, genres, sortBy, perPage, pageNumber,
 }: GetBodyRequestMainPaintings): Promise<AxiosResponse<AuthStaticArtist>> => {
   let sorting = null;
   if (orderBy === 'A—Z') sorting = 'asc';
@@ -90,9 +90,11 @@ export const getAuthMainPaintings = ({
 
   return instance.get('/artists/', {
     params: {
-      sortBy,
+      sortBy: sortBy || null,
       orderBy: sorting,
       genres: genres?.length ? genres : null,
+      perPage,
+      pageNumber,
     },
   });
 };

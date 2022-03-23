@@ -19,6 +19,8 @@ export type GetBodyRequestMainPaintings = {
   sortBy?: string | null,
   orderBy?: string | null,
   genres?: string[] | [],
+  pageNumber?: number,
+  perPage?: number,
 };
 
 export type PostNewPaintingRequest = {
@@ -83,6 +85,12 @@ export type ArtistPainting = {
 
 export type AuthStaticArtist = {
   data: StaticArtist[]
+  meta: {
+    count: number,
+    perPage: number,
+    pageNumber: number,
+    totalCount: number,
+  }
 };
 
 export type StaticArtist = {

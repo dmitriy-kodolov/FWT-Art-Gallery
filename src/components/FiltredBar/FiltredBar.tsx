@@ -30,9 +30,12 @@ const mockSortName = ['Recently added', 'A—Z', 'Z—A'];
 
 const FiltredBar: FC<FiltredBarProps> = ({ isDarkTheme, setIsOpenArtsitEdit }) => {
   const dispatch = useAppDispatch();
-  const { genres: { genres } } = useAppSelector((state) => state);
+  const {
+    genres: { genres },
+    paintings: { meta: { pageNumber, perPage } },
+  } = useAppSelector((state) => state);
   const [genresBySelelcet, setGenresBySelelcet] = useState<Genre[]>([]);
-  const [sortInfo, setSortInfo] = useState('Recently added');
+  const [sortInfo, setSortInfo] = useState<string>();
   const { updateParams, state } = useFilter();
   const { control, watch } = useForm<ControlSchema>({
     defaultValues: { name: state.sortBy || '' },
@@ -46,8 +49,8 @@ const FiltredBar: FC<FiltredBarProps> = ({ isDarkTheme, setIsOpenArtsitEdit }) =
 
   useEffect(() => {
     setSortInfo(state.orderBy || 'Recently added');
-    dispatch(fetchAuthMainPaintings(state));
-  }, [state]);
+    dispatch(fetchAuthMainPaintings({ ...state, pageNumber, perPage }));
+  }, [state, pageNumber]);
 
   useEffect(() => {
     setGenresBySelelcet(setGenresById(genres, state.genres));
@@ -87,6 +90,11 @@ const FiltredBar: FC<FiltredBarProps> = ({ isDarkTheme, setIsOpenArtsitEdit }) =
     });
   };
 
+  const sortHandler = (selectedName: string) => {
+    setSortInfo(selectedName);
+    updateParams({ orderBy: selectedName });
+  };
+
   return (
     <div className={style.filtredBar}>
       <Button
@@ -121,7 +129,7 @@ const FiltredBar: FC<FiltredBarProps> = ({ isDarkTheme, setIsOpenArtsitEdit }) =
       <Select
         sortInfo={mockSortName}
         checkedSortName={sortInfo}
-        sortHandler={updateParams}
+        sortHandler={sortHandler}
         className={style.filtredBar__select}
         isDarkTheme={isDarkTheme}
       />
