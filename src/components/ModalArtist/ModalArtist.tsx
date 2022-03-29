@@ -1,5 +1,6 @@
 import React, {
-  FC, useRef, useEffect, useState,
+  useEffect, useState, MutableRefObject,
+  useRef,
 } from 'react';
 import { SubmitHandler, useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
@@ -31,9 +32,9 @@ const schema = yup.object({
   genres: yup.array().required(),
 }).required();
 
-const ModalArtist: FC<ModalArtistProps> = ({
+const ModalArtist = React.forwardRef<HTMLDivElement, ModalArtistProps>(({
   setIsOpenArtsitEdit, isUpdateArtstInfo, artistInfo,
-}) => {
+}, ref) => {
   const dispatch = useAppDispatch();
   const [genresBySelelcet, setGenresBySelelcet] = useState<Genre[]>(artistInfo?.genres || []);
   const [isOpenArtistAvatarLoader, setIsOpenArtistAvatarLoader] = useState(false);
@@ -96,9 +97,12 @@ const ModalArtist: FC<ModalArtistProps> = ({
     setIsOpenArtsitEdit();
   };
 
-  const ref = useRef <HTMLDivElement>(null) as React.MutableRefObject<HTMLInputElement>;
+  const modalImageRef = useRef<HTMLDivElement>() as MutableRefObject<HTMLDivElement>;
 
-  useOutsideClick(ref, () => !isOpenArtistAvatarLoader && setIsOpenArtsitEdit());
+  useOutsideClick(
+    ref as MutableRefObject<HTMLDivElement>,
+    () => !isOpenArtistAvatarLoader && setIsOpenArtsitEdit(),
+  );
 
   const addGenresHandler = (selecetedGenre: Genre) => {
     setGenresBySelelcet((prev) => {
@@ -121,14 +125,13 @@ const ModalArtist: FC<ModalArtistProps> = ({
     setIsOpenArtistAvatarLoader(false);
     setAvatarImage(acceptedFiles);
   };
-  // аватарка не обновляется в ответе
-  // валидация снова кривая на жанры,
 
   return (
     <div className={style.modal}>
       {isOpenArtistAvatarLoader
       && (
       <ModalImage
+        ref={modalImageRef}
         isArtistEdit
         setIsOpenPaintingLoader={() => setIsOpenArtistAvatarLoader(false)}
         submitHandler={addAvatarHandler}
@@ -208,6 +211,6 @@ const ModalArtist: FC<ModalArtistProps> = ({
       </div>
     </div>
   );
-};
+});
 
 export default ModalArtist;

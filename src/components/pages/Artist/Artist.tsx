@@ -1,4 +1,6 @@
-import React, { FC, useEffect, useState } from 'react';
+import React, {
+  FC, useEffect, useState, MouseEvent, useRef,
+} from 'react';
 import cn from 'classnames/bind';
 import { useNavigate, useParams } from 'react-router-dom';
 import style from './style.module.scss';
@@ -17,6 +19,8 @@ import ModalImage from '../../ModalImage/ModalImage';
 import ModalAgreement from '../../ModalAgreement/ModalAgreement';
 import ModalArtist from '../../ModalArtist/ModalArtist';
 import MyLink from '../../MyLink/MyLink';
+import Card from '../../Card/Card';
+import AddPaintingBlock from '../../AddPaintingBlock/AddPaintingBlock';
 
 const cx = cn.bind(style);
 
@@ -35,22 +39,28 @@ const Artist: FC = () => {
   const [isOpenPaintingEdit, setIsOpenPaintingEdit] = useState(false);
   const [isOpenArtsitEdit, setIsOpenArtsitEdit] = useState(false);
   const [isOpenArtistAgreement, setIsOpenArtistAgreement] = useState(false);
-
-  const favoritePaintingHandler = (payload: PatchFavoritePaintingRequest) => {
-    patchFavoritePainting(payload);
-  };
+  const artistClassName = cx('artist', { artist_addLightTheme: !isDarkTheme });
+  const footerInfoClassName = cx('artist__footerInfo', { artist__footerInfo_addLightTheme: !isDarkTheme });
 
   useEffect(() => {
     dispatch(fetchArtist(id!));
   }, []);
 
-  const artistClassName = cx('artist', { artist_addLightTheme: !isDarkTheme });
-  const footerInfoClassName = cx('artist__footerInfo', { artist__footerInfo_addLightTheme: !isDarkTheme });
+  const favoritePaintingHandler = (e: MouseEvent, payload: PatchFavoritePaintingRequest) => {
+    e.stopPropagation();
+    patchFavoritePainting(payload);
+  };
 
-  const deleteArtistHandler = () => {
-    dispatch(fetchDeleteArtist(artist._id));
-    navigate(-1);
-    setIsOpenArtistAgreement(false);
+  const editArtistPaintingHandler = (e: MouseEvent, payload: number) => {
+    e.stopPropagation();
+    setCurentIdPainting(payload);
+    setIsOpenPaintingEdit(true);
+  };
+
+  const openPaintingAgreement = (e: MouseEvent, payload: number) => {
+    e.stopPropagation();
+    setCurentIdPainting(payload);
+    setIsOpenPaintingAgreement(true);
   };
 
   const deleteArtistPaintingHandler = () => {
@@ -61,18 +71,12 @@ const Artist: FC = () => {
     setIsOpenPaintingAgreement(false);
   };
 
-  const openSliderHandler = (idPainting: string | number) => {
-    setIsOpenSlider(true);
-    setCurentIdPainting(idPainting);
+  const deleteArtistHandler = () => {
+    dispatch(fetchDeleteArtist(artist._id));
+    navigate(-1);
+    setIsOpenArtistAgreement(false);
   };
 
-  const curentIdPaintingHandler = (idPainting: number) => setCurentIdPainting(idPainting);
-
-  if (error) <h1>Error</h1>;
-
-  if (loading) <Loader isDarkTheme={isDarkTheme} />;
-
-  // создание и обновление артиста мб в отудльный хук
   const createPaintingHandler = (data?: ControlSchema, acceptedFiles?: File) => {
     dispatch(fetchCreateArtistPainitng(
       {
@@ -97,7 +101,7 @@ const Artist: FC = () => {
         )?._id as string,
         body:
         {
-          yearOfCreation: data!.yearOfCreation!.toString(),
+          yearOfCreation: data!.yearOfCreation!,
           name: data!.name!,
         },
       }),
@@ -105,10 +109,24 @@ const Artist: FC = () => {
     setIsOpenPaintingEdit(false);
   };
 
+  const openSliderHandler = (idPainting: string | number) => {
+    setIsOpenSlider(true);
+    setCurentIdPainting(idPainting);
+  };
+
+  if (error) <h1>Error</h1>;
+
+  if (loading) <Loader isDarkTheme={isDarkTheme} />;
+
+  const ref = useRef<HTMLDivElement>(null);
+  const paintingEditRef = useRef<HTMLDivElement>(null);
+  const paintingLoaderRef = useRef<HTMLDivElement>(null);
+
   return (
     <div className={artistClassName}>
       {isOpenArtsitEdit && (
         <ModalArtist
+          ref={ref}
           artistInfo={artist}
           isUpdateArtstInfo
           setIsOpenArtsitEdit={() => setIsOpenArtsitEdit(false)}
@@ -134,6 +152,7 @@ const Artist: FC = () => {
        )}
       {isOpenPaintingEdit && (
       <ModalImage
+        ref={paintingEditRef}
         submitHandler={patchPaintingHandler}
         paintingSrc={artist.paintings[+curentIdPainting!].image.src}
         setIsOpenPaintingLoader={setIsOpenPaintingEdit}
@@ -144,6 +163,7 @@ const Artist: FC = () => {
       {isOpenPaintingLoader
       && (
       <ModalImage
+        ref={paintingLoaderRef}
         submitHandler={createPaintingHandler}
         setIsOpenPaintingLoader={setIsOpenPaintingLoader}
       />
@@ -170,16 +190,23 @@ const Artist: FC = () => {
         />
         )
       }
-      <CardList
-        setIsOpenPaintingLoader={setIsOpenPaintingLoader}
-        deleteArtistPaintingHandler={() => setIsOpenPaintingAgreement(true)}
-        editArtistPaintingHandler={() => setIsOpenPaintingEdit(true)}
-        isDarkTheme={isDarkTheme}
-        favoritePaintingHandler={favoritePaintingHandler}
-        artistPageInfo={artist}
-        clickHandler={openSliderHandler}
-        curentIdPaintingHandler={curentIdPaintingHandler}
-      />
+      <CardList isDarkTheme={isDarkTheme}>
+        <AddPaintingBlock
+          setIsOpenPaintingLoader={setIsOpenPaintingLoader!}
+          isDarkTheme={isDarkTheme}
+        />
+        {artist.paintings?.map((paintingInfo, idPainting) => (
+          <Card
+            key={idPainting}
+            idPaintingArtist={idPainting}
+            artistPageInfo={paintingInfo}
+            clickHandler={openSliderHandler}
+            deleteArtistPaintingHandler={openPaintingAgreement}
+            favoritePaintingHandler={favoritePaintingHandler}
+            editArtistPaintingHandler={editArtistPaintingHandler}
+          />
+        ))}
+      </CardList>
       {!artist?.paintings?.length && (
         <div className={footerInfoClassName}>
           <span>the paintings of this artist have not been uploaded yet.</span>

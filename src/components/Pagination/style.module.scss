@@ -69,6 +69,12 @@
             }
             border-color:  rgba(255, 255, 255, 0.3) !important;
         }
+        &_addLightDisabled{
+            border-color: rgba(0, 0, 0, 0.3) !important;
+            svg{
+                fill: rgba(0, 0, 0, 0.3);
+            }
+        }
     }
     &__prevPage{
         &_addDisabled{
@@ -79,6 +85,12 @@
                 fill: rgba(255, 255, 255, 0.3);
             }
             border-color:  rgba(255, 255, 255, 0.3) !important;
+        }
+        &_addLightDisabled{
+            border-color: rgba(0, 0, 0, 0.3) !important;
+            svg{
+                fill: rgba(0, 0, 0, 0.3);
+            }
         }
     }
     &__firstPage{
@@ -94,6 +106,12 @@
             }
             border-color:  rgba(255, 255, 255, 0.3) !important;
         }
+        &_addLightDisabled{
+            border-color: rgba(0, 0, 0, 0.3) !important;
+            svg{
+                fill: rgba(0, 0, 0, 0.3);
+            }
+        }
     }
     &__lastPage{
         border-left: none !important;
@@ -107,6 +125,12 @@
                 fill: rgba(255, 255, 255, 0.3);
             }
             border-color:  rgba(255, 255, 255, 0.3) !important;
+        }
+        &_addLightDisabled{
+            border-color: rgba(0, 0, 0, 0.3) !important;
+            svg{
+                fill: rgba(0, 0, 0, 0.3);
+            }
         }
     }
 }

@@ -43,6 +43,7 @@ const authorizationSlice = createSlice({
       state.errorAuth = false;
     });
     builder.addCase(fetchAuthorization.rejected, (state) => {
+      state.isAuth = false;
       state.errorAuth = true;
     });
   },

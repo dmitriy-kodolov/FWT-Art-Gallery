@@ -54,7 +54,6 @@ const Select: FC<SelectProps> = ({
         )}
       <span>Sort by</span>
       <ArrowSelect className={selectDropIconClassName} />
-
     </div>
   );
 };

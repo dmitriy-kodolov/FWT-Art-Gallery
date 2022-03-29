@@ -7,14 +7,12 @@ import {
   AuthArtist, ArtistPainting, DeleteArtistPainting,
   StaticArtist, AuthStaticArtist, PostNewPaintingRequest,
   PatchPainintgInfoRequest, Genre, PostNewArtistRequset,
-  PatchArtistInfoRequest, GetBodyRequestMainPaintings,
+  PatchArtistInfoRequest, GetBodyRequestMainPaintings, GetStaticPaintingsRequest,
 } from '../../types/types';
 
 export const getAuthArtists = (): Promise<AxiosResponse<GetAuthArtistsRespons>> => instance.get('/artists');
 
 export const getAuthArtist = (id: string): Promise<AxiosResponse<AuthArtist>> => instance.get(`/artists/${id}`);
-
-export const getMainPaintings = (): Promise<AxiosResponse<StaticArtist[]>> => instance.get('/artists/static');
 
 export const getArtistPaintings = (id: string): Promise<AxiosResponse<ArtistPainting[]>> => instance.get(`/artists/${id}/paintings`);
 
@@ -98,3 +96,10 @@ export const getAuthMainPaintings = ({
     },
   });
 };
+
+export const getMainPaintings = ({ pageNumber, perPage }: GetStaticPaintingsRequest): Promise<AxiosResponse<StaticArtist[]>> => instance.get('/artists/static', {
+  params: {
+    perPage,
+    pageNumber,
+  },
+});

@@ -1,4 +1,6 @@
-import React, { FC, useEffect, useRef } from 'react';
+import React, {
+  FC, useEffect, useRef, MouseEvent,
+} from 'react';
 import cn from 'classnames/bind';
 import style from './style.module.scss';
 import { ReactComponent as Next } from '../../assets/nextIcon.svg';
@@ -18,7 +20,7 @@ type SliderProps = {
   paintings: AuthorPaintings[],
   curentIdPainting: number,
   setCurentIdPainting: (id: number) => void,
-  favoritePaintingHandler: (payload: PatchFavoritePaintingRequest) => void,
+  favoritePaintingHandler: (e: MouseEvent, payload: PatchFavoritePaintingRequest) => void,
   deleteArtistPaintingHandler: () => void,
   editArtistPaintingHandler: () => void,
 };
@@ -92,12 +94,10 @@ const Slider: FC<SliderProps> = ({
             aria-label="favorite button"
             isDarkTheme={isDarkTheme}
             className={btnClassName}
-            onClick={() => {
-              favoritePaintingHandler!({
-                id: paintings[curentIdPainting].artist,
-                body: { mainPainting: paintings[curentIdPainting]._id },
-              });
-            }}
+            onClick={(e) => favoritePaintingHandler!(e, {
+              id: paintings[curentIdPainting].artist,
+              body: { mainPainting: paintings[curentIdPainting]._id },
+            })}
           >
             <Favorite />
           </Button>
@@ -122,9 +122,7 @@ const Slider: FC<SliderProps> = ({
           <div className={style.sliderContainer__circles}>
             {paintings.map((paintingsInfo, id) => (
               <div
-                onClick={() => {
-                  setCurentIdPainting(id);
-                }}
+                onClick={() => setCurentIdPainting(id)}
                 className={curentIdPainting === id
                   ? circle
                   : style.sliderContainer__circle}

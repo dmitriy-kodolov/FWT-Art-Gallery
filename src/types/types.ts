@@ -146,3 +146,15 @@ export type PatchArtistInfoRequest = {
   id: string,
   body: PostNewArtistRequset
 };
+
+export type DragDropCard = {
+  card: StaticArtist,
+  id: number,
+};
+export interface DragDropWrapperItemsType extends StaticArtist {
+  id: number
+}
+export type GetStaticPaintingsRequest = {
+  perPage: number,
+  pageNumber: number
+};

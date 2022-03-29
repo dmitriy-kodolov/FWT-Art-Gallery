@@ -2,13 +2,13 @@
 @import '../../assets/mobile';
 @import '../../assets/tablet';
 .card{
-    display: grid;
+    // display: grid;
     cursor: pointer;
     width: 100%;
     height: 100%;
     position: relative;
     overflow: hidden;
-    direction: column;
+    // direction: column;
     align-items: center;
     border-radius: 4px;
     line-height: 20px;
@@ -174,7 +174,7 @@
         height: 50%;
         box-sizing: border-box;
         position: absolute;
-        top: 230px;
+        top: 88%;
         padding: 5px 15px;
         background: rgba(255, 255, 255, 0.75);
         transition: 0.5s;

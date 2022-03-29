@@ -1,7 +1,6 @@
-/* eslint-disable @typescript-eslint/no-unused-expressions */
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 import {
-  GetBodyRequestMainPaintings, PostNewArtistRequset, StaticArtist,
+  GetBodyRequestMainPaintings, GetStaticPaintingsRequest, PostNewArtistRequset, StaticArtist,
 } from '../../types/types';
 import { getMainPaintings, getAuthMainPaintings, postNewArtist } from '../../utils/api/methods';
 
@@ -27,15 +26,14 @@ const initialState: PaintingsSlice = {
     pageNumber: 1,
     perPage: 9,
     count: 0,
-    // TODO
     totalCount: 9,
   },
 };
 
 export const fetchMainPaintings = createAsyncThunk(
   'paintings',
-  async () => {
-    const response = await getMainPaintings();
+  async ({ perPage, pageNumber }: GetStaticPaintingsRequest) => {
+    const response = await getMainPaintings({ perPage, pageNumber });
     return (response.data);
   },
 );

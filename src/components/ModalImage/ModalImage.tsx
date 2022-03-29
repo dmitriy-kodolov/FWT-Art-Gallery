@@ -1,5 +1,5 @@
 import React, {
-  FC, useEffect, useRef, useState,
+  forwardRef, useEffect, useState, MutableRefObject,
 } from 'react';
 import { useDropzone } from 'react-dropzone';
 import cn from 'classnames/bind';
@@ -32,14 +32,17 @@ const schema = yup.object({
 }).required();
 
 const baseUrl = process.env.REACT_APP_BASE_URL_DEV;
-const ModalImage: FC<ModalImageProps> = ({
+
+const ModalImage = forwardRef<HTMLDivElement, ModalImageProps>(({
   setIsOpenPaintingLoader, paintingName, created, isArtistEdit, submitHandler,
   paintingSrc,
-}) => {
-  const ref = useRef <HTMLDivElement>(null) as React.MutableRefObject<HTMLInputElement>;
+}, ref) => {
   const [myError, setMyError] = useState(true);
 
-  useOutsideClick(ref, () => setIsOpenPaintingLoader(false));
+  useOutsideClick(
+    ref as MutableRefObject<HTMLDivElement>,
+    () => setIsOpenPaintingLoader(false),
+  );
 
   const keyHandler = (e: { key: string; }) => ((e.key === 'Escape') ? setIsOpenPaintingLoader(false) : null);
 
@@ -110,32 +113,32 @@ const ModalImage: FC<ModalImageProps> = ({
           <span>Image</span>
         </div>
         {!isArtistEdit
-        && (
-        <div className={style.addPainting__descriptionPainting}>
-          <Input
-            myPlaceholder="The name of the picture"
-            className={style.addPainting__inputPlaceholder}
-            {...register('name')}
-            placeholder="Enter a name"
-            isDarkTheme
-            control={control}
-            value=""
-            name="name"
-            errorMessage={errors.name?.message || false}
-          />
-          <Input
-            myPlaceholder="Year of creation"
-            className={style.addPainting__inputPlaceholder}
-            {...register('yearOfCreation')}
-            placeholder="Enter the year"
-            isDarkTheme
-            control={control}
-            type="number"
-            name="yearOfCreation"
-            errorMessage={errors.yearOfCreation?.message || false}
-          />
-        </div>
-        )}
+    && (
+    <div className={style.addPainting__descriptionPainting}>
+      <Input
+        myPlaceholder="The name of the picture"
+        className={style.addPainting__inputPlaceholder}
+        {...register('name')}
+        placeholder="Enter a name"
+        isDarkTheme
+        control={control}
+        value=""
+        name="name"
+        errorMessage={errors.name?.message || false}
+      />
+      <Input
+        myPlaceholder="Year of creation"
+        className={style.addPainting__inputPlaceholder}
+        {...register('yearOfCreation')}
+        placeholder="Enter the year"
+        isDarkTheme
+        control={control}
+        type="number"
+        name="yearOfCreation"
+        errorMessage={errors.yearOfCreation?.message || false}
+      />
+    </div>
+    )}
         <div {...getRootProps({ className: dropZoneClassName })}>
           {paintingSrc && <img src={`${baseUrl!}${paintingSrc}`} alt="" className={style.addPainting__painting} />}
           {acceptedFiles[0] && <img src={URL.createObjectURL(acceptedFiles[0])} alt="" className={style.addPainting__painting} />}
@@ -165,6 +168,6 @@ const ModalImage: FC<ModalImageProps> = ({
       </div>
     </form>
   );
-};
+});
 
 export default ModalImage;

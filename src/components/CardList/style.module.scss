@@ -2,6 +2,7 @@
 @import '../../assets/mobile';
 @import '../../assets/tablet';
 .cardList {
+    min-height: 700px;
     display: grid;
     background: v.$darkThemeColor;
     grid-template-columns: repeat(3, 1fr);
@@ -15,7 +16,7 @@
     &_addLightTheme{
         background: v.$lightThemeColor;
     }
-    &__card{
+    & > div{
         width: 315px;
         height: 260px;
         box-sizing: border-box;
@@ -27,10 +28,5 @@
             width: 137px;
             height: 120px;
         };
-    }
-    &__loader{
-        width: 100%;
-        display: grid;
-        justify-content: center;
     }
 }

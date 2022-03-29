@@ -20,21 +20,38 @@ const Pagination: import('react').FC = () => {
     paintings: { meta: { totalCount, pageNumber, perPage } },
   } = useAppSelector((state) => state);
   const dispatch = useAppDispatch();
-  const paginationClassName = cx('pagination', { pagination_addLightTheme: !isDarkTheme });
-  const firstPageStyle = cx('pagination__firstPage', { pagination__firstPage_addDisabled: pageNumber === 1 });
-  const lastPageStyle = cx('pagination__lastPage', { pagination__lastPage_addDisabled: pageNumber === 3 });
-  const nextPageStyle = cx('pagination__nextPage', { pagination__nextPage_addDisabled: pageNumber === 3 });
-  const prevPageStyle = cx('pagination__prevPage', { pagination__prevPage_addDisabled: pageNumber === 1 });
-  const pageStyle = cx(
-    'pagination__page',
-  );
-  const curentPageStyle = cx('pagination__curentPage', { pagination__curentPage_addLightTheme: !isDarkTheme });
-  const totalPagesCount = Math.ceil(totalCount / perPage);
-  dispatch(setAllPagesCount(totalPagesCount <= 3 ? 3 : totalPagesCount));
 
   useEffect(() => {
     dispatch(setPerPage(document.documentElement.scrollWidth));
   }, [pageNumber]);
+
+  const paginationClassName = cx('pagination', { pagination_addLightTheme: !isDarkTheme });
+  const firstPageStyle = cx(
+    'pagination__firstPage',
+    { pagination__firstPage_addDisabled: pageNumber === 1 },
+    { pagination__firstPage_addLightDisabled: pageNumber === 1 && !isDarkTheme },
+  );
+  const lastPageStyle = cx(
+    'pagination__lastPage',
+    { pagination__lastPage_addDisabled: pageNumber === 3 },
+    { pagination__lastPage_addLightDisabled: pageNumber === 3 && !isDarkTheme },
+  );
+  const nextPageStyle = cx(
+    'pagination__nextPage',
+    { pagination__nextPage_addDisabled: pageNumber === 3 },
+    { pagination__nextPage_addLightDisabled: pageNumber === 3 && !isDarkTheme },
+  );
+  const prevPageStyle = cx(
+    'pagination__prevPage',
+    { pagination__prevPage_addDisabled: pageNumber === 1 },
+    { pagination__prevPage_addLightDisabled: pageNumber === 1 && !isDarkTheme },
+  );
+  const pageStyle = cx('pagination__page');
+  const curentPageStyle = cx('pagination__curentPage', { pagination__curentPage_addLightTheme: !isDarkTheme });
+
+  dispatch(setAllPagesCount(Math.ceil(totalCount / perPage) <= 3
+    ? 3
+    : Math.ceil(totalCount / perPage)));
 
   return (
     <div className={paginationClassName}>
