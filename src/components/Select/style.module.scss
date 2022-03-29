@@ -1,0 +1,127 @@
+@use '../../assets/variables' as v;
+@import '../../assets/mobile';
+.select{
+    position: relative;
+    height: 45px;
+    padding: 15px 12px;
+    display: flex;
+    align-items: center;
+    position: relative;
+    justify-content: center;
+    color: v.$lightThemeColor;
+    background: #0C0C0C;
+    border: 1px solid rgba(255, 255, 255, 0.3);
+    box-sizing: border-box;
+    border-radius: 8px;
+    font-weight: 400;
+    z-index: 1;
+    & > {
+        span{
+            width: 100%;
+        }
+    }
+    &:hover{
+        border: 1px solid v.$lightThemeColor;
+    }
+    &:focus{
+        border: 1px solid v.$lightThemeColor;
+    }
+    &_removeBorderRadius{
+        border-bottom-left-radius: 0;
+        border-bottom-right-radius: 0;
+    }
+    &_addLightTheme{
+        color: v.$darkThemeColor;
+        background: v.$lightThemeColor;
+        border: 1px solid rgba(0, 0, 0, 0.3);
+        &:hover{
+            border: 1px solid v.$darkThemeColor;
+        }
+        &:focus{
+            border: 1px solid v.$darkThemeColor;
+        }
+    }
+    &__dropBtn{
+        position: absolute;
+        top: 20px;
+        right: 18px;
+        fill:rgba(255, 255, 255, 0.3);
+        &_addLigthTheme{
+            fill: rgba(0, 0, 0, 0.3);
+        }
+        &_rotateDropBtn{
+            transform: rotate(-180deg);
+        }
+    }
+    &__items{
+        cursor: pointer;
+        display: flex;
+        background: inherit;
+        border: inherit;
+        flex-direction: column;
+        align-items: center;
+        justify-content: flex-start;
+        position: absolute;
+        border-bottom-left-radius: 8px;
+        border-bottom-right-radius: 8px;
+        border-top: 1px solid rgba(255, 255, 255, 0.3);
+        top: 43px;
+        width: 100%;
+        padding-top: 20px;
+        &_addLightTheme{
+            border-top: 1px solid rgba(0, 0, 0, 0.3);
+        }
+        & > label {
+            display: flex;
+            box-sizing: border-box;
+            width: 100%;
+            align-items: center;
+            position: relative;
+            padding-left: 50px;
+            margin-bottom: 20px;
+            cursor: pointer;
+            -webkit-user-select: none;
+            -moz-user-select: none;
+            -ms-user-select: none;
+            user-select: none;
+            &:hover{
+                color: #AAAAAA;
+            }
+            input{
+                position: absolute;
+                opacity: 0;
+                cursor: pointer;
+                height: 0;
+                width: 0;
+
+                &:checked ~ span {
+                    display: block;
+                }
+                &:checked ~ span:after {
+                    left: 9px;
+                    top: 5px;
+                    width: 5px;
+                    height: 10px;
+                    border: solid white;
+                    border-width: 0 3px 3px 0;
+                    -webkit-transform: rotate(45deg);
+                    -ms-transform: rotate(45deg);
+                    transform: rotate(45deg);
+                    display: block;
+                }
+            }
+            span{
+                position: absolute;
+                top: -3px;
+                left: 15px;
+                height: 14px;
+                width: 10px;
+                &:after{
+                    content: "";
+                    position: absolute;
+                    display: none;
+                }
+            }
+        }
+    }
+}

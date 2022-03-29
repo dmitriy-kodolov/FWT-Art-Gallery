@@ -1,0 +1,126 @@
+@use '../../assets/variables' as v;
+@import '../../assets/mobile';
+.multiSelect{
+    height: 45px;
+    display: flex;
+    align-items: center;
+    position: relative;
+    justify-content: center;
+    color: v.$lightThemeColor;
+    background: #0C0C0C;
+    border: 1px solid rgba(255, 255, 255, 0.3);
+    box-sizing: border-box;
+    border-radius: 8px;
+    font-weight: 400;
+    z-index: 2;
+    &:hover{
+        border: 1px solid v.$lightThemeColor;
+    }
+    &:focus{
+        border: 1px solid v.$lightThemeColor;
+    }
+    &_addLightTheme{
+        color: v.$darkThemeColor;
+        border: 1px solid rgba(0, 0, 0, 0.3);
+        background: v.$lightThemeColor;
+        &:hover{
+            border: 1px solid #000000;
+        }
+        &:focus{
+            border: 1px solid #000000;
+        } 
+    }
+    &_addErrorStyle{
+        border: 1px solid #FF0000 !important;
+    }
+    &_removeBorderRadius{
+        border-bottom-left-radius: 0;
+        border-bottom-right-radius: 0;
+    }
+    &__errorMessage{
+        position: absolute;
+        bottom: -15px;
+        left: 0;
+        color: #FF0000;
+        font-weight: normal;
+        font-size: 10px;
+        line-height: 12px;
+        span{
+          display: inline !important; 
+        }
+    }
+    &__placeholder{
+        width: fit-content;
+        display: inline;
+        position: absolute;
+        top: -20px;
+        left: 0;
+        color: rgba(0, 0, 0, 0.3);
+    }
+    &__selectedItems{
+        width: calc(100% - 28px);
+        box-sizing: border-box;
+        overflow: hidden;
+        padding-right: 28px;
+        display: flex;
+        gap: 12px;
+    }
+    &__selectItems{
+        height: 400px;
+        width: 100%;
+        position: absolute;
+        top: 43px;
+        overflow: auto;
+        cursor: pointer;
+        display: flex;
+        font-weight: 500;
+        font-size: 16px;
+        line-height: 19px;
+        border: inherit;
+        border-bottom-left-radius: 8px;
+        border-bottom-right-radius: 8px;
+        border-top: 1px solid rgba(255, 255, 255, 0.3);
+        flex-direction: column;
+        background: #0C0C0C;
+        padding-bottom: 20px;
+        &_addLightTheme{
+            border-top: 1px solid rgba(0, 0, 0, 0.3);
+            background: v.$lightThemeColor;
+        }
+        & > div{
+            box-sizing: border-box;
+            padding: 20px 0 0 16px;
+            display: flex;
+            align-items: center;
+            :hover{
+                color: #AAAAAA;
+            }
+        }
+        input{
+            margin: 0 11px 0 0;
+            width: 14px;
+            height: 14px;            
+        }
+        @include mobile{
+            width: 290px;
+        }
+    }
+    &__selectedItem{
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        gap: 6px;
+    }
+    &__dropBtn{
+        position: absolute;
+        top: 20px;
+        right: 18px;
+        fill:rgba(255, 255, 255, 0.3);
+        &_addLigthTheme{
+            fill: rgba(0, 0, 0, 0.3);
+        }
+        &_rotateDropBtn{
+            transform: rotate(-180deg);
+        }
+    }
+}

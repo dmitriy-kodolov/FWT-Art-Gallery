@@ -1,0 +1,52 @@
+@use '../../assets/variables' as v;
+@import '../../assets/mobile';
+@import '../../assets/tablet';
+
+.addPaintingBlock{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    width: 315px;
+    height: 260px;
+    border: 3px solid rgba(255, 255, 255, 0.3);
+    box-sizing: border-box;
+    border-radius: 4px;
+    &_addLightTheme{
+        border: 3px solid rgba(0, 0, 0, 0.4);
+    }
+    &_addLightTheme svg{
+        stroke: rgba(0, 0, 0, 0.3) !important;
+    }
+    @include tablet{
+        width: 230px;
+        height: 190px;
+    }
+    @include mobile{
+        width: 137px;
+        height: 120px;
+    }
+    &__btn{
+        width: 55px;
+        height: 55px;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        background: inherit;
+        border: none !important;
+        @include tablet{
+            width: 50px;
+            height: 50px;
+        }
+        @include mobile{
+            width: 30px;
+            height: 30px;
+        }
+        svg{
+            width: inherit;
+            height: inherit;
+            stroke: rgba(255, 255, 255, 0.4);
+        }
+    }
+}

@@ -1,0 +1,49 @@
+@use '../../assets/variables' as v;
+.button{
+    background: v.$darkThemeColor;
+    border: 1px solid v.$lightThemeColor;
+    box-sizing: border-box;
+    border-radius: 6px;
+    color: v.$lightThemeColor;
+    font-weight: bold;
+    margin: 0;
+    &_disabled{
+        background: rgba(255, 255, 255, 0.3) !important;
+        &:hover{
+            color: v.$darkThemeColor !important;
+        }
+    }
+    &:hover{
+        border: 1px solid v.$darkThemeHoverColor; 
+        color: v.$darkThemeHoverColor;
+        stroke: v.$darkThemeHoverColor;
+    }
+    &_addLightTheme{
+        background: v.$lightThemeColor;
+        border: 1px solid v.$darkThemeColor;
+        color: v.$darkThemeColor;
+        &:hover{
+            border: 1px solid v.$lightThemeHoverColor;
+            color: v.$lightThemeHoverColor;
+            stroke: v.$lightThemeHoverColor;
+        }
+    }
+    &_filled{
+        color: v.$darkThemeColor;
+        background: v.$lightThemeColor;
+        border:none;
+        &:hover{
+            background: v.$darkThemeHoverColor;
+            color: v.$darkThemeColor;
+        }
+    }
+    &_filledLightTheme{
+        color: v.$lightThemeColor;
+        border:none;
+        background: v.$darkThemeColor;
+        &:hover{
+            background: v.$lightThemeHoverColor;
+            color: v.$lightThemeColor;
+        }
+    }
+}

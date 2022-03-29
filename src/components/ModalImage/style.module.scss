@@ -1,0 +1,181 @@
+@use '../../assets/variables' as v;
+@import '../../assets/mobile';
+.modal{
+    z-index: 4;
+    position: fixed;
+    background:rgba(0, 0, 0, 0.8);
+    display: flex;
+    width: 100%;
+    height: 100%;
+    top: 0;
+    left: 0;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+.addPainting{
+    width: 496px;
+    height: auto;
+    background: #131313;
+    box-sizing: border-box;
+    padding: 20px;
+    @include mobile{
+        display: flex;
+        box-sizing: none;
+        width: 320px;
+        flex-direction: column;
+        align-items: center;
+    }
+    &__dropZone{
+        box-sizing: border-box;
+        background-color: rgba(0, 0, 0, 0.7);;
+        width: 456px;
+        height: 400px;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        border-radius: 8px;
+        border: 3px dashed #464646;
+        &_addWhiteBorder{
+            border: 3px solid v.$lightThemeColor;
+        }
+        &_addRedBorder{
+            border: 3px dashed #FF0000;
+        }
+        @include mobile{
+            width: 280px;
+            height: 306px;
+        }
+    }
+    &__inputPlaceholder{
+        font-size: 12px;
+        line-height: 14px;
+        color: #BFBFBF;
+    }
+    &__painting{
+        width: 440px;
+        height: 314px;
+        @include mobile{
+            width: 250px;
+            height: 222px;
+        }
+    }
+    &__descriptionPainting{
+        display: flex;
+        justify-content: space-between;
+        padding-bottom: 26px;
+        & > div{
+            border: none;
+            background: none;
+            &:hover{
+                border: none !important;
+            }
+            &input{
+                ::placeholder{
+                    color: red !important;
+                }
+            }
+        }
+        :nth-child(1){
+            width: 310px;
+        }
+        :nth-child(2){
+            width: 126px;
+        }
+        @include mobile {
+            flex-direction: column;
+            align-items: center;
+            gap: 39px;
+            :nth-child(1){
+                width: 280px;
+            }
+            :nth-child(2){
+                width: 280px;
+            }
+        }
+    }
+    &__infoMessage{
+        width: 121px;
+        text-align: center;
+        font-weight: 300;
+        font-size: 12px;
+        line-height: 20px;
+        color: #464646;
+        &_addRedColor{
+            color: #FF0000;
+        }
+    }
+    &__dropZoneInfo{
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 12px;
+        :nth-child(2){
+            font-weight: normal;
+            font-size: 18px;
+            line-height: 21px;
+            color: rgba(255, 255, 255, 0.5);
+        }
+    }
+    &__acceptBtn{
+        margin-top: 8px;
+        width: 180px;
+        height: 40px;
+        text-transform: uppercase;
+        border: none !important;
+    }
+    &__footer{
+        padding-top: 20px;
+        gap: 81px;
+        display: flex;
+        justify-content: flex-start;
+        align-items: center;
+        span{
+            color: rgba(255, 255, 255, 0.5);
+            font-weight: normal;
+            @include mobile{
+                position: absolute;
+                top: -35px;
+                left: -35px;
+            }
+        }
+        @include mobile{
+        position: relative;
+        }
+    }
+    &__closeBtn{
+        width: 15px;
+        height: 15px;
+        position: absolute;
+        padding: 0;
+        top: 0;
+        right: 0;
+        border: none !important;
+        background: inherit;
+        :nth-child(1){
+            width: 15px !important;
+            height: 15px !important;
+            fill: v.$lightThemeColor;
+        }
+    }
+    &__header{
+        padding-bottom: 40px;
+        width: 100%;
+        display: flex;
+        justify-content: flex-start;
+        position: relative;
+        span{
+            padding-left: 35px;
+            line-height: 20px;
+            font-weight: normal;
+            color: v.$lightThemeColor
+        }
+        :nth-child(1){
+            width: 19px;
+            height: 19px;  
+            top: 0;
+            left: 0; 
+        }
+    }
+}

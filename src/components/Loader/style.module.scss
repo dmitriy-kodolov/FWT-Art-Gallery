@@ -1,0 +1,32 @@
+@use '../../assets/variables' as v;
+.loader{
+    display: flex;
+    justify-content: center;
+    gap: 4px;
+    height: 40px;
+    div:nth-child(2){
+        animation-delay: 0.5s;
+    }
+    div:nth-child(3){
+        animation-delay: 0.7s;
+    }
+    &__item{
+        animation: circle 1.2s ease-in-out infinite alternate;
+        svg {
+            fill: v.$lightThemeColor;
+        }
+        &_addLightTheme{
+            svg{
+                fill: v.$darkThemeColor;   
+            }
+        }    
+    }
+    @keyframes circle {
+        from {
+            padding-top: 20px;
+        }
+        to{
+            padding-top: 0;
+        }  
+    }
+}

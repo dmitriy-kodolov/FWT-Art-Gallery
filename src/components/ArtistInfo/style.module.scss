@@ -1,0 +1,191 @@
+@use '../../assets/variables' as v;
+@import '../../assets/mobile';
+@import '../../assets/tablet';
+.artistInfo{
+    color: v.$lightThemeColor;
+    gap: 15px;
+    padding-bottom:30px;
+    background: v.$darkThemeColor;
+    padding-bottom: 40px;
+    display: grid;
+    grid-template-areas:
+    'buttons buttons'
+    'portrait description'
+    'info info';
+    @include mobile{
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+    }
+    &__plugAvatar{
+        font-weight: 400;
+        font-size: 22px;
+        line-height: 26px;
+        width: 482px;
+        height: 350px;
+        @include tablet{
+            font-size: 18px;
+            line-height: 21px;
+            width: 354px;
+            height: 310px;
+        }
+        @include mobile{
+            font-size: 14px;
+            line-height: 16px;
+            width: 290px;
+            height: 250px;
+        }
+        span{
+            max-width: 280px;
+            @include tablet{
+                max-width: 229px;
+            }
+            @include mobile{
+                max-width: 178px;
+            }
+        }
+        svg{
+            width: 150px;
+            height: 150px;
+            @include tablet{
+                width: 110px;
+                height: 110px;
+            }
+            @include mobile{
+                width: 80px;
+                height: 80px;
+            }
+        }
+    }
+    &__genres{
+        display: flex;
+        flex-wrap: wrap;
+        gap: 10px;
+        justify-content: flex-start;
+        @include mobile{
+            justify-content: space-between;
+        }
+    }
+    &__genre{
+        display: inline-block;
+        margin: 0;
+        color: v.$darkThemeColor;
+        background: #FAFAD2;
+        border-radius: 50px;
+        padding: 10px;
+        margin-bottom: 15px;
+        font-variant: small-caps;
+        font-weight: bold;
+        @include mobile{
+            font-size: 10px;
+            line-height: 12px;
+        }
+    }
+    &__descriprion{
+        grid-area: description;
+        height: 100%;
+        display: flex;
+        flex-direction: column;
+        align-items: flex-start;
+        line-height: 24px;
+        font-weight: normal;
+        span:nth-child(2){
+            padding: 15px 0 30px 0;
+            color: #9C9C9C;
+            font-variant: small-caps;
+        }
+    }
+    &__info{
+        display: flex;
+        flex-direction: column;
+        grid-area: info;
+        align-items: flex-start;
+        padding-top: 15px;
+        @include mobile{
+            align-items: center;
+        }
+        span:nth-child(1){
+            padding-bottom: 10px;
+            font-weight: 900;
+            font-size: 22px;
+            line-height: 26px;    
+            text-transform: uppercase;
+        }
+        span:nth-child(2){
+            color: #9C9C9C;
+            font-variant: small-caps;
+        }
+    }
+    &__portrait{
+        grid-area: portrait;
+        width: 482px;
+        height: 350px;
+        img{
+            width: 100%;
+            height: 100%;
+        }
+        @include tablet{
+            width: 354px;
+            height: 310px;
+        }
+        @include mobile{
+            width: 290px;
+            height: 250px;
+        }
+    }
+    &_addLightTheme{
+        background: v.$lightThemeColor;
+        color: v.$darkThemeColor;
+    }
+    &__buttons{
+    grid-area: buttons;
+    padding-bottom: 15px;
+    display: flex;
+    width: 100%;
+    gap: 15px;
+    justify-content: flex-start;
+    }
+    &__btn{
+        background: rgba(255, 255, 255, 0.1);
+        width: 30px;
+        height: 30px;
+        border: none !important;
+        &:active{
+            border: 1px solid rgba(255, 255, 255, 0.1) !important;
+            svg{
+                fill: v.$darkThemeHoverColor!important;
+                stroke: none;
+            }
+            &:nth-child(3){
+                svg{
+                    fill: red !important;
+                    stroke: none;
+                }
+            }
+        }
+        &:hover{
+            svg{
+                fill: v.$darkThemeHoverColor!important;
+                stroke: none;
+            }
+            &:nth-child(3){
+                svg{
+                    fill: red !important;
+                    stroke: none;
+                }
+            }
+        }
+        svg{
+            fill: v.$lightThemeColor;
+            stroke: none;
+        }
+        &_addLightTheme{
+            border: none;
+            background: rgba(0, 0, 0, 0.1);
+            svg{
+                fill: v.$darkThemeColor;
+                stroke: none;
+            }
+        }
+    }
+}
